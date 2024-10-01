@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "786401790212",
+    "project_id": "reto1-a905c",
+    "storage_bucket": "reto1-a905c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786401790212:android:49bda8fad8ad904356e851",
+        "android_client_info": {
+          "package_name": "com.reto1.ultramarinos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqYvOyNV_Ucf3b8tfhXahXuhatgBlb9NI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
