@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.reto1.ultramarinos.FAB
+import com.reto1.ultramarinos.components.FAB
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ToolBar
