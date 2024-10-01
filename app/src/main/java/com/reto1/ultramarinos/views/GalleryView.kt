@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.reto1.ultramarinos.Artwork
-import com.reto1.ultramarinos.FAB
+import com.reto1.ultramarinos.components.FAB
 import com.reto1.ultramarinos.GalleryViewModel
 import com.reto1.ultramarinos.components.ArtworkCard
 import com.reto1.ultramarinos.components.BottomNavBar

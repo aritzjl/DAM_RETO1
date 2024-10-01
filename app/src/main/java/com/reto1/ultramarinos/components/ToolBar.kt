@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -22,7 +23,7 @@ import com.reto1.ultramarinos.toolbarTitle
 fun ToolBar(viewModel: GalleryViewModel?) {
     val context = LocalContext.current
     TopAppBar(
-        title = { Text(text = toolbarTitle, color = Color.Black) },
+        title = { Text(text = toolbarTitle, color = MaterialTheme.colorScheme.onSecondaryContainer) },
         actions = {
             if (toolbarTitle != "Galería") {
                 IconButton(onClick = {
@@ -56,6 +57,6 @@ fun ToolBar(viewModel: GalleryViewModel?) {
                 }
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
     )
 }
