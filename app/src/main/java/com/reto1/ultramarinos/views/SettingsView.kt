@@ -3,6 +3,7 @@ package com.reto1.ultramarinos.views
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
@@ -20,6 +22,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -46,6 +49,8 @@ import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.lightmode
+import com.reto1.ultramarinos.models.Idioma
+import com.reto1.ultramarinos.ui.theme.Theme
 
 
 //  SETTINGS VIEW
@@ -69,13 +74,15 @@ fun SettingsView() {
 
 @Composable
 fun SettingsContent(paddingValues: PaddingValues) {
+    var showMenu by remember { mutableStateOf(false) }
+    var idioma = "Castellano"
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier= Modifier
             .fillMaxSize()
-            .background(if (lightmode) MaterialTheme.colorScheme.background
-            else MaterialTheme.colorScheme.primary)
+            .background(if (lightmode) MaterialTheme.colorScheme.primary
+            else MaterialTheme.colorScheme.secondary)
             .padding(paddingValues)
             .padding(start = 16.dp)
     ) {
@@ -133,27 +140,52 @@ fun SettingsContent(paddingValues: PaddingValues) {
                         .padding(start = 5.dp)
                         .size(40.dp)
                 )
-//                DropdownMenu(
-//                    expanded = true,
-//                    onDismissRequest = {},
-//                    modifier = Modifier
-//                        .width(150.dp)
-//                ) {
-//                    DropdownMenuItem(
-//                        onClick = {},
-//                        text = (Text(
-//                            text = "help"
-//                        ))
-//                    )
-//                }
-                Text(
-                    text = "Castellano (hacer desplegable)",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    modifier = Modifier
-                        .padding(start = 10.dp),
-                )
+                TextButton(
+                    onClick = {
+                        showMenu = !showMenu
+                    }
+                )  {
+                    Text(
+                        text = "$idioma",
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        modifier = Modifier
+                            .padding(start = 10.dp),
+                    )
+                }
+                DropdownMenu(
+                    expanded = showMenu,
+                    onDismissRequest = { showMenu = false },
+                ) {
+                    DropdownMenuItem(
+                        text = {
+                            Text(text = "Castellano")
+                        },
+                        onClick = {
+                            idioma = "Castellano"
+                            showMenu = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                            Text(text = "English")
+                        },
+                        onClick = {
+                            idioma = "English"
+                            showMenu = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                            Text(text = "Euskara")
+                        },
+                        onClick = {
+                            idioma = "Euskara"
+                            showMenu = false
+                        }
+                    )
+                }
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -193,6 +225,35 @@ fun SettingsContent(paddingValues: PaddingValues) {
     }
 }
 
+//@Composable
+//fun CambiarIdioma(onCategorySelected: (Idioma?) -> Unit) {
+//    var expanded by remember { mutableStateOf(false) }
+//    val idiomas = Idioma.values().toList() + listOf(null) // Agregar "Todas las categorías" }
+//    var selectedIdioma by remember { mutableStateOf<Idioma?>(null) }
+//    if (expanded) {
+//        LazyColumn {
+//            items(idiomas) { idioma ->
+//                Row (
+//                    modifier = Modifier
+//                        .background(MaterialTheme.colorScheme.primary)
+//                        .fillMaxWidth()
+//                        .padding(16.dp)
+//                        .clickable {
+//                            selectedIdioma = idioma
+//                            onCategorySelected(idioma)
+//                            expanded = false // Cerrar la lista al seleccionar una opción
+//                        })
+//                {
+//                    Text(
+//                        text = "test",
+//                        color = MaterialTheme.colorScheme.onPrimary,
+//                    )
+//                }
+//            }
+//        }
+//    }
+//}
+
 @Composable
 fun SwitchVista() {
     Image(
@@ -226,6 +287,12 @@ fun SwitchVista() {
         checked = lightmode,
         onCheckedChange = {
             lightmode = it
-        }
+        },
+        colors = SwitchDefaults.colors(
+            checkedThumbColor = Color.Black,
+            checkedTrackColor = Color.Blue,
+            uncheckedThumbColor = Color.White,
+            uncheckedTrackColor = Color.Red
+        )
     )
 }
