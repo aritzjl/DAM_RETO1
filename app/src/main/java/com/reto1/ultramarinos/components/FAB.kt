@@ -44,7 +44,7 @@ fun FAB(){
                 })
         }
         else {
-            Image(painter= painterResource(R.drawable.baseline_add_circle_outline_24), contentDescription = "Icono", modifier= Modifier
+            Image(painter= painterResource(R.drawable.baseline_shopping_cart_24), contentDescription = "Icono", modifier= Modifier
                 .width(48.dp)
                 .clickable {
 

@@ -1,6 +1,7 @@
 package com.reto1.ultramarinos.components
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -12,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import com.reto1.ultramarinos.GalleryViewModel
+import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.is_single_column
 import com.reto1.ultramarinos.toolbarTitle
@@ -41,7 +42,9 @@ fun ToolBar(viewModel: GalleryViewModel?) {
                     )
                 }
             } else {
+                val context = LocalContext.current
                 IconButton(onClick = {
+                    Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show()
                     is_single_column = !is_single_column
                 }) {
                     val icon = if (is_single_column) {
