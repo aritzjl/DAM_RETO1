@@ -1,22 +1,39 @@
 package com.reto1.ultramarinos.views
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.reto1.ultramarinos.Artwork
+import com.reto1.ultramarinos.Product
 import com.reto1.ultramarinos.components.FAB
 import com.reto1.ultramarinos.GalleryViewModel
-import com.reto1.ultramarinos.components.ArtworkCard
+import com.reto1.ultramarinos.ProductCategory
+import com.reto1.ultramarinos.components.ProductPreview
 import com.reto1.ultramarinos.components.BottomNavBar
+import com.reto1.ultramarinos.components.CategorySelector
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.is_single_column
 
@@ -33,32 +50,40 @@ fun GalleryView(paddingValues: PaddingValues) {
         bottomBar = { BottomNavBar(navController) },
         floatingActionButton = { FAB() }
     ) { innerPadding ->
-        GalleryContent(paddingValues, viewModel.isSingleColumn, viewModel.artworks.value, innerPadding)
+        GalleryContent(
+            paddingValues = paddingValues,
+            isSingleColumn = is_single_column,
+            artworks = viewModel.artworks.value,
+            paddingValues2 = innerPadding,
+            onCategorySelected = { category -> viewModel.filterArtworks(category) }
+        )
     }
 }
-
 
 
 @Composable
 fun GalleryContent(
     paddingValues: PaddingValues,
-    isSingleColumn: Boolean, // Cambiar a MutableState<Boolean>
-    artworks: List<Artwork>, // Asegúrate de que este tipo sea List<Artwork>
+    isSingleColumn: Boolean,
+    artworks: List<Product>,
     paddingValues2: PaddingValues,
+    onCategorySelected: (ProductCategory?) -> Unit // Agregar esta función
 ) {
-    LazyVerticalGrid(
-        columns = if (is_single_column) GridCells.Fixed(1) else GridCells.Fixed(2),
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0.1f, 0.1f, 0.1f, 0.9f))
-            .padding(paddingValues)
-    ) {
-        items(
-            count = artworks.size,
-            key = { index -> artworks[index].name }
-        ) { index ->
-            val artwork = artworks[index]
-            ArtworkCard(artwork)
+    Column (modifier = Modifier.padding(paddingValues)){
+        CategorySelector(onCategorySelected) // Añadir el selector aquí
+        LazyVerticalGrid(
+            columns = if (isSingleColumn) GridCells.Fixed(1) else GridCells.Fixed(2),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            items(
+                count = artworks.size,
+                key = { index -> artworks[index].title }
+            ) { index ->
+                val artwork = artworks[index]
+                ProductPreview(artwork)
+            }
         }
     }
 }

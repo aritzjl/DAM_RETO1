@@ -9,54 +9,69 @@ class GalleryViewModel : ViewModel() {
     var isSingleColumn by mutableStateOf(false)
         private set
 
+    var selectedCategory by mutableStateOf<ProductCategory?>(null)
+        private set
+
     fun toggleColumnCount() {
         isSingleColumn = !isSingleColumn
     }
+
     var artworks = mutableStateOf(sampleArtworks())
 
-    private fun sampleArtworks(): List<Artwork> {
+    fun filterArtworks(category: ProductCategory?) {
+        selectedCategory = category
+        artworks.value = sampleArtworks().filter { product ->
+            category == null || product.category == category
+        }
+    }
+
+    private fun sampleArtworks(): List<Product> {
         return listOf(
-            Artwork(
-                name = "PadelChiquito",
-                title = "PadelChiquito",
-                description = "Comparador de carácterísticas de palas de Padle y precios de diferentes tiendas.",
-                creationDate = "2023-03-15",
-                style = ArtworkStyle.WATERCOLOUR,
-                imageResId = R.drawable.img_11 // Asegúrate de tener este recurso de imagen
+            Product(
+                title = "Bacalada con espinas",
+                description = "Bacalada con espinas, origen bacalao de Islandia. \n" +
+                        "\n" +
+                        "para consumir necesita un proceso de entre 2 y 3  días de ponerlo en mucha agua dentro de la nevera y cambiar ese agua 3 veces al dia, es importante este proceso por 2 cuestiones, la primera por desalar el bacalao y la segunda es por hidratar ese bacalao y que ahueque su carne.",
+                imageUrl = "https://www.gregoriomartin.es/103-home_default/bacalada-con-espinas.jpg",
+                price = 100.0f,
+                offerPrice = 90.0f,
+                unit = "Kg",
+                category = ProductCategory.Pescado
             ),
-            Artwork(
-                name = "Capital Fondeo",
-                title = "Capital Fondeo",
-                description = "Web de venta de cuentas fondeadas para trading.",
-                creationDate = "2024-01-10",
-                style = ArtworkStyle.DIGITAL,
-                imageResId = R.drawable.img_12 // Asegúrate de tener este recurso de imagen
+            Product(
+                title = "Arándano rojo",
+                description = "Este producto no tiene descripción",
+                imageUrl = "https://www.gregoriomartin.es/52-large_default/arandano-rojo.jpg",
+                price = 500.0f,
+                offerPrice = 450.0f,
+                unit = "Kg",
             ),
-            Artwork(
-                name = "Predicción Precios",
+            Product(
                 title = "Sistema de predicción de precios para Order Inn",
-                description = "Web con modelo de machine learning entrenado con datos de más de 50mil productos de Order Inn, utilizado para predecir los precios de futuros productos. Admeás, incorpora OCR y actualizaciones automáticas con lenguaje natural conectando el código fuente con OpenAI",
-                creationDate = "2022-11-05",
-                style = ArtworkStyle.INK,
-                imageResId = R.drawable.img_13 // Asegúrate de tener este recurso de imagen
+                description = "Cada tajada pesa entre 275 a 300gr.",
+                imageUrl = "https://www.gregoriomartin.es/22-large_default/bacalao-desalado-275-300gr.jpg",
+                price = 200.0f,
+                offerPrice = null,
+                unit = "Kg",
+                category = ProductCategory.Pescado
             ),
-            Artwork(
-                name = "Gestion Minera",
-                title = "Gestion Minera",
-                description = "Herramienta de gesitón interna para empresa minera de Perú",
-                creationDate = "2023-07-22",
-                style = ArtworkStyle.WATERCOLOUR,
-                imageResId = R.drawable.img_14 // Asegúrate de tener este recurso de imagen
+            Product(
+                title = "Alubia Agarbanzada",
+                description = "Este producto no tiene descripción",
+                imageUrl = "https://www.gregoriomartin.es/55-large_default/alubia-agarbanzada.jpg",
+                price = 300.0f,
+                offerPrice = 250.0f,
+                unit = "Kg",
+                category = ProductCategory.Legumbres
             ),
-            Artwork(
-                name = "Programa Trading Amazon",
-                title = "Programa Trading Amazon",
-                description = "Programa que genera excel con los productos que cumplan los criterios solciitados en la interfaz para la compraventa de items en Amazon.",
-                creationDate = "2024-02-14",
-                style = ArtworkStyle.DIGITAL,
-                imageResId = R.drawable.img_15 // Asegúrate de tener este recurso de imagen
+            Product(
+                title = "Bonito del norte en aceite de oliva ARROYABE 280gr",
+                description = "Este producto no tiene descripción.",
+                imageUrl = "https://www.gregoriomartin.es/79-large_default/bonito-del-norte-en-aceite-de-oliva-arroyabe-280gr.jpg",
+                price = 600.0f,
+                offerPrice = null,
+                category = ProductCategory.Conservas
             )
         )
     }
-
 }

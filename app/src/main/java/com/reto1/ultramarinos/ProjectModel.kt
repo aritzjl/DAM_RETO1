@@ -1,16 +1,17 @@
 package com.reto1.ultramarinos
 
-data class Artwork(
-    val name: String,
+data class Product(
     val title: String,
     val description: String,
-    val creationDate: String,
-    val style: ArtworkStyle,  // Enum que define el estilo de arte
-    val imageResId: Int // ID del recurso de la imagen (JPG)
+    val imageUrl: String,
+    val price: Float,
+    val offerPrice: Float? = null,
+    val unit: String? = null,
+    val category: ProductCategory? = null,
 )
 
-enum class ArtworkStyle {
-    WATERCOLOUR,  // Acuarela
-    DIGITAL,      // Arte digital
-    INK           // Tinta
+enum class ProductCategory {
+    Pescado,
+    Legumbres,
+    Conservas
 }
