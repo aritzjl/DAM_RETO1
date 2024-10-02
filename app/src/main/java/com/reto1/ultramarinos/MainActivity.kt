@@ -3,6 +3,7 @@ package com.reto1.ultramarinos
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.reto1.ultramarinos.ui.theme.AppTheme
 import com.reto1.ultramarinos.views.HomeView
 
 class MainActivity : ComponentActivity() {
@@ -10,7 +11,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         toolbarTitle = "Inicio"
         setContent {
-            HomeView()
+            AppTheme {
+                HomeView()
+            }
         }
     }
 }
