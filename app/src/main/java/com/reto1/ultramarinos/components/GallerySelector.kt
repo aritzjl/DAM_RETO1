@@ -1,8 +1,6 @@
 package com.reto1.ultramarinos.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,10 +15,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
-import com.reto1.ultramarinos.ProductCategory
+import com.reto1.ultramarinos.models.ProductCategory
 
 @Composable
 fun CategorySelector(onCategorySelected: (ProductCategory?) -> Unit) {

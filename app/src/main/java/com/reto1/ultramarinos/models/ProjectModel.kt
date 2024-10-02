@@ -1,4 +1,4 @@
-package com.reto1.ultramarinos
+package com.reto1.ultramarinos.models
 
 data class Product(
     val title: String,

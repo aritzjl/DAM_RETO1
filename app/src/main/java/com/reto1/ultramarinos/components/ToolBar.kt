@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import com.reto1.ultramarinos.GalleryViewModel
+import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.is_single_column
 import com.reto1.ultramarinos.toolbarTitle

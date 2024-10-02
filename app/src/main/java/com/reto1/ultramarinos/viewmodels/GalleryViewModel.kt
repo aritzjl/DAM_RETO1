@@ -1,9 +1,11 @@
-package com.reto1.ultramarinos
+package com.reto1.ultramarinos.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.reto1.ultramarinos.models.Product
+import com.reto1.ultramarinos.models.ProductCategory
 
 class GalleryViewModel : ViewModel() {
     var isSingleColumn by mutableStateOf(false)
