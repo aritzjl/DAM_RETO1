@@ -8,3 +8,4 @@ import androidx.compose.runtime.mutableStateOf
 var total_likes by mutableIntStateOf(0)
 var is_single_column by mutableStateOf(false)
 var toolbarTitle by mutableStateOf("Inicio")
+var lightmode by mutableStateOf(true)
