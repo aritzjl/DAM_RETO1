@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -41,7 +42,7 @@ fun BottomNavBar(navController: NavHostController) {
             }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Create, contentDescription = "Gallery") },
+            icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Productos") },
             selected = navController.currentBackStackEntry?.destination?.route == "gallery",
             onClick = {
                 toolbarTitle = "Productos"

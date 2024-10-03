@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Ultramarinos</string>
+    <string name="app_name">Overseas</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="light_mode">Light Mode</string>
 </resources>

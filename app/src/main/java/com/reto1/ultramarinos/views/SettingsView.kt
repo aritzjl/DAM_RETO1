@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,6 +46,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.primaryDark
 import com.example.compose.primaryLight
+import com.google.android.gms.common.internal.StringResourceValueReader
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ToolBar
@@ -247,9 +249,9 @@ fun SwitchVista() {
     Text(
         text =
         if (lightmode) {
-            "Modo Claro"
+            stringResource(id = R.string.light_mode)
         } else {
-            "Modo Oscuro"
+            stringResource(id = R.string.dark_mode)
         },
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
@@ -263,9 +265,9 @@ fun SwitchVista() {
             lightmode = it
         },
         colors = SwitchDefaults.colors(
-            checkedThumbColor = Color.White,
+            checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
             checkedTrackColor = MaterialTheme.colorScheme.onBackground,
-            uncheckedThumbColor = Color.Black,
+            uncheckedThumbColor = MaterialTheme.colorScheme.onBackground,
             uncheckedTrackColor = MaterialTheme.colorScheme.onPrimary
         )
     )
