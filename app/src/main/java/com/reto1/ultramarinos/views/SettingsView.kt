@@ -81,8 +81,8 @@ fun SettingsContent(paddingValues: PaddingValues) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier= Modifier
             .fillMaxSize()
-            .background(if (lightmode) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.background)
+            .background(if (lightmode) MaterialTheme.colorScheme.onPrimary
+            else MaterialTheme.colorScheme.onBackground)
             .padding(paddingValues)
             .padding(start = 16.dp)
     ) {
@@ -264,9 +264,9 @@ fun SwitchVista() {
         },
         colors = SwitchDefaults.colors(
             checkedThumbColor = Color.White,
-            checkedTrackColor = MaterialTheme.colorScheme.background,
+            checkedTrackColor = MaterialTheme.colorScheme.onBackground,
             uncheckedThumbColor = Color.Black,
-            uncheckedTrackColor = MaterialTheme.colorScheme.primary
+            uncheckedTrackColor = MaterialTheme.colorScheme.onPrimary
         )
     )
 }
