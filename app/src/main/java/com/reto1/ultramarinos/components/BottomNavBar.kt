@@ -32,7 +32,7 @@ fun BottomNavBar(navController: NavHostController) {
             icon = { Icon(Icons.Default.Info, contentDescription = "Info") },
             selected = navController.currentBackStackEntry?.destination?.route == "about",
             onClick = {
-                toolbarTitle = "Sobre mí"
+                toolbarTitle = "Sobre nosotros"
                 navController.navigate("about") {
                     popUpTo(navController.graph.startDestinationId) { saveState = true }
                     launchSingleTop = true
@@ -44,7 +44,7 @@ fun BottomNavBar(navController: NavHostController) {
             icon = { Icon(Icons.Default.Create, contentDescription = "Gallery") },
             selected = navController.currentBackStackEntry?.destination?.route == "gallery",
             onClick = {
-                toolbarTitle = "Galería"
+                toolbarTitle = "Productos"
                 navController.navigate("gallery") {
                     popUpTo(navController.graph.startDestinationId) { saveState = true }
                     launchSingleTop = true

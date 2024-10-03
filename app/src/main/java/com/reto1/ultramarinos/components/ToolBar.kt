@@ -26,7 +26,7 @@ fun ToolBar(viewModel: GalleryViewModel?) {
     TopAppBar(
         title = { Text(text = toolbarTitle, color = MaterialTheme.colorScheme.onSecondaryContainer) },
         actions = {
-            if (toolbarTitle != "Galería") {
+            if (toolbarTitle != "Productos") {
                 IconButton(onClick = {
                     val shareIntent = Intent().apply {
                         action = Intent.ACTION_SEND
@@ -38,13 +38,11 @@ fun ToolBar(viewModel: GalleryViewModel?) {
                     Icon(
                         painter = painterResource(id = R.drawable.share_icon),
                         contentDescription = "Compartir",
-                        tint = Color.Black
+                        tint = Color.White
                     )
                 }
             } else {
-                val context = LocalContext.current
                 IconButton(onClick = {
-                    Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show()
                     is_single_column = !is_single_column
                 }) {
                     val icon = if (is_single_column) {
@@ -55,7 +53,7 @@ fun ToolBar(viewModel: GalleryViewModel?) {
                     Icon(
                         painter = icon,
                         contentDescription = "Alternar vista",
-                        tint = Color.Black
+                        tint = Color.White
                     )
                 }
             }
