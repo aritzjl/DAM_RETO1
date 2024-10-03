@@ -82,7 +82,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
         modifier= Modifier
             .fillMaxSize()
             .background(if (lightmode) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.secondary)
+            else MaterialTheme.colorScheme.background)
             .padding(paddingValues)
             .padding(start = 16.dp)
     ) {
@@ -99,7 +99,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                 text = "Usuario",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
-                color = Color.Black,
+                color = if (lightmode) Color.Black else Color.White,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
@@ -112,7 +112,8 @@ fun SettingsContent(paddingValues: PaddingValues) {
                     .height(60.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.baseline_email_perfil_24),
+                    painter = painterResource(
+                        id = if (lightmode) R.drawable.baseline_email_perfil_24 else R.drawable.baseline_email_24),
                     contentDescription = "email",
                     modifier = Modifier
                         .padding(start = 5.dp)
@@ -122,7 +123,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                     text = "email@email.com",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
-                    color = Color.Black,
+                    color = if (lightmode) Color.Black else Color.White,
                     modifier = Modifier
                         .padding(start = 10.dp),
                 )
@@ -134,7 +135,8 @@ fun SettingsContent(paddingValues: PaddingValues) {
                     .height(60.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.baseline_g_translate_24),
+                    painter = painterResource(
+                        id = if (lightmode) R.drawable.baseline_g_translate_24 else R.drawable.baseline_light_g_translate_24),
                     contentDescription = "traductor",
                     modifier = Modifier
                         .padding(start = 5.dp)
@@ -149,7 +151,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                         text = "$idioma",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
-                        color = Color.Black,
+                        color = if (lightmode) Color.Black else Color.White,
                         modifier = Modifier
                             .padding(start = 10.dp),
                     )
@@ -202,7 +204,8 @@ fun SettingsContent(paddingValues: PaddingValues) {
                     .height(60.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.baseline_exit_to_app_24),
+                    painter = painterResource(
+                        id = if (lightmode) R.drawable.baseline_exit_to_app_24 else R.drawable.baseline_light_exit_to_app_24),
                     contentDescription = "cerrar",
                     modifier = Modifier
                         .padding(start = 5.dp)
@@ -215,7 +218,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                         text = "Cerrar Sesión",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
-                        color = Color.Black,
+                        color = if (lightmode) Color.Black else Color.White,
                         modifier = Modifier
                             .padding(start = 10.dp),
                     )
@@ -224,35 +227,6 @@ fun SettingsContent(paddingValues: PaddingValues) {
         }
     }
 }
-
-//@Composable
-//fun CambiarIdioma(onCategorySelected: (Idioma?) -> Unit) {
-//    var expanded by remember { mutableStateOf(false) }
-//    val idiomas = Idioma.values().toList() + listOf(null) // Agregar "Todas las categorías" }
-//    var selectedIdioma by remember { mutableStateOf<Idioma?>(null) }
-//    if (expanded) {
-//        LazyColumn {
-//            items(idiomas) { idioma ->
-//                Row (
-//                    modifier = Modifier
-//                        .background(MaterialTheme.colorScheme.primary)
-//                        .fillMaxWidth()
-//                        .padding(16.dp)
-//                        .clickable {
-//                            selectedIdioma = idioma
-//                            onCategorySelected(idioma)
-//                            expanded = false // Cerrar la lista al seleccionar una opción
-//                        })
-//                {
-//                    Text(
-//                        text = "test",
-//                        color = MaterialTheme.colorScheme.onPrimary,
-//                    )
-//                }
-//            }
-//        }
-//    }
-//}
 
 @Composable
 fun SwitchVista() {
@@ -279,7 +253,7 @@ fun SwitchVista() {
         },
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
-        color = Color.Black,
+        color = if (lightmode) Color.Black else Color.White,
         modifier = Modifier
             .padding(10.dp),
     )
@@ -289,10 +263,10 @@ fun SwitchVista() {
             lightmode = it
         },
         colors = SwitchDefaults.colors(
-            checkedThumbColor = Color.Black,
-            checkedTrackColor = Color.Blue,
-            uncheckedThumbColor = Color.White,
-            uncheckedTrackColor = Color.Red
+            checkedThumbColor = Color.White,
+            checkedTrackColor = MaterialTheme.colorScheme.background,
+            uncheckedThumbColor = Color.Black,
+            uncheckedTrackColor = MaterialTheme.colorScheme.primary
         )
     )
 }
