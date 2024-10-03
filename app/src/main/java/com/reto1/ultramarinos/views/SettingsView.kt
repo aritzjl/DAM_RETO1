@@ -99,7 +99,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                 text = "Usuario",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
-                color = if (lightmode) Color.Black else Color.White,
+                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
@@ -123,7 +123,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                     text = "email@email.com",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
-                    color = if (lightmode) Color.Black else Color.White,
+                    color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .padding(start = 10.dp),
                 )
@@ -151,7 +151,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                         text = "$idioma",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
-                        color = if (lightmode) Color.Black else Color.White,
+                        color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
                             .padding(start = 10.dp),
                     )
@@ -218,7 +218,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                         text = "Cerrar Sesión",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
-                        color = if (lightmode) Color.Black else Color.White,
+                        color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
                             .padding(start = 10.dp),
                     )
@@ -253,7 +253,7 @@ fun SwitchVista() {
         },
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
-        color = if (lightmode) Color.Black else Color.White,
+        color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
         modifier = Modifier
             .padding(10.dp),
     )
