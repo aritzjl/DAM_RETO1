@@ -44,15 +44,15 @@ fun HomeView() {
 fun HomeContent(paddingValues: PaddingValues) {
     LazyColumn(modifier= Modifier
         .fillMaxSize()
-        .background(if (lightmode) MaterialTheme.colorScheme.primary
-        else MaterialTheme.colorScheme.background)
+        .background(if (lightmode) MaterialTheme.colorScheme.onPrimary
+        else MaterialTheme.colorScheme.onBackground)
         .padding(paddingValues)) {
         item {
             Text(
                 text = "Inicio",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
-                color = if (lightmode) Color.Black else Color.White,
+                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp), textAlign = TextAlign.Center)
