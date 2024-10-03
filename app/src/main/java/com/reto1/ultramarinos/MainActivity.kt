@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.reto1.ultramarinos.ui.theme.AppTheme
 import com.reto1.ultramarinos.views.HomeView
 import com.reto1.ultramarinos.views.LoginView
 
@@ -15,15 +16,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            if (isLoggedIn) {
-                HomeView()
-            } else {
-                /*LoginView(onLoginSuccess = {
-                    isLoggedIn = true
-                })*/
-                //Disabled for development
-                HomeView()
+            AppTheme {
+                if (isLoggedIn) {
+                    HomeView()
+                } else {
+                    /*LoginView(onLoginSuccess = {
+                        isLoggedIn = true
+                    })*/
+                    //Disabled for development
+                    HomeView()
+                }
             }
+
         }
     }
 }
