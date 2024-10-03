@@ -18,9 +18,11 @@ class MainActivity : ComponentActivity() {
             if (isLoggedIn) {
                 HomeView()
             } else {
-                LoginView(onLoginSuccess = {
+                /*LoginView(onLoginSuccess = {
                     isLoggedIn = true
-                })
+                })*/
+                //Disabled for development
+                HomeView()
             }
         }
     }
