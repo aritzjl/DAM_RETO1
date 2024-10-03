@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ToolBar
+import com.reto1.ultramarinos.lightmode
 
 @Composable
 fun HomeView() {
@@ -43,12 +44,18 @@ fun HomeView() {
 fun HomeContent(paddingValues: PaddingValues) {
     LazyColumn(modifier= Modifier
         .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background)
+        .background(if (lightmode) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.background)
         .padding(paddingValues)) {
         item {
-            Text(text = "Inicio", fontWeight = FontWeight.ExtraBold ,fontSize = 32.sp, color = Color.White, modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp), textAlign = TextAlign.Center)
+            Text(
+                text = "Inicio",
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 32.sp,
+                color = if (lightmode) Color.Black else Color.White,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp), textAlign = TextAlign.Center)
         }
     }
 }
