@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +32,7 @@ import com.reto1.ultramarinos.components.FAB
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ToolBar
-import com.reto1.ultramarinos.total_likes
+import com.reto1.ultramarinos.lightmode
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -54,28 +55,11 @@ fun AboutView(paddingValues2: PaddingValues) {
 
 @Composable
 fun AboutContent(paddingValues: PaddingValues) {
-    val counter by remember { derivedStateOf { total_likes } }
-
     LazyColumn(modifier= Modifier
         .fillMaxSize()
-        .background(Color.DarkGray)
+        .background(if (lightmode) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.background)
         .padding(paddingValues))
-    {
-        item{
-            Image(painter= painterResource(R.drawable.img_1), contentDescription = "Icono", modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp)
-                .clip(
-                    CircleShape
-                ))
-            Text(text = "Aritz Jaber", fontWeight = FontWeight.ExtraBold ,fontSize = 32.sp, color = Color.White, modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp), textAlign = TextAlign.Center)
-            Text(text = "** Full Stack Developer **", fontWeight = FontWeight.SemiBold ,fontSize = 28.sp, color = Color.LightGray, modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp), textAlign = TextAlign.Center)
-
-        }
-    }
+    {}
 
 }

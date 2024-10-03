@@ -28,7 +28,7 @@ fun FAB(){
             context.startActivity(emailIntent)
         }
     }) {
-        if (toolbarTitle != "Galería")
+        if (toolbarTitle != "Productos")
         {
             Image(painter= painterResource(R.drawable.baseline_email_24), contentDescription = "Icono", modifier= Modifier
                 .width(48.dp)
