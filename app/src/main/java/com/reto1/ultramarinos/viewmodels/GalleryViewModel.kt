@@ -72,6 +72,7 @@ class GalleryViewModel : ViewModel() {
                 imageUrl = "https://www.gregoriomartin.es/79-large_default/bonito-del-norte-en-aceite-de-oliva-arroyabe-280gr.jpg",
                 price = 600.0f,
                 offerPrice = null,
+                unit = "Kg",
                 category = ProductCategory.Conservas
             )
         )
