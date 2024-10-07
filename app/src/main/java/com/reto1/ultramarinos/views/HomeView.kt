@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -31,10 +33,6 @@ import androidx.compose.ui.res.painterResource
 // HomeView.kt
 
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -44,15 +42,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.viewmodels.MainViewModel
 import com.reto1.ultramarinos.components.YouTubePlayer
-import com.reto1.ultramarinos.lightmode
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 
 @Composable
@@ -97,7 +91,7 @@ fun HomeContent(paddingValues: PaddingValues) {
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 lineHeight = 38.sp,
-                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp), textAlign = TextAlign.Center
@@ -108,7 +102,7 @@ fun HomeContent(paddingValues: PaddingValues) {
                 fontWeight = FontWeight.Thin,
                 fontSize = 22.sp,
                 lineHeight = 35.sp,
-                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp, bottom = 40.dp), textAlign = TextAlign.Center
@@ -118,7 +112,7 @@ fun HomeContent(paddingValues: PaddingValues) {
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 lineHeight = 35.sp,
-                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp, bottom = 40.dp), textAlign = TextAlign.Center
@@ -136,7 +130,6 @@ fun HomeContent(paddingValues: PaddingValues) {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun Carrusel(modifier: Modifier = Modifier) {
 // meto las imagenes en una coleccion
@@ -152,8 +145,7 @@ fun Carrusel(modifier: Modifier = Modifier) {
 
 
     val pagerState = rememberPagerState(
-        pageCount =
-        images.size
+        pageCount = { images.size }
     )
 
     Column(
@@ -190,7 +182,7 @@ fun Carrusel(modifier: Modifier = Modifier) {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
+
 @Composable
 fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
     val configuration = LocalConfiguration.current
@@ -203,7 +195,7 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
     val products = viewModel.artworks.value
 
     val pagerState = rememberPagerState(
-        pageCount = products.size
+        pageCount = { products.size }
     )
 
     Column(
