@@ -2,8 +2,6 @@ package com.reto1.ultramarinos.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,21 +10,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MovableContentStateReference
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,50 +27,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.compose.primaryDark
-import com.example.compose.primaryLight
-import com.google.android.gms.common.internal.StringResourceValueReader
 import com.reto1.ultramarinos.R
-import com.reto1.ultramarinos.components.BottomNavBar
-import com.reto1.ultramarinos.components.ToolBar
-import com.reto1.ultramarinos.lightmode
-import com.reto1.ultramarinos.models.Idioma
-import com.reto1.ultramarinos.ui.theme.Theme
+import com.reto1.ultramarinos.viewmodels.MainViewModel
 
 
 //  SETTINGS VIEW
-@Preview
-@Composable
-fun SettingsView() {
-    val navController = rememberNavController()
-    Scaffold(
-        topBar = { ToolBar(null) },
-        bottomBar = { BottomNavBar(navController) },
-        content = { paddingValues ->
-            NavHost(navController = navController, startDestination = "home") {
-                composable("home") { HomeContent(paddingValues) }
-                composable("about") { AboutView(paddingValues) }
-                composable("gallery") { GalleryView(paddingValues) }
-                composable("settings") { SettingsContent(paddingValues) }
-            }
-        }
-    )
-}
 
 @Composable
-fun SettingsContent(paddingValues: PaddingValues) {
+fun SettingsContent(paddingValues: PaddingValues, mainViewModel: MainViewModel, isLightMode: Boolean) {
     var showMenu by remember { mutableStateOf(false) }
     var idioma = "Castellano"
     LazyColumn(
@@ -85,8 +48,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier= Modifier
             .fillMaxSize()
-            .background(if (lightmode) MaterialTheme.colorScheme.onPrimary
-            else MaterialTheme.colorScheme.onBackground)
+            .background(MaterialTheme.colorScheme.onPrimary)
             .padding(paddingValues)
             .padding(start = 16.dp)
     ) {
@@ -103,7 +65,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                 text = "Usuario",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
-                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
@@ -117,7 +79,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
             ) {
                 Image(
                     painter = painterResource(
-                        id = if (lightmode) R.drawable.baseline_email_perfil_24 else R.drawable.baseline_email_24),
+                        id = if (isLightMode) R.drawable.baseline_email_24 else R.drawable.baseline_email_perfil_24),
                     contentDescription = "email",
                     modifier = Modifier
                         .padding(start = 5.dp)
@@ -127,7 +89,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                     text = "email@email.com",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
-                    color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                    color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier
                         .padding(start = 10.dp),
                 )
@@ -140,7 +102,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
             ) {
                 Image(
                     painter = painterResource(
-                        id = if (lightmode) R.drawable.baseline_g_translate_24 else R.drawable.baseline_light_g_translate_24),
+                        id = if (isLightMode) R.drawable.baseline_light_g_translate_24 else R.drawable.baseline_g_translate_24),
                     contentDescription = "traductor",
                     modifier = Modifier
                         .padding(start = 5.dp)
@@ -155,7 +117,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                         text = "$idioma",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
-                        color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .padding(start = 10.dp),
                     )
@@ -199,7 +161,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                     .fillMaxWidth()
                     .height(60.dp)
             ) {
-                SwitchVista()
+                SwitchVista(isLightMode = !mainViewModel.darkTheme.value!!, mainViewModel = mainViewModel)
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -209,7 +171,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
             ) {
                 Image(
                     painter = painterResource(
-                        id = if (lightmode) R.drawable.baseline_exit_to_app_24 else R.drawable.baseline_light_exit_to_app_24),
+                        id = if (isLightMode) R.drawable.baseline_light_exit_to_app_24 else R.drawable.baseline_exit_to_app_24),
                     contentDescription = "cerrar",
                     modifier = Modifier
                         .padding(start = 5.dp)
@@ -222,7 +184,7 @@ fun SettingsContent(paddingValues: PaddingValues) {
                         text = "Cerrar Sesión",
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
-                        color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .padding(start = 10.dp),
                     )
@@ -233,16 +195,11 @@ fun SettingsContent(paddingValues: PaddingValues) {
 }
 
 @Composable
-fun SwitchVista() {
-//    val context = LocalContext.current
-//    val sharedPreferences = context.getSharedPreferences("mode",0)
-//    var lightmode by remember {
-//        mutableStateOf(sharedPreferences.getBoolean("lightmode", true))
-//    }
+fun SwitchVista(isLightMode: Boolean, mainViewModel: MainViewModel) {
     Image(
         painter = painterResource(
             id =
-            if (lightmode) {
+            if (isLightMode) {
                 R.drawable.baseline_light_mode_24
             } else {
                 R.drawable.baseline_dark_mode_24
@@ -255,28 +212,28 @@ fun SwitchVista() {
     )
     Text(
         text =
-        if (lightmode) {
+        if (isLightMode) {
             stringResource(id = R.string.light_mode)
         } else {
             stringResource(id = R.string.dark_mode)
         },
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
-        color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+        color = MaterialTheme.colorScheme.onBackground,
         modifier = Modifier
             .padding(10.dp),
     )
     Switch(
-        checked = lightmode,
+        checked = isLightMode,
+        enabled = true,
         onCheckedChange = {
-//            sharedPreferences.edit().putBoolean("lightmode",it).apply()
-            lightmode = it
+            mainViewModel.toggleTheme()
         },
         colors = SwitchDefaults.colors(
             checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
             checkedTrackColor = MaterialTheme.colorScheme.onBackground,
-            uncheckedThumbColor = MaterialTheme.colorScheme.onBackground,
-            uncheckedTrackColor = MaterialTheme.colorScheme.onPrimary
+            uncheckedThumbColor = MaterialTheme.colorScheme.onPrimary,
+            uncheckedTrackColor = MaterialTheme.colorScheme.onBackground
         )
     )
 }

@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -21,10 +23,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ToolBar
-import com.reto1.ultramarinos.lightmode
+import com.reto1.ultramarinos.viewmodels.MainViewModel
 
 @Composable
-fun HomeView() {
+fun HomeView(mainViewModel: MainViewModel, isLightMode: Boolean) {
+
     val navController = rememberNavController()
     Scaffold(
         topBar = { ToolBar(null) },
@@ -34,7 +37,7 @@ fun HomeView() {
                 composable("home") { HomeContent(paddingValues) }
                 composable("about") { AboutView(paddingValues) }
                 composable("gallery") { GalleryView(paddingValues) }
-                composable("settings") { SettingsContent(paddingValues) }
+                composable("settings") { SettingsContent(paddingValues, mainViewModel, isLightMode) }
             }
         }
     )
@@ -44,15 +47,14 @@ fun HomeView() {
 fun HomeContent(paddingValues: PaddingValues) {
     LazyColumn(modifier= Modifier
         .fillMaxSize()
-        .background(if (lightmode) MaterialTheme.colorScheme.onPrimary
-        else MaterialTheme.colorScheme.onBackground)
+        .background(MaterialTheme.colorScheme.onPrimary)
         .padding(paddingValues)) {
         item {
             Text(
                 text = "Inicio",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
-                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp), textAlign = TextAlign.Center)

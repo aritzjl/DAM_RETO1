@@ -10,5 +10,3 @@ var is_single_column by mutableStateOf(false)
 var toolbarTitle by mutableStateOf("Inicio")
 var isLoggedIn by mutableStateOf(false)
 
-var lightmode by mutableStateOf(true)
-
