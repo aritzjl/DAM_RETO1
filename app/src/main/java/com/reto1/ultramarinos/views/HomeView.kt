@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -27,10 +29,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+
+// HomeView.kt
+
+import androidx.compose.material3.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -38,18 +42,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ToolBar
+import com.reto1.ultramarinos.viewmodels.MainViewModel
 import com.reto1.ultramarinos.components.YouTubePlayer
-import com.reto1.ultramarinos.lightmode
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 
 @Composable
-fun HomeView() {
+fun HomeView(mainViewModel: MainViewModel, isLightMode: Boolean) {
+
     val navController = rememberNavController()
     Scaffold(
         topBar = { ToolBar(null) },
@@ -59,7 +61,7 @@ fun HomeView() {
                 composable("home") { HomeContent(paddingValues) }
                 composable("about") { AboutView(paddingValues) }
                 composable("gallery") { GalleryView(paddingValues) }
-                composable("settings") { SettingsContent(paddingValues) }
+                composable("settings") { SettingsContent(paddingValues, mainViewModel, isLightMode) }
             }
         }
     )
@@ -67,22 +69,16 @@ fun HomeView() {
 
 @Composable
 fun HomeContent(paddingValues: PaddingValues) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                if (lightmode) MaterialTheme.colorScheme.onPrimary
-                else MaterialTheme.colorScheme.onBackground
-            )
-            .padding(paddingValues)
-    ) {
+    LazyColumn(modifier= Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.onPrimary)
+        .padding(paddingValues)) {
         item {
             Text(
                 text = "Inicio",
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
-
-                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp), textAlign = TextAlign.Center
@@ -95,7 +91,7 @@ fun HomeContent(paddingValues: PaddingValues) {
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 lineHeight = 38.sp,
-                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp), textAlign = TextAlign.Center
@@ -106,7 +102,7 @@ fun HomeContent(paddingValues: PaddingValues) {
                 fontWeight = FontWeight.Thin,
                 fontSize = 22.sp,
                 lineHeight = 35.sp,
-                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp, bottom = 40.dp), textAlign = TextAlign.Center
@@ -116,7 +112,7 @@ fun HomeContent(paddingValues: PaddingValues) {
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 lineHeight = 35.sp,
-                color = if (lightmode) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimary,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp, bottom = 40.dp), textAlign = TextAlign.Center
@@ -134,7 +130,6 @@ fun HomeContent(paddingValues: PaddingValues) {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun Carrusel(modifier: Modifier = Modifier) {
 // meto las imagenes en una coleccion
@@ -150,8 +145,7 @@ fun Carrusel(modifier: Modifier = Modifier) {
 
 
     val pagerState = rememberPagerState(
-        pageCount =
-        images.size
+        pageCount = { images.size }
     )
 
     Column(
@@ -188,7 +182,7 @@ fun Carrusel(modifier: Modifier = Modifier) {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
+
 @Composable
 fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
     val configuration = LocalConfiguration.current
@@ -201,7 +195,7 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
     val products = viewModel.artworks.value
 
     val pagerState = rememberPagerState(
-        pageCount = products.size
+        pageCount = { products.size }
     )
 
     Column(
