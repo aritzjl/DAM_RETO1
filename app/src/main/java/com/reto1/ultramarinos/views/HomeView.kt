@@ -55,6 +55,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.components.BottomNavBar
+import com.reto1.ultramarinos.components.ProductPreview
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.components.YouTubePlayer
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
@@ -169,6 +170,7 @@ fun Carrusel(modifier: Modifier = Modifier) {
         R.drawable.img_3,
         R.drawable.img_4,
         R.drawable.img_5,
+        R.drawable.imgprueba
 
         )
 
@@ -194,7 +196,7 @@ fun Carrusel(modifier: Modifier = Modifier) {
         Box(
             modifier = modifier
                 .wrapContentSize()
-                .fillMaxWidth(fraction)
+                .fillMaxWidth(fraction).clip(RoundedCornerShape(0.dp))
         ) {
             HorizontalPager(
                 state = pagerState,
@@ -207,7 +209,8 @@ fun Carrusel(modifier: Modifier = Modifier) {
                 Card(
 
                     modifier = Modifier
-                        .height(height = 250.dp).fillMaxWidth()
+                        .height(height = 250.dp)
+                        .fillMaxWidth()
 
 
                 ) {
@@ -318,7 +321,7 @@ fun IndicatorDots(isSelected: Boolean, modifier: Modifier) {
 fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
     val configuration = LocalConfiguration.current
     val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        0.8f // 80% width in landscape
+        0.9f // 80% width in landscape
     } else {
         1f // 100% width in portrait
     }
@@ -329,6 +332,16 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
         pageCount = { products.size }
     )
 
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(4000)
+            val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
+            pagerState.scrollToPage(nextPage)
+        }
+    }
+
+    val scope = rememberCoroutineScope()
+
     Column(
         modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -336,7 +349,7 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
         Box(
             modifier = modifier
                 .fillMaxWidth(fraction)
-                .height(350.dp)
+                .height(500.dp)
                 .clip(RoundedCornerShape(8.dp))
         ) {
             HorizontalPager(
@@ -348,29 +361,76 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
                 val product = products[currentPage]
                 Card(
                     modifier = Modifier
-                        .size(height = 400.dp, width = 600.dp)
+                        .height(height = 500.dp)
+                        .fillMaxWidth()
                 ) {
                     Column {
-                        Image(
-                            painter = rememberAsyncImagePainter(model = product.imageUrl),
-                            contentDescription = product.title,
-                            contentScale = ContentScale.FillBounds,
-                            modifier = Modifier
-                                .height(200.dp)
-                                .fillMaxWidth()
-                        )
-                        Text(
-                            text = product.title,
-                            modifier = Modifier.padding(5.dp)
-                        )
-                        Text(
-                            text = "${product.price} ${product.unit}",
-                            modifier = Modifier.padding(5.dp)
-                        )
+                        ProductPreview(product)
                     }
                 }
             }
+            IconButton(
+                onClick = {
+                    val nextPage = pagerState.currentPage + 1
+                    if (nextPage < products.size) {
+                        scope.launch {
+                            pagerState.animateScrollToPage(nextPage)
+                        }
+                    }
+                },
+                modifier = Modifier
+                    .padding(10.dp)
+                    .size(48.dp)
+                    .align(Alignment.CenterEnd)
+                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = Color(
+                        0x52373737
+                    )
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = "",
+                    modifier = Modifier.fillMaxSize(),
+                    tint = Color.LightGray
+                )
+            }
+
+            IconButton(
+                onClick = {
+                    val previousPage = pagerState.currentPage - 1
+                    if (previousPage >= 0) {
+                        scope.launch {
+                            pagerState.animateScrollToPage(previousPage)
+                        }
+                    }
+                },
+                modifier = Modifier
+                    .padding(10.dp)
+                    .size(48.dp)
+                    .align(Alignment.CenterStart)
+                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = Color(
+                        0x52373737
+                    )
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = "",
+                    modifier = Modifier.fillMaxSize(),
+                    tint = Color.LightGray
+                )
+            }
+
         }
+
+        PageIndicator(
+            pageCount = products.size,
+            currentPage = pagerState.currentPage,
+            modifier = Modifier.padding(top = 8.dp, bottom = 14.dp, start = 5.dp, end = 5.dp)
+        )
     }
 }
+
 
