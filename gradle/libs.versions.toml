@@ -1,4 +1,6 @@
 [versions]
+accompanistPager = "0.12.0"
+accompanistPagerIndicators = "0.31.2-alpha"
 agp = "8.6.0"
 chromecastSender = "0.28"
 kotlin = "1.9.0"
@@ -19,6 +21,8 @@ uiTextGoogleFontsVersion = "1.7.3"
 runtimeLivedata = "1.7.3"
 
 [libraries]
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
+accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-media3-common = { module = "androidx.media3:media3-common", version.ref = "media3Exoplayer" }
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3Exoplayer" }
