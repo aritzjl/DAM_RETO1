@@ -1,80 +1,77 @@
 package com.reto1.ultramarinos.viewmodels
 
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 import com.reto1.ultramarinos.models.Product
-import com.reto1.ultramarinos.models.ProductCategory
 
 class GalleryViewModel : ViewModel() {
     var isSingleColumn by mutableStateOf(false)
         private set
 
-    var selectedCategory by mutableStateOf<ProductCategory?>(null)
+    var selectedCategory by mutableStateOf<String?>(null)
         private set
+
+    var categories by mutableStateOf(
+        listOf(
+            "Pescado",
+            "Legumbres",
+            "Conservas"
+        )
+    )
 
     fun toggleColumnCount() {
         isSingleColumn = !isSingleColumn
     }
 
-    var artworks = mutableStateOf(sampleArtworks())
+    private var allProducts = listOf<Product>()
 
-    fun filterArtworks(category: ProductCategory?) {
-        selectedCategory = category
-        artworks.value = sampleArtworks().filter { product ->
-            category == null || product.category == category
-        }
+    // Lista filtrada de productos que se mostrarán en la interfaz
+    var artworks = mutableStateOf<List<Product>>(emptyList())
+        private set
+
+    init {
+        loadProducts() // Cargar productos al inicializar el ViewModel
     }
 
-    private fun sampleArtworks(): List<Product> {
-        return listOf(
-            Product(
-                title = "Bacalada con espinas",
-                description = "Bacalada con espinas, origen bacalao de Islandia. \n" +
-                        "\n" +
-                        "para consumir necesita un proceso de entre 2 y 3  días de ponerlo en mucha agua dentro de la nevera y cambiar ese agua 3 veces al dia, es importante este proceso por 2 cuestiones, la primera por desalar el bacalao y la segunda es por hidratar ese bacalao y que ahueque su carne.",
-                imageUrl = "https://www.gregoriomartin.es/103-home_default/bacalada-con-espinas.jpg",
-                price = 100.0f,
-                offerPrice = 90.0f,
-                unit = "Kg",
-                category = ProductCategory.Pescado
-            ),
-            Product(
-                title = "Arándano rojo",
-                description = "Este producto no tiene descripción",
-                imageUrl = "https://www.gregoriomartin.es/52-large_default/arandano-rojo.jpg",
-                price = 500.0f,
-                offerPrice = 450.0f,
-                unit = "Kg",
-            ),
-            Product(
-                title = "Sistema de predicción de precios para Order Inn",
-                description = "Cada tajada pesa entre 275 a 300gr.",
-                imageUrl = "https://www.gregoriomartin.es/22-large_default/bacalao-desalado-275-300gr.jpg",
-                price = 200.0f,
-                offerPrice = null,
-                unit = "Kg",
-                category = ProductCategory.Pescado
-            ),
-            Product(
-                title = "Alubia Agarbanzada",
-                description = "Este producto no tiene descripción",
-                imageUrl = "https://www.gregoriomartin.es/55-large_default/alubia-agarbanzada.jpg",
-                price = 300.0f,
-                offerPrice = 250.0f,
-                unit = "Kg",
-                category = ProductCategory.Legumbres
-            ),
-            Product(
-                title = "Bonito del norte en aceite de oliva ARROYABE 280gr",
-                description = "Este producto no tiene descripción.",
-                imageUrl = "https://www.gregoriomartin.es/79-large_default/bonito-del-norte-en-aceite-de-oliva-arroyabe-280gr.jpg",
-                price = 600.0f,
-                offerPrice = null,
-                unit = "Kg",
-                category = ProductCategory.Conservas
-            )
-        )
+    // Función para cargar todos los productos desde Firebase
+    private fun loadProducts() {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Productos")
+            .get()
+            .addOnSuccessListener { docs ->
+                val productsList = docs.map { documento ->
+                    Product(
+                        title = documento.data["nombre"].toString(),
+                        description = documento.data["descripcion"].toString(),
+                        imageUrl = documento.data["foto"].toString(),
+                        price = documento.data["precio"].toString().toFloat(),
+                        offerPrice = documento.data["precio_oferta"].toString().toFloatOrNull(),
+                        unit = documento.data["unidad"].toString(),
+                        category = documento.data["categoria"].toString(),
+                    )
+                }
+                // Guardar todos los productos en la lista completa
+                allProducts = productsList
+                // Inicialmente, mostrar todos los productos (sin filtro)
+                artworks.value = allProducts
+            }
+            .addOnFailureListener {
+                // Manejar errores si es necesario
+            }
+    }
+
+    // Función para filtrar productos según la categoría seleccionada
+    fun filterArtworks(category: String?) {
+        artworks.value = if (category == null) {
+            // Si no hay categoría seleccionada, mostrar todos los productos
+            allProducts
+        } else {
+            // Si hay una categoría seleccionada, filtrar los productos por esa categoría
+            allProducts.filter { it.category == category }
+        }
     }
 }
