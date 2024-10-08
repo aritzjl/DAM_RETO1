@@ -1,5 +1,7 @@
 package com.reto1.ultramarinos.views
 
+import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,15 +37,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.models.Idioma
 import com.reto1.ultramarinos.viewmodels.MainViewModel
+import kotlin.math.log
 
 
 //  SETTINGS VIEW
 
 @Composable
-fun SettingsContent(paddingValues: PaddingValues, mainViewModel: MainViewModel, isLightMode: Boolean) {
+fun SettingsContent(
+    paddingValues: PaddingValues,
+    mainViewModel: MainViewModel,
+    isLightMode: Boolean,
+    idiomaList: List<Idioma>,
+    idiomaActual: String,
+    onIdiomaActualChange: (Idioma, Activity) -> Unit,
+    activity: Activity
+) {
     var showMenu by remember { mutableStateOf(false) }
-    var idioma = "Castellano"
+    var selectedItem by remember { mutableStateOf(idiomaList.first { it.codigo == idiomaActual }) }
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -114,7 +128,7 @@ fun SettingsContent(paddingValues: PaddingValues, mainViewModel: MainViewModel, 
                     }
                 )  {
                     Text(
-                        text = "$idioma",
+                        text = selectedItem.title,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onBackground,
@@ -126,33 +140,19 @@ fun SettingsContent(paddingValues: PaddingValues, mainViewModel: MainViewModel, 
                     expanded = showMenu,
                     onDismissRequest = { showMenu = false },
                 ) {
-                    DropdownMenuItem(
-                        text = {
-                            Text(text = "Castellano")
-                        },
-                        onClick = {
-                            idioma = "Castellano"
-                            showMenu = false
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = {
-                            Text(text = "English")
-                        },
-                        onClick = {
-                            idioma = "English"
-                            showMenu = false
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = {
-                            Text(text = "Euskara")
-                        },
-                        onClick = {
-                            idioma = "Euskara"
-                            showMenu = false
-                        }
-                    )
+                    for (i in idiomaList.indices) {
+                        val item = idiomaList[i]
+                        DropdownMenuItem(
+                            text = {
+                                Text(text = item.title)
+                            },
+                            onClick = {
+                                selectedItem = item
+                                onIdiomaActualChange(item, activity)
+                                showMenu = false
+                            }
+                        )
+                    }
                 }
             }
             Row(

@@ -2,6 +2,8 @@ package com.reto1.ultramarinos.views
 
 // HomeView.kt
 
+import android.app.Activity
+import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 // HomeView.kt
 
 import androidx.compose.material3.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -47,11 +50,19 @@ import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.viewmodels.MainViewModel
 import com.reto1.ultramarinos.components.YouTubePlayer
+import com.reto1.ultramarinos.models.Idioma
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 
 @Composable
-fun HomeView(mainViewModel: MainViewModel, isLightMode: Boolean) {
+fun HomeView(
+    mainViewModel: MainViewModel,
+    isLightMode: Boolean,
+    idiomaList: List<Idioma>,
+    idiomaActual: String,
+    onIdiomaActualChange: (Idioma, Activity) -> Unit,
+) {
 
+    val activity = LocalContext.current as Activity
     val navController = rememberNavController()
     Scaffold(
         topBar = { ToolBar(null) },
@@ -61,7 +72,8 @@ fun HomeView(mainViewModel: MainViewModel, isLightMode: Boolean) {
                 composable("home") { HomeContent(paddingValues) }
                 composable("about") { AboutView(paddingValues) }
                 composable("gallery") { GalleryView(paddingValues) }
-                composable("settings") { SettingsContent(paddingValues, mainViewModel, isLightMode) }
+                composable("settings") { SettingsContent(
+                    paddingValues, mainViewModel, isLightMode, idiomaList, idiomaActual, onIdiomaActualChange, activity) }
             }
         }
     )
