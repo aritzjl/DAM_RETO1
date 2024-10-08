@@ -75,12 +75,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     //extension para el carrusel
-    implementation ("com.google.accompanist:accompanist-pager:0.12.0")
-
+    implementation (libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
 
     //extension para el video en home
     implementation( libs.chromecast.sender)
-
 
     //Exo
     implementation (libs.androidx.media3.exoplayer)
