@@ -5,8 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -28,41 +26,23 @@ fun ProductDetailModal(product: Product, onDismiss: () -> Unit) {
         title = { Text(text = product.title) },
         text = {
             LazyColumn {
-                items(listOf(product)) { productItem ->
+                item{
                     Image(
-                        painter = rememberAsyncImagePainter(productItem.imageUrl),
+                        painter = rememberAsyncImagePainter(product.imageUrl),
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1f) // Para que sea cuadrada
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = productItem.description)
+                    Text(text = product.category.toString())
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Precio: ${productItem.price}€" + (if (productItem.unit != null) " / ${productItem.unit}" else ""))
-                    productItem.offerPrice?.let {
-                        Text(text = "Precio de oferta: $it€" + (if (productItem.unit != null) " / ${productItem.unit}" else ""), color = Color.Red)
-                    }
-                    Row (modifier = Modifier.fillMaxWidth().padding(top= 8.dp), horizontalArrangement = Arrangement.SpaceBetween){
-                        Text(text = "Cantidad", fontSize = 20.sp,)
-                        Image(painter= painterResource(R.drawable.baseline_do_disturb_on_24), contentDescription = "Icono", modifier= Modifier
-                            .width(48.dp)
-                            .clickable {
-
-                            })
-                        Text(text = cantidad.toString())
-                        Image(painter= painterResource(R.drawable.baseline_add_circle_24), contentDescription = "Icono", modifier= Modifier
-                            .width(48.dp)
-                            .clickable {
-
-                            })
-                        Image(painter= painterResource(R.drawable.baseline_add_shopping_cart_24), contentDescription = "Icono", modifier= Modifier
-                            .width(48.dp)
-                            .clickable {
-
-                            })
+                    Text(text = "Precio: ${product.price}€" + (if (product.unit != null) " / ${product.unit}" else ""))
+                    product.offerPrice?.let {
+                        Text(text = "Precio de oferta: $it€" + (if (product.unit != null) " / ${product.unit}" else ""), color = Color.Red)
                     }
                 }
+
             }
         },
         confirmButton = {

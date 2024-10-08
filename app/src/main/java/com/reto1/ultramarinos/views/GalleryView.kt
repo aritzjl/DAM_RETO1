@@ -16,13 +16,11 @@ import androidx.navigation.compose.rememberNavController
 import com.reto1.ultramarinos.models.Product
 import com.reto1.ultramarinos.components.FAB
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
-import com.reto1.ultramarinos.models.ProductCategory
 import com.reto1.ultramarinos.components.ProductPreview
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.CategorySelector
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.is_single_column
-
 
 //  GALLERY VIEW
 
@@ -41,11 +39,10 @@ fun GalleryView(paddingValues: PaddingValues) {
             isSingleColumn = is_single_column,
             artworks = viewModel.artworks.value,
             paddingValues2 = innerPadding,
-            onCategorySelected = { category -> viewModel.filterArtworks(category) }
+            onCategorySelected = { category -> viewModel.filterArtworks(category) } // Pasar la categoría seleccionada
         )
     }
 }
-
 
 @Composable
 fun GalleryContent(
@@ -53,10 +50,12 @@ fun GalleryContent(
     isSingleColumn: Boolean,
     artworks: List<Product>,
     paddingValues2: PaddingValues,
-    onCategorySelected: (ProductCategory?) -> Unit // Agregar esta función
+    onCategorySelected: (String?) -> Unit // Cambié ProductCategory? a String?
 ) {
-    Column (modifier = Modifier.padding(paddingValues)){
-        CategorySelector(onCategorySelected) // Añadir el selector aquí
+    Column(modifier = Modifier.padding(paddingValues)) {
+        // Mostrar el selector de categorías
+        CategorySelector(onCategorySelected = onCategorySelected)
+
         LazyVerticalGrid(
             columns = if (isSingleColumn) GridCells.Fixed(1) else GridCells.Fixed(2),
             modifier = Modifier
