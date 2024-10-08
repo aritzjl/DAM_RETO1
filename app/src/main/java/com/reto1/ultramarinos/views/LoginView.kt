@@ -1,7 +1,10 @@
 package com.reto1.ultramarinos.views
 
+import android.content.ContentValues.TAG
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,19 +30,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.reto1.ultramarinos.R
 
 @Composable
 fun LoginView(onLoginSuccess: () -> Unit) {
+
+    val context = LocalContext.current
+
     // Simulación de un campo de texto para el nombre de usuario y la contraseña
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -54,20 +61,6 @@ fun LoginView(onLoginSuccess: () -> Unit) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Text(
-                text = "Volver al inicio",
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier.clickable {
-                    // Logic for navigating to the home screen
-                }
-            )
-        }
         Image(
             painter = painterResource(id = R.drawable.logo_utramarinos),
             contentDescription = "logo",
@@ -127,14 +120,18 @@ fun LoginView(onLoginSuccess: () -> Unit) {
         Spacer(modifier = Modifier.height(24.dp))
         Button(
             onClick = {
-
                 if (email.isNotEmpty() && password.isNotEmpty()) {
-                    connectToBD(email, password) { success ->
-                        if (success) {
-                            errorMessage = "sadnffd lkmf  lknfg;kn klrgj"
-                            onLoginSuccess()
-                        } else {
-                            errorMessage = "Invalid email or password."
+                    if (password.length < 6){
+                        errorMessage = "Password must be at least 6 characters."
+                        return@Button
+                    }else {
+                        connectToBD(context, email, password) { success ->
+                            if (success) {
+                                errorMessage = "sadnffd lkmf  lknfg;kn klrgj"
+                                onLoginSuccess()
+                            } else {
+                                errorMessage = "Invalid email or password."
+                            }
                         }
                     }
                 } else {
@@ -149,6 +146,35 @@ fun LoginView(onLoginSuccess: () -> Unit) {
             Text(text = "Login", color = Color.White)
         }
 
+        Button(
+            onClick = {
+
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    if (password.length < 6) {
+                        errorMessage = "Password must be at least 6 characters."
+                        return@Button
+                    } else {
+                        registerToBD(context, email, password) { success ->
+                            if (success) {
+                                errorMessage = "sadnffd lkmf  lknfg;kn klrgj"
+                                onLoginSuccess()
+                            } else {
+                                errorMessage = "Invalid email or password."
+                            }
+                        }
+                    }
+                } else {
+                    errorMessage = "Please fill in all fields."
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.DarkGray
+            )
+        ) {
+            Text(text = "Registrar", color = Color.White)
+        }
+
         // Display error message if any
         if (errorMessage.isNotEmpty()) {
             Text(
@@ -157,42 +183,49 @@ fun LoginView(onLoginSuccess: () -> Unit) {
                 modifier = Modifier.padding(top = 8.dp)
             )
         }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "¿Todavia no tienes cuenta?",
-                color = Color.Gray
-            )
-            Text(
-                text = " Crear",
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier.clickable {
-                    // Logic for navigating to the register view
-                }
-            )
-        }
     }
 }
 
-fun connectToBD(email: String, password: String, onResult: (Boolean) -> Unit) {
+fun connectToBD(context: Context, email: String, password: String, onResult: (Boolean) -> Unit) {
     val auth = FirebaseAuth.getInstance()
 
-    // Sign in using Firebase Authentication
     auth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                onResult(true) // Successful login
+                onResult(true)
+                Toast.makeText(context, "Log in successful!", Toast.LENGTH_SHORT).show()
             } else {
-                onResult(false) // Failed login
+                onResult(false)
             }
         }
         .addOnFailureListener { e ->
             println("Error logging in: ${e.message}")
-            onResult(false) // Failed login due to error
+            onResult(false)
         }
+}
+
+fun registerToBD(context: Context, email: String, password: String, onResult: (Boolean) -> Unit) {
+    val auth = FirebaseAuth.getInstance()
+
+    auth.createUserWithEmailAndPassword(email, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d(TAG, "createUserWithEmail:success")
+                onResult(true)
+                Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                onResult(false)
+            }
+        }
+        .addOnFailureListener { e ->
+            Log.e(TAG, "Error registering: ${e.message}")
+            onResult(false)
+        }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoginViewPreview() {
+    LoginView(onLoginSuccess = {})
 }
