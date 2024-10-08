@@ -132,6 +132,13 @@ fun HomeContent(paddingValues: PaddingValues) {
 
 @Composable
 fun Carrusel(modifier: Modifier = Modifier) {
+    val configuration = LocalConfiguration.current
+    val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        0.8f // 80% width in landscape
+    } else {
+        1f // 100% width in portrait
+    }
+
 // meto las imagenes en una coleccion
     val images = listOf(
 
@@ -152,7 +159,7 @@ fun Carrusel(modifier: Modifier = Modifier) {
         modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(modifier = modifier.wrapContentSize()) {
+        Box(modifier = modifier.wrapContentSize().fillMaxWidth(fraction)) {
             HorizontalPager(
                 state = pagerState,
                 modifier
