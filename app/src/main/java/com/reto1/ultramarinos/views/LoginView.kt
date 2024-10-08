@@ -5,7 +5,6 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,22 +37,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthRegistrar
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.auth
-import com.google.firebase.database.core.Tag
-import com.google.firebase.firestore.FirebaseFirestore
 import com.reto1.ultramarinos.R
 
 @Composable
 fun LoginView(onLoginSuccess: () -> Unit) {
 
-    val Context = LocalContext.current
+    val context = LocalContext.current
 
     // Simulación de un campo de texto para el nombre de usuario y la contraseña
     var email by remember { mutableStateOf("") }
@@ -133,7 +125,7 @@ fun LoginView(onLoginSuccess: () -> Unit) {
                         errorMessage = "Password must be at least 6 characters."
                         return@Button
                     }else {
-                        connectToBD(Context, email, password) { success ->
+                        connectToBD(context, email, password) { success ->
                             if (success) {
                                 errorMessage = "sadnffd lkmf  lknfg;kn klrgj"
                                 onLoginSuccess()
@@ -162,7 +154,7 @@ fun LoginView(onLoginSuccess: () -> Unit) {
                         errorMessage = "Password must be at least 6 characters."
                         return@Button
                     } else {
-                        registerToBD(Context, email, password) { success ->
+                        registerToBD(context, email, password) { success ->
                             if (success) {
                                 errorMessage = "sadnffd lkmf  lknfg;kn klrgj"
                                 onLoginSuccess()
