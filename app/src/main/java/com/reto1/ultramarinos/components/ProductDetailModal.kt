@@ -41,6 +41,32 @@ fun ProductDetailModal(product: Product, onDismiss: () -> Unit) {
                     product.offerPrice?.let {
                         Text(text = "Precio de oferta: $it€" + (if (product.unit != null) " / ${product.unit}" else ""), color = Color.Red)
                     }
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 8.dp)
+                            .padding(top = 8.dp)
+
+                    ) {
+                        Image(painter= painterResource(R.drawable.baseline_do_disturb_on_24), contentDescription = "Icono", modifier= Modifier
+                            .width(48.dp)
+                            .clickable {
+
+                            })
+                        Text(text = "0")
+                        Image(painter= painterResource(R.drawable.baseline_add_circle_24), contentDescription = "Icono", modifier= Modifier
+                            .width(48.dp)
+                            .clickable {
+
+                            })
+                        Image(painter= painterResource(R.drawable.baseline_add_shopping_cart_24), contentDescription = "Icono", modifier= Modifier
+                            .width(48.dp)
+                            .clickable {
+
+                            })
+
+                    }
                 }
 
             }
