@@ -56,21 +56,24 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
+    implementation(platform(libs.androidx.compose.bom)) // Mantiene la plataforma para Compose
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.tools.core)
-    implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.ui.text.google.fonts)
+
+    // Debug dependencies
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom)) // Para mantener el testing con Compose
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+
 }
+
