@@ -53,6 +53,7 @@ android {
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,6 +64,7 @@ dependencies {
     implementation(libs.firebase.database.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.ui.text.google.fonts)
+    implementation(libs.androidx.foundation.android)
 
     // Debug dependencies
     debugImplementation(libs.androidx.ui.tooling)
