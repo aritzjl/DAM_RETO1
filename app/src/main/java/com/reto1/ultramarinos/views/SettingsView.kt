@@ -42,8 +42,6 @@ import com.reto1.ultramarinos.viewmodels.MainViewModel
 import kotlin.math.log
 
 
-//  SETTINGS VIEW
-
 @Composable
 fun SettingsContent(
     paddingValues: PaddingValues,

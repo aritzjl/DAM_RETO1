@@ -70,7 +70,7 @@ fun HomeView(
         content = { paddingValues ->
             NavHost(navController = navController, startDestination = "home") {
                 composable("home") { HomeContent(paddingValues) }
-                composable("about") { AboutView(paddingValues) }
+                composable("about") { AboutContent(paddingValues) }
                 composable("gallery") { GalleryView(paddingValues) }
                 composable("settings") { SettingsContent(
                     paddingValues, mainViewModel, isLightMode, idiomaList, idiomaActual, onIdiomaActualChange, activity) }

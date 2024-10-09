@@ -14,43 +14,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.reto1.ultramarinos.components.FAB
-import com.reto1.ultramarinos.R
-import com.reto1.ultramarinos.components.BottomNavBar
-import com.reto1.ultramarinos.components.ToolBar
-
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Composable
-fun AboutView(paddingValues2: PaddingValues) {
-    val navController = rememberNavController()
-    Scaffold(
-        topBar = { ToolBar(null) },
-        bottomBar = { BottomNavBar(navController) },
-        floatingActionButton = { FAB() },
-        content = { paddingValues ->
-            NavHost(navController = navController, startDestination = "about") {
-                composable("about") { AboutContent(paddingValues2) }
-            }
-        }
-    )
-}
-
 
 
 @Composable
