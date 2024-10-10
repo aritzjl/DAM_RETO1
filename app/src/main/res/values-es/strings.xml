@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Ultramarinos</string>
+
+    <string name="nav_home">Inicio</string>
+    <string name="nav_about">Sobre nosotros</string>
+    <string name="nav_products">Productos</string>
+    <string name="nav_settings">Ajustes</string>
+
+    <string name="dark_mode">Modo Oscuro</string>
+    <string name="light_mode">Modo Claro</string>
+    <string name="log_out">Cerrar Sesión</string>
+
+    <string name="about_main_title">ULTRAMARINOS GREGORIO MARTIN</string>
+
+    <string name="about_subtitle_1">El Comienzo</string>
+    <string name="about_desc_1">En 1835, José María Gurtubay, un comerciante de Bilbao, cometió un error en su pedido a sus proveedores. Escribió "Envíenme primer barco que toque puerto de Bilbao 100 o 120 bacaladas primera superior". Sin embargo, la "o" fue malinterpretada como un 0, y en lugar de recibir 100 o 120 bacaladas, recibió **1,000,120**. Este inesperado exceso de bacalao se convirtió en el alimento básico para la gente de Bilbao durante el verano de ese año, lo que llevó a la creación de muchas recetas.</string>
+
+    <string name="about_subtitle_2">La Tradición Continúa</string>
+    <string name="about_desc_2">En las siguientes décadas, el bacalao se convirtió en un ingrediente esencial en la cocina tradicional de Bilbao, y las bacaladerías (tiendas de bacalao seco) se convirtieron en una vista común en las calles y plazas de la ciudad. Bilbao y el bacalao estaban para siempre unidos.</string>
+
+    <string name="about_subtitle_3">Gregorio Martín: Un Emprendedor Visionario</string>
+    <string name="about_desc_3">En 1931, Gregorio Martín, un joven emprendedor de Medina del Campo, abrió su propio negocio en Artecalle 22, Bilbao. Gracias a su amistad con un importador, Gregorio innovó su negocio especializándose en bacalao y colocó un letrero que decía: "Gregorio Martín. Especialidad en bacalao remojado todos los días. Tno.- 13.707". Esto marcó el comienzo de "La Bacalada" de Artecalle, un negocio que se convertiría en un punto de referencia en la escena culinaria de Bilbao.</string>
+
+    <string name="about_subtitle_4">Nuestra Historia Hoy</string>
+    <string name="about_desc_4">Hoy en día, en Gregorio Martín, seguimos ofreciendo los mismos productos de alta calidad, incluyendo bacalaos enormes, legumbres a granel, quesos, carnes curadas, conservas, vinos, condimentos y chocolates. Nuestro secreto radica en el origen de nuestros productos y el servicio personalizado que nuestros empleados han brindado durante décadas.</string>
+
+    <string name="about_subtitle_5">Nuestro Objetivo</string>
+    <string name="about_desc_5">Nuestro objetivo es seguir ofreciendo los mejores productos a los mejores precios, mientras mantenemos nuestra autenticidad y profesionalismo. Creemos que nuestro servicio personalizado y nuestros productos de alta calidad nos distinguen, y estamos orgullosos de ser un punto de referencia en la escena culinaria de Bilbao.</string>
+
+    <string name="home_main_title">Inicio</string>
+
+    <string name="home_text_1">Desde 1931 somos especialistas en bacalao, legumbres, quesos, embutidos, conservas, vinos, condimentos, chocolates…</string>
+    <string name="home_text_2">Uno de nuestros secretos es que somos amantes de la gastronomía de calidad en Ultramarinos Gregorio Martín.\n Nuestra experiencia de estos años unido a una materia prima de calidad es la combinación perfecta para un producto 5 estrellas.</string>
+    <string name="home_text_3">Productos destacados</string>
+
+    <string name="products_all">Todas las categorías</string>
+    <string name="products_fish">Pescado</string>
+    <string name="products_legumes">Legumbres</string>
+    <string name="products_preserves">Conservas</string>
+</resources>

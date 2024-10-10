@@ -1,6 +1,7 @@
 package com.reto1.ultramarinos.components
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -12,7 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import com.reto1.ultramarinos.GalleryViewModel
+import androidx.compose.ui.res.stringResource
+import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.is_single_column
 import com.reto1.ultramarinos.toolbarTitle
@@ -22,10 +24,12 @@ import com.reto1.ultramarinos.toolbarTitle
 @Composable
 fun ToolBar(viewModel: GalleryViewModel?) {
     val context = LocalContext.current
+    val products = stringResource(id = R.string.nav_products)
+
     TopAppBar(
         title = { Text(text = toolbarTitle, color = MaterialTheme.colorScheme.onSecondaryContainer) },
         actions = {
-            if (toolbarTitle != "Galería") {
+            if (toolbarTitle != products) {
                 IconButton(onClick = {
                     val shareIntent = Intent().apply {
                         action = Intent.ACTION_SEND
@@ -37,7 +41,7 @@ fun ToolBar(viewModel: GalleryViewModel?) {
                     Icon(
                         painter = painterResource(id = R.drawable.share_icon),
                         contentDescription = "Compartir",
-                        tint = Color.Black
+                        tint = Color.White
                     )
                 }
             } else {
@@ -52,7 +56,7 @@ fun ToolBar(viewModel: GalleryViewModel?) {
                     Icon(
                         painter = icon,
                         contentDescription = "Alternar vista",
-                        tint = Color.Black
+                        tint = Color.White
                     )
                 }
             }
