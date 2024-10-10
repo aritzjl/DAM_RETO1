@@ -51,22 +51,22 @@ class MainActivity : ComponentActivity() {
             AppTheme (
                 darkTheme = darkTheme
             ){
-                if (isLoggedIn) {
+                if (register.isLoggedIn.value) {
                     HomeView(
                         mainViewModel, darkTheme, mainViewModel.allIdiomas, currentLanguage
                     ) { idioma, activity ->
                         mainViewModel.onCurrentLanguageChange(idioma, activity)
                     }
                 } else {
-                    /*LoginView(onLoginSuccess = {
-                        isLoggedIn = true
-                    })*/
-                    //Disabled for development
-                    HomeView(
-                        mainViewModel, darkTheme, mainViewModel.allIdiomas, currentLanguage
-                    ) { idioma, activity ->
-                        mainViewModel.onCurrentLanguageChange(idioma, activity)
-                    }
+                    LoginView(
+                        register = register,    // Передаем register в LoginView
+                        onLoginSuccess = {
+                            register.isLoggedIn.value = true
+                        },
+                        onGoogleSignIn = {
+                            register.startGoogleSignIn()
+                        }
+                    )
                 }
             }
 
