@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Janariak</string>
+    <string name="app_name">Ultramarinak</string>
 
     <string name="nav_home">Hasiera</string>
     <string name="nav_about">Guri buruz</string>
@@ -32,4 +32,9 @@
     <string name="home_text_1">1931tik bakailao, lekadunak, gazta, saltsak, kontserbak, ardoak, ongailuak, txokolateak… espezialistak gara.</string>
     <string name="home_text_2">Gure sekretu bat da gastronomia kalitate oneko zaleak garela Ultramarinos Gregorio Martín-en.\n Urteetako esperientzia konbinatuta materia prima kalitate onekoarekin 5 izarretako produktua sortzeko konbinazio perfektua da.</string>
     <string name="home_text_3">Produktu nabarmenak</string>
+
+    <string name="products_all">Kategoria guztiak</string>
+    <string name="products_fish">Arraina</string>
+    <string name="products_legumes">Lekaleak</string>
+    <string name="products_preserves">Kontserbak</string>
 </resources>

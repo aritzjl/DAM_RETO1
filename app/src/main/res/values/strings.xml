@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Groceries</string>
+    <string name="app_name">Ultramarine</string>
 
     <string name="nav_home">Home</string>
     <string name="nav_about">About us</string>
@@ -10,7 +10,7 @@
     <string name="light_mode">Light Mode</string>
     <string name="log_out">Log Out</string>
 
-    <string name="about_main_title">GREGORIO MARTIN ULTRAMARINES</string>
+    <string name="about_main_title">GREGORIO MARTIN ULTRAMARINE</string>
 
     <string name="about_subtitle_1">The Beginning</string>
     <string name="about_desc_1">In 1835, José María Gurtubay, a Bilbao merchant, made a mistake in his order to his suppliers. He wrote "Envíenme primer barco que toque puerto de Bilbao 100 o 120 bacaladas primera superior". However, the "o" was misinterpreted as a 0, and instead of receiving 100 or 120 cods, he received **1,000,120**! This unexpected surplus of cod became the staple food for the people of Bilbao during the summer of that year, leading to the creation of many recipes.</string>
@@ -32,6 +32,11 @@
     <string name="home_text_1">Since 1931, we have been specialists in cod, legumes, cheeses, cured meats, preserves, wines, condiments, chocolates…</string>
     <string name="home_text_2">One of our secrets is that we are lovers of high-quality gastronomy at Ultramarinos Gregorio Martín.\n Our years of experience combined with high-quality raw materials is the perfect combination for a 5-star product.</string>
     <string name="home_text_3">Featured products</string>
+
+    <string name="products_all">All categories</string>
+    <string name="products_fish">Fish</string>
+    <string name="products_legumes">Legumes</string>
+    <string name="products_preserves">Preserves</string>
 
     <string name="default_web_client_id">786401790212-bpq7k8b71h3egvf6eovnr5fugde0lvja.apps.googleusercontent.com</string>
 </resources>
