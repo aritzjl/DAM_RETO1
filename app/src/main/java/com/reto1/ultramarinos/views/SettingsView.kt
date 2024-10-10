@@ -179,7 +179,7 @@ fun SettingsContent(
                     onClick = {}
                 )  {
                     Text(
-                        text = "Cerrar Sesión",
+                        text = stringResource(id = R.string.log_out),
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onBackground,

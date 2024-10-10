@@ -36,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 
 import androidx.compose.material3.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -87,7 +88,7 @@ fun HomeContent(paddingValues: PaddingValues) {
         .padding(paddingValues)) {
         item {
             Text(
-                text = "Inicio",
+                text = stringResource(id = R.string.home_main_title),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 color = MaterialTheme.colorScheme.onBackground,
@@ -99,7 +100,7 @@ fun HomeContent(paddingValues: PaddingValues) {
             Carrusel()
 
             Text(
-                text = "Desde 1931 somos especialistas en bacalao, legumbres, quesos, embutidos, conservas, vinos, condimentos, chocolates...\n",
+                text = stringResource(id = R.string.home_text_1),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 lineHeight = 38.sp,
@@ -109,8 +110,7 @@ fun HomeContent(paddingValues: PaddingValues) {
                     .padding(10.dp), textAlign = TextAlign.Center
             )
             Text(
-                text = "Uno de nuestros secretos es que somos amantes de la gastronomía de calidad en Ultramarinos Gregorio Martín.\n" +
-                        "Nuestra experiencia de estos años unido a una materia prima de calidad es la combinación perfecta para un producto 5 estrellas.",
+                text = stringResource(id = R.string.home_text_2),
                 fontWeight = FontWeight.Thin,
                 fontSize = 22.sp,
                 lineHeight = 35.sp,
@@ -120,7 +120,7 @@ fun HomeContent(paddingValues: PaddingValues) {
                     .padding(10.dp, bottom = 40.dp), textAlign = TextAlign.Center
             )
             Text(
-                text = "Productos destacados",
+                text = stringResource(id = R.string.home_text_3),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 lineHeight = 35.sp,
