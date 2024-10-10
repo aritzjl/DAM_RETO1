@@ -48,6 +48,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    androidResources {
+        generateLocaleConfig = true
+    }
 }
 
 dependencies {
@@ -65,6 +68,7 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.ui.text.google.fonts)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.foundation.android)
 
     // Debug dependencies
