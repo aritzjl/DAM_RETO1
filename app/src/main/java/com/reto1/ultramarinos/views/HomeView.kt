@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,6 +49,7 @@ import androidx.compose.ui.res.painterResource
 // HomeView.kt
 
 import androidx.compose.material3.*
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -61,7 +63,9 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.components.BottomNavBar
+import com.reto1.ultramarinos.components.MiHilo
 import com.reto1.ultramarinos.components.ProductPreview
+import com.reto1.ultramarinos.components.Timer
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.components.YouTubePlayer
 import com.reto1.ultramarinos.models.Idioma
@@ -82,23 +86,32 @@ fun HomeView(
 
     val activity = LocalContext.current as Activity
     val navController = rememberNavController()
-    Scaffold(
-        topBar = { ToolBar(null) },
+    Scaffold(topBar = { ToolBar(null) },
         bottomBar = { BottomNavBar(navController) },
         content = { paddingValues ->
             NavHost(navController = navController, startDestination = "home") {
                 composable("home") { HomeContent(paddingValues) }
                 composable("about") { AboutContent(paddingValues) }
                 composable("gallery") { GalleryView(paddingValues) }
-                composable("settings") { SettingsContent(
-                    paddingValues, mainViewModel, isLightMode, idiomaList, idiomaActual, onIdiomaActualChange, activity) }
+                composable("settings") {
+                    SettingsContent(
+                        paddingValues,
+                        mainViewModel,
+                        isLightMode,
+                        idiomaList,
+                        idiomaActual,
+                        onIdiomaActualChange,
+                        activity
+                    )
+                }
             }
-        }
-    )
+        })
 }
 
 @Composable
 fun HomeContent(paddingValues: PaddingValues) {
+    val hilo = MiHilo()
+    hilo.start()
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -113,8 +126,21 @@ fun HomeContent(paddingValues: PaddingValues) {
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp), textAlign = TextAlign.Center
+                    .padding(10.dp),
+                textAlign = TextAlign.Center
             )
+
+            Box(
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo_utramarinos),
+                    contentDescription = "logo",
+                    modifier = Modifier
+                        .size(256.dp)
+                        .alpha(0.6f)
+                )
+            }
 
             Carrusel()
 
@@ -126,7 +152,8 @@ fun HomeContent(paddingValues: PaddingValues) {
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp), textAlign = TextAlign.Center
+                    .padding(10.dp),
+                textAlign = TextAlign.Start
             )
             Text(
                 text = stringResource(id = R.string.home_text_2),
@@ -136,7 +163,8 @@ fun HomeContent(paddingValues: PaddingValues) {
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp, bottom = 40.dp), textAlign = TextAlign.Center
+                    .padding(start = 10.dp, end = 10.dp, bottom = 40.dp),
+                textAlign = TextAlign.Start
             )
             Text(
                 text = stringResource(id = R.string.home_text_3),
@@ -146,14 +174,15 @@ fun HomeContent(paddingValues: PaddingValues) {
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp, bottom = 40.dp), textAlign = TextAlign.Center
+                    .padding(10.dp, bottom = 40.dp),
+                textAlign = TextAlign.Center
             )
 
+            Timer()
             Carrusel2(GalleryViewModel())
 
             YouTubePlayer(
-                youtubeVideoId = "QG4oGxgnBBw",
-                lifecycleOwner = LocalLifecycleOwner.current
+                youtubeVideoId = "QG4oGxgnBBw", lifecycleOwner = LocalLifecycleOwner.current
 
             )
 
@@ -170,22 +199,18 @@ fun Carrusel(modifier: Modifier = Modifier) {
         1f // 100% width in portrait
     }
 
-// meto las imagenes en una coleccion
+    // meto las imagenes en una coleccion
     val images = listOf(
 
-        R.drawable.img_1,
-        R.drawable.img_2,
-        R.drawable.img_3,
-        R.drawable.img_4,
-        R.drawable.img_5,
-        R.drawable.imgprueba
+        R.drawable.imgcarruselpresentacion1,
+        R.drawable.imgcarruselpresentacion2,
+        R.drawable.imgcarruselpresentacion3,
+        R.drawable.imgcarruselpresentacion4
 
-        )
-
-
-    val pagerState = rememberPagerState(
-        pageCount = { images.size }
     )
+
+
+    val pagerState = rememberPagerState(pageCount = { images.size })
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -198,18 +223,16 @@ fun Carrusel(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
 
     Column(
-        modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = modifier
                 .wrapContentSize()
-                .fillMaxWidth(fraction).clip(RoundedCornerShape(0.dp))
+                .fillMaxWidth(fraction)
+                .clip(RoundedCornerShape(0.dp))
         ) {
             HorizontalPager(
-                state = pagerState,
-                modifier
-                    .wrapContentSize()
+                state = pagerState, modifier.wrapContentSize()
 
             ) {
 
@@ -224,7 +247,8 @@ fun Carrusel(modifier: Modifier = Modifier) {
                 ) {
                     Image(
                         painter = painterResource(id = images[currentPage]),
-                        contentDescription = "", contentScale = ContentScale.FillBounds
+                        contentDescription = "",
+                        contentScale = ContentScale.FillBounds
                     )
 
 
@@ -244,7 +268,8 @@ fun Carrusel(modifier: Modifier = Modifier) {
                     .padding(10.dp)
                     .size(48.dp)
                     .align(Alignment.CenterEnd)
-                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
+                    .clip(CircleShape),
+                colors = IconButtonDefaults.iconButtonColors(
                     containerColor = Color(
                         0x52373737
                     )
@@ -271,7 +296,8 @@ fun Carrusel(modifier: Modifier = Modifier) {
                     .padding(10.dp)
                     .size(48.dp)
                     .align(Alignment.CenterStart)
-                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
+                    .clip(CircleShape),
+                colors = IconButtonDefaults.iconButtonColors(
                     containerColor = Color(
                         0x52373737
                     )
@@ -336,9 +362,7 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
 
     val products = viewModel.artworks.value
 
-    val pagerState = rememberPagerState(
-        pageCount = { products.size }
-    )
+    val pagerState = rememberPagerState(pageCount = { products.size })
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -351,8 +375,7 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
 
     Column(
-        modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = modifier
@@ -361,8 +384,7 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
                 .clip(RoundedCornerShape(8.dp))
         ) {
             HorizontalPager(
-                state = pagerState,
-                modifier = Modifier
+                state = pagerState, modifier = Modifier
                     .wrapContentSize()
                     .padding(26.dp)
             ) { currentPage ->
@@ -390,7 +412,8 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
                     .padding(10.dp)
                     .size(48.dp)
                     .align(Alignment.CenterEnd)
-                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
+                    .clip(CircleShape),
+                colors = IconButtonDefaults.iconButtonColors(
                     containerColor = Color(
                         0x52373737
                     )
@@ -417,7 +440,8 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
                     .padding(10.dp)
                     .size(48.dp)
                     .align(Alignment.CenterStart)
-                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
+                    .clip(CircleShape),
+                colors = IconButtonDefaults.iconButtonColors(
                     containerColor = Color(
                         0x52373737
                     )
