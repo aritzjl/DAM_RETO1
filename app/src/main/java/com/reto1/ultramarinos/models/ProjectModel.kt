@@ -7,11 +7,5 @@ data class Product(
     val price: Float,
     val offerPrice: Float? = null,
     val unit: String? = null,
-    val category: ProductCategory? = null,
+    val category: String? = null,
 )
-
-enum class ProductCategory {
-    Pescado,
-    Legumbres,
-    Conservas
-}
