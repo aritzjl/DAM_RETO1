@@ -53,10 +53,12 @@ class MainActivity : ComponentActivity() {
             ){
                 if (register.isLoggedIn.value) {
                     HomeView(
-                        mainViewModel, darkTheme, mainViewModel.allIdiomas, currentLanguage
-                    ) { idioma, activity ->
-                        mainViewModel.onCurrentLanguageChange(idioma, activity)
-                    }
+                        mainViewModel, darkTheme, mainViewModel.allIdiomas, currentLanguage,
+                        onIdiomaActualChange = { idioma, activity ->
+                            mainViewModel.onCurrentLanguageChange(idioma, activity)
+                        },
+                        register = register,
+                    )
                 } else {
                     LoginView(
                         register = register,    // Передаем register в LoginView

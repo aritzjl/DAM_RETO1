@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.models.Idioma
 import com.reto1.ultramarinos.viewmodels.MainViewModel
 import kotlin.math.log
@@ -50,7 +51,8 @@ fun SettingsContent(
     idiomaList: List<Idioma>,
     idiomaActual: String,
     onIdiomaActualChange: (Idioma, Activity) -> Unit,
-    activity: Activity
+    activity: Activity,
+    register: Register,
 ) {
     var showMenu by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf(idiomaList.first { it.codigo == idiomaActual }) }
@@ -176,7 +178,9 @@ fun SettingsContent(
                         .size(40.dp)
                 )
                 TextButton(
-                    onClick = {}
+                    onClick = {
+                        register.logOut()
+                    }
                 )  {
                     Text(
                         text = stringResource(id = R.string.log_out),
