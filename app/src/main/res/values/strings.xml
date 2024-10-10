@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Groceries</string>
-    <string name="dark_mode">Dark Mode</string>
-    <string name="light_mode">Light Mode</string>
+    <string name="app_name">Ultramarinos</string>
+    <string name="default_web_client_id">786401790212-bpq7k8b71h3egvf6eovnr5fugde0lvja.apps.googleusercontent.com</string>
 </resources>

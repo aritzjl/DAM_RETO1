@@ -12,14 +12,31 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.reto1.ultramarinos.ui.theme.AppTheme
 import com.reto1.ultramarinos.viewmodels.MainViewModel
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.IntentSenderRequest
 import com.reto1.ultramarinos.views.HomeView
 import com.reto1.ultramarinos.views.LoginView
+import androidx.activity.result.ActivityResultLauncher
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var register: Register
+    private lateinit var signInLauncher: ActivityResultLauncher<IntentSenderRequest>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val mainViewModel = MainViewModel()
+
+        signInLauncher = registerForActivityResult(
+            ActivityResultContracts.StartIntentSenderForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                register.handleSignInResult(result.data)
+            }
+        }
+
+        register = Register(this, signInLauncher)  // Передаем signInLauncher в Register
 
         setContent {
 
