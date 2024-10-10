@@ -111,4 +111,9 @@ class Register(private val activity: Activity, private val signInLauncher: Activ
                 onResult(false, e.message)
             }
     }
+
+    fun logOut() {
+        FirebaseAuth.getInstance().signOut()
+        isLoggedIn.value = false
+    }
 }

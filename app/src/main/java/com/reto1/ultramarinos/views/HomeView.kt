@@ -60,6 +60,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ProductPreview
 import com.reto1.ultramarinos.components.ToolBar
@@ -78,6 +79,7 @@ fun HomeView(
     idiomaList: List<Idioma>,
     idiomaActual: String,
     onIdiomaActualChange: (Idioma, Activity) -> Unit,
+    register: Register,
 ) {
 
     val activity = LocalContext.current as Activity
@@ -91,7 +93,9 @@ fun HomeView(
                 composable("about") { AboutContent(paddingValues) }
                 composable("gallery") { GalleryView(paddingValues) }
                 composable("settings") { SettingsContent(
-                    paddingValues, mainViewModel, isLightMode, idiomaList, idiomaActual, onIdiomaActualChange, activity) }
+                    paddingValues, mainViewModel, isLightMode, idiomaList, idiomaActual,
+                    onIdiomaActualChange, activity, register
+                ) }
             }
         }
     )
