@@ -56,6 +56,7 @@ android {
 dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -68,6 +69,13 @@ dependencies {
     implementation(libs.ui.text.google.fonts)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.foundation.android)
+
+    // Debug dependencies
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

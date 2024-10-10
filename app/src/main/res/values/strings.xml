@@ -37,4 +37,6 @@
     <string name="products_fish">Fish</string>
     <string name="products_legumes">Legumes</string>
     <string name="products_preserves">Preserves</string>
+
+    <string name="default_web_client_id">786401790212-bpq7k8b71h3egvf6eovnr5fugde0lvja.apps.googleusercontent.com</string>
 </resources>

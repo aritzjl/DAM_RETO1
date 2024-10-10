@@ -15,14 +15,31 @@ import androidx.compose.ui.platform.LocalContext
 import com.reto1.ultramarinos.models.Idioma
 import com.reto1.ultramarinos.ui.theme.AppTheme
 import com.reto1.ultramarinos.viewmodels.MainViewModel
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.IntentSenderRequest
 import com.reto1.ultramarinos.views.HomeView
 import com.reto1.ultramarinos.views.LoginView
+import androidx.activity.result.ActivityResultLauncher
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var register: Register
+    private lateinit var signInLauncher: ActivityResultLauncher<IntentSenderRequest>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val mainViewModel = MainViewModel(applicationContext)
+
+        signInLauncher = registerForActivityResult(
+            ActivityResultContracts.StartIntentSenderForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                register.handleSignInResult(result.data)
+            }
+        }
+
+        register = Register(this, signInLauncher)  // Передаем signInLauncher в Register
 
         setContent {
 
@@ -34,22 +51,22 @@ class MainActivity : ComponentActivity() {
             AppTheme (
                 darkTheme = darkTheme
             ){
-                if (isLoggedIn) {
+                if (register.isLoggedIn.value) {
                     HomeView(
                         mainViewModel, darkTheme, mainViewModel.allIdiomas, currentLanguage
                     ) { idioma, activity ->
                         mainViewModel.onCurrentLanguageChange(idioma, activity)
                     }
                 } else {
-                    /*LoginView(onLoginSuccess = {
-                        isLoggedIn = true
-                    })*/
-                    //Disabled for development
-                    HomeView(
-                        mainViewModel, darkTheme, mainViewModel.allIdiomas, currentLanguage
-                    ) { idioma, activity ->
-                        mainViewModel.onCurrentLanguageChange(idioma, activity)
-                    }
+                    LoginView(
+                        register = register,    // Передаем register в LoginView
+                        onLoginSuccess = {
+                            register.isLoggedIn.value = true
+                        },
+                        onGoogleSignIn = {
+                            register.startGoogleSignIn()
+                        }
+                    )
                 }
             }
 
