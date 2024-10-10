@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.is_single_column
@@ -23,10 +24,12 @@ import com.reto1.ultramarinos.toolbarTitle
 @Composable
 fun ToolBar(viewModel: GalleryViewModel?) {
     val context = LocalContext.current
+    val products = stringResource(id = R.string.nav_products)
+
     TopAppBar(
         title = { Text(text = toolbarTitle, color = MaterialTheme.colorScheme.onSecondaryContainer) },
         actions = {
-            if (toolbarTitle != "Productos") {
+            if (toolbarTitle != products) {
                 IconButton(onClick = {
                     val shareIntent = Intent().apply {
                         action = Intent.ACTION_SEND

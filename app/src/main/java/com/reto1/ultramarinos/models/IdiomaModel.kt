@@ -1,7 +1,6 @@
 package com.reto1.ultramarinos.models
 
-enum class Idioma {
-    Castellano,
-    English,
-    Euskara
-}
+data class Idioma (
+    var title: String,
+    val codigo: String,
+)
