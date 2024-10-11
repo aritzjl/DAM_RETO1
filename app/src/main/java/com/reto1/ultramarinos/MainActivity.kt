@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 if (register.isLoggedIn.value) {
                     HomeView(
                         mainViewModel, darkTheme, mainViewModel.allIdiomas, currentLanguage,
-                        onIdiomaActualChange = { idioma, activity ->
+                        onIdiomaActualChange = { idioma, actividad ->
                             mainViewModel.onCurrentLanguageChange(idioma, activity)
                         },
                         register = register,

@@ -75,8 +75,8 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email") },
-                placeholder = { Text("example@domain.com") },
+                label = { Text("Email",color = Color.Black) },
+                placeholder = { Text("example@domain.com",color = Color.Black) },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
@@ -89,7 +89,7 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") },
+                label = { Text("Password",color = Color.Black) },
                 visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Password,
@@ -159,7 +159,7 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
             }
 
             Text(
-                text = "Entrar con:",
+                text = "Sign in with:",
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 16.dp,
                     top = 24.dp),
