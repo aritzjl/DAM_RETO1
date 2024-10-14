@@ -2,7 +2,6 @@ package com.reto1.ultramarinos.views
 
 // HomeView.kt
 
-import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.animation.core.animateDpAsState
@@ -47,8 +46,6 @@ import androidx.compose.ui.res.painterResource
 
 // HomeView.kt
 
-import androidx.compose.material3.*
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -58,7 +55,6 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberAsyncImagePainter
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.components.BottomNavBar
@@ -77,12 +73,11 @@ fun HomeView(
     mainViewModel: MainViewModel,
     isLightMode: Boolean,
     idiomaList: List<Idioma>,
-    idiomaActual: String,
-    onIdiomaActualChange: (Idioma, Activity) -> Unit,
+    activity: Context,
+    context: Context,
     register: Register,
 ) {
 
-    val activity = LocalContext.current as Activity
     val navController = rememberNavController()
     Scaffold(
         topBar = { ToolBar(null) },
@@ -93,8 +88,13 @@ fun HomeView(
                 composable("about") { AboutContent(paddingValues) }
                 composable("gallery") { GalleryView(paddingValues) }
                 composable("settings") { SettingsContent(
-                    paddingValues, mainViewModel, isLightMode, idiomaList, idiomaActual,
-                    onIdiomaActualChange, activity, register
+                    paddingValues,
+                    mainViewModel,
+                    isLightMode,
+                    idiomaList,
+                    activity,
+                    context,
+                    register
                 ) }
             }
         }
