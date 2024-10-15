@@ -14,22 +14,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import com.reto1.ultramarinos.R
-import com.reto1.ultramarinos.is_single_column
-import com.reto1.ultramarinos.toolbarTitle
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToolBar(viewModel: GalleryViewModel?) {
+fun ToolBar(galeryViewModel: GalleryViewModel, navController: NavController, isLightMode: Boolean) {
     val context = LocalContext.current
-    val products = stringResource(id = R.string.nav_products)
+    val actualView = navController.currentBackStackEntryAsState().value?.destination?.route
 
     TopAppBar(
-        title = { Text(text = toolbarTitle, color = MaterialTheme.colorScheme.onSecondaryContainer) },
+        title = { Text(text = "", color = MaterialTheme.colorScheme.onSecondaryContainer) },
         actions = {
-            if (toolbarTitle != products) {
+            if (actualView != "gallery") {
                 IconButton(onClick = {
                     val shareIntent = Intent().apply {
                         action = Intent.ACTION_SEND
@@ -41,14 +41,14 @@ fun ToolBar(viewModel: GalleryViewModel?) {
                     Icon(
                         painter = painterResource(id = R.drawable.share_icon),
                         contentDescription = "Compartir",
-                        tint = Color.White
+                        tint = if (isLightMode) Color.White else Color.Black
                     )
                 }
             } else {
                 IconButton(onClick = {
-                    is_single_column = !is_single_column
+                    galeryViewModel.isSingleColumn = !galeryViewModel.isSingleColumn
                 }) {
-                    val icon = if (is_single_column) {
+                    val icon = if (galeryViewModel.isSingleColumn) {
                         painterResource(id = R.drawable.baseline_apps_24) // Icono de cuadrícula
                     } else {
                         painterResource(id = R.drawable.baseline_view_list_24) // Icono de lista
@@ -56,7 +56,7 @@ fun ToolBar(viewModel: GalleryViewModel?) {
                     Icon(
                         painter = icon,
                         contentDescription = "Alternar vista",
-                        tint = Color.White
+                        tint = if (isLightMode) Color.White else Color.Black
                     )
                 }
             }

@@ -85,17 +85,18 @@ fun HomeView(
     activity: Context,
     context: Context,
     register: Register,
-    email: String
+    email: String,
+    galleryViewModel: GalleryViewModel
 ) {
 
     val navController = rememberNavController()
-    Scaffold(topBar = { ToolBar(null) },
+    Scaffold(topBar = { ToolBar(galleryViewModel, navController, isLightMode) },
         bottomBar = { BottomNavBar(navController) },
         content = { paddingValues ->
             NavHost(navController = navController, startDestination = "home") {
                 composable("home") { HomeContent(paddingValues, context) }
                 composable("about") { AboutContent(paddingValues, context) }
-                composable("gallery") { GalleryView(paddingValues) }
+                composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode) }
                 composable("settings") { SettingsContent(
                     paddingValues, mainViewModel, isLightMode, idiomaList,
                     activity, context, register, email
@@ -114,7 +115,7 @@ fun HomeContent(paddingValues: PaddingValues, context: Context) {
     ) {
         item {
             Text(
-                text = stringResource(id = R.string.home_main_title),
+                text = stringResource(id = R.string.nav_home),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 color = MaterialTheme.colorScheme.onBackground,
