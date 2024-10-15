@@ -51,6 +51,8 @@ class MainActivity : ComponentActivity() {
         }
 
         register = Register(this, signInLauncher) // We pass signInLauncher to Register
+
+        val email = register.loadEmail("email","")
         val isLoggedIn = register.loadBoolean("is_logged_in", false)
         register.isLoggedIn.value = isLoggedIn
 
@@ -71,13 +73,15 @@ class MainActivity : ComponentActivity() {
                         mainViewModel.allIdiomas,
                         context,
                         activity,
-                        register = register
+                        register = register,
+                        email = email
                     )
                 } else {
                     LoginView(
                         register = register,    // We pass register to LoginView
                         onLoginSuccess = {
                             register.isLoggedIn.value = true
+                            register.saveEmail("email",email)
                         },
                         onGoogleSignIn = {
                             register.startGoogleSignIn()
