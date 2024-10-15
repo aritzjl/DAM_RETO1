@@ -21,7 +21,6 @@ android {
         }
     }
 
-    // Добавляем конфигурацию для release keystore
     signingConfigs {
         create("release") {
             storeFile = file(rootProject.file(properties["STORE_FILE"] as String))

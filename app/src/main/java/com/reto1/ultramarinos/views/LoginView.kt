@@ -117,6 +117,14 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
                 )
             }
 
+            if (errorMessage.isNotEmpty()) {
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+
             Spacer(modifier = Modifier.height(24.dp))
             Button(
                 onClick = {
@@ -197,22 +205,14 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        painter = painterResource(id = R.drawable.img_google), // Замените на ваш ресурс иконки
+                        painter = painterResource(id = R.drawable.img_google),
                         contentDescription = "Google Icon",
                         modifier = Modifier.size(20.dp),
-                        tint = Color.Unspecified // Оставляем иконку с оригинальными цветами
+                        tint = Color.Unspecified
                     )
-                    Spacer(modifier = Modifier.width(8.dp)) // Пробел между иконкой и текстом
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(text = "Google", color = Color.DarkGray)
                 }
-            }
-
-            if (errorMessage.isNotEmpty()) {
-                Text(
-                    text = errorMessage,
-                    color = Color.Red,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
             }
         }
         }
