@@ -17,6 +17,7 @@ import androidx.activity.result.IntentSenderRequest
 import com.reto1.ultramarinos.views.HomeView
 import com.reto1.ultramarinos.views.LoginView
 import androidx.activity.result.ActivityResultLauncher
+import androidx.compose.runtime.mutableIntStateOf
 
 class MainActivity : ComponentActivity() {
 
@@ -50,7 +51,7 @@ class MainActivity : ComponentActivity() {
         }
 
         register = Register(this, signInLauncher) // We pass signInLauncher to Register
-        val isLoggedIn = register.loadBoolean("is_logged_in", false)
+        val isLoggedIn = register.loadBoolean("is_logged_in", true)
         register.isLoggedIn.value = isLoggedIn
 
         setContent {
