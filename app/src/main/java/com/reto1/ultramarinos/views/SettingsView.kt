@@ -75,7 +75,7 @@ fun SettingsContent(
                     .clip(CircleShape)
             )
             Text(
-                text = "Usuario",
+                text = stringResource(id = R.string.nav_settings),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 color = MaterialTheme.colorScheme.onBackground,
@@ -192,6 +192,9 @@ fun SettingsContent(
                 TextButton(
                     onClick = {
                         register.logOut()
+                        val intent = Intent(activity, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        activity.startActivity(intent)
                     }
                 )  {
                     Text(

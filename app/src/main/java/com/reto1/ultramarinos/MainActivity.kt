@@ -2,6 +2,7 @@ package com.reto1.ultramarinos
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -48,7 +49,9 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        register = Register(this, signInLauncher)  // Передаем signInLauncher в Register
+        register = Register(this, signInLauncher) // We pass signInLauncher to Register
+        val isLoggedIn = register.loadBoolean("is_logged_in", false)
+        register.isLoggedIn.value = isLoggedIn
 
         setContent {
 
@@ -60,7 +63,7 @@ class MainActivity : ComponentActivity() {
             AppTheme (
                 darkTheme = darkTheme
             ){
-                if (!register.isLoggedIn.value) {
+                if (isLoggedIn) {
                     HomeView(
                         mainViewModel,
                         darkTheme,
@@ -71,13 +74,14 @@ class MainActivity : ComponentActivity() {
                     )
                 } else {
                     LoginView(
-                        register = register,    // Передаем register в LoginView
+                        register = register,    // We pass register to LoginView
                         onLoginSuccess = {
                             register.isLoggedIn.value = true
                         },
                         onGoogleSignIn = {
                             register.startGoogleSignIn()
-                        }
+                        },
+                        activity
                     )
                 }
             }
