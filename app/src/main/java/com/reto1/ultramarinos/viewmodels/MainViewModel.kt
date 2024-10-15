@@ -1,59 +1,55 @@
 package com.reto1.ultramarinos.viewmodels;
 
-import android.app.Activity
 import android.content.Context
-import androidx.compose.ui.platform.LocalContext
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.reto1.ultramarinos.CambiarIdiomaClass
-import com.reto1.ultramarinos.MainActivity
 import com.reto1.ultramarinos.models.Idioma
-import java.util.Locale
 
-class MainViewModel(private val context: Context) : ViewModel() {
+class MainViewModel(context: Context) : ViewModel() {
 
     // Temas
     private val _darkTheme = MutableLiveData<Boolean>()
     val darkTheme: LiveData<Boolean> = _darkTheme
 
-    fun toggleTheme(){
+    fun toggleTheme(context: Context){
+        val prefs: SharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+
+        // Cambia el value del tema
         _darkTheme.value = _darkTheme.value?.not()
+
+        // Guarda el nuevo value en SharedPreference
+        prefs.edit().putBoolean("dark_theme",_darkTheme.value ?: false).apply()
+    }
+
+    fun getTheme(context: Context) {
+        val prefs: SharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+
+        // Initialize _darkTheme based on SharedPreferences
+        _darkTheme.value = prefs.getBoolean("dark_theme", false)
     }
 
     // Idiomas
-
     val cambiarIdiomaClass by lazy {
         CambiarIdiomaClass()
     }
 
-    private val _idioma = MutableLiveData<String>()
-    val idioma: LiveData<String> = _idioma
+    fun setLanguage(context: Context, idioma: String) {
+        val prefs: SharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        prefs.edit().putString("language", idioma).apply()
+    }
+
+    fun getLanguage(context: Context): String? {
+        val sharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("language", "es")
+    }
 
     val allIdiomas = listOf(
         Idioma("Castellano","es"),
         Idioma("English","en"),
         Idioma("Euskara","eu"),
     )
-
-    fun onCurrentLanguageChange(idioma: Idioma, activity: Activity){
-        val locale = Locale(idioma.codigo)
-        Locale.setDefault(locale)
-        val config = context.resources.configuration
-        config.locale = locale
-        context.createConfigurationContext(config)
-        _idioma.value = idioma.codigo
-        cambiarIdiomaClass.cambiarIdioma(context, idioma.codigo)
-        activity.recreate()
-    }
-
-    init {
-        // Temas
-        _darkTheme.value = false
-
-        // Idiomas
-        val currentLanguageCode: String = cambiarIdiomaClass.getIdiomaCode(context)
-        _idioma.value = currentLanguageCode
-    }
 
 }

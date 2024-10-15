@@ -2,7 +2,6 @@ package com.reto1.ultramarinos.views
 
 // HomeView.kt
 
-import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.animation.core.animateDpAsState
@@ -61,6 +60,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.Carrusel
 import com.reto1.ultramarinos.components.Carrusel2
@@ -81,11 +81,11 @@ fun HomeView(
     mainViewModel: MainViewModel,
     isLightMode: Boolean,
     idiomaList: List<Idioma>,
-    idiomaActual: String,
-    onIdiomaActualChange: (Idioma, Activity) -> Unit,
+    activity: Context,
+    context: Context,
+    register: Register,
 ) {
 
-    val activity = LocalContext.current as Activity
     val navController = rememberNavController()
     Scaffold(topBar = { ToolBar(null) },
         bottomBar = { BottomNavBar(navController) },
@@ -94,17 +94,15 @@ fun HomeView(
                 composable("home") { HomeContent(paddingValues) }
                 composable("about") { AboutContent(paddingValues) }
                 composable("gallery") { GalleryView(paddingValues) }
-                composable("settings") {
-                    SettingsContent(
-                        paddingValues,
-                        mainViewModel,
-                        isLightMode,
-                        idiomaList,
-                        idiomaActual,
-                        onIdiomaActualChange,
-                        activity
-                    )
-                }
+                composable("settings") { SettingsContent(
+                    paddingValues,
+                    mainViewModel,
+                    isLightMode,
+                    idiomaList,
+                    activity,
+                    context,
+                    register
+                ) }
             }
         })
 }
