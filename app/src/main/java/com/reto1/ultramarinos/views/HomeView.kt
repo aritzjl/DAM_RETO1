@@ -59,6 +59,7 @@ import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.ProductPreview
+import com.reto1.ultramarinos.components.RedesSociales
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.components.YouTubePlayer
 import com.reto1.ultramarinos.models.Idioma
@@ -76,6 +77,7 @@ fun HomeView(
     activity: Context,
     context: Context,
     register: Register,
+    email: String
 ) {
 
     val navController = rememberNavController()
@@ -84,17 +86,12 @@ fun HomeView(
         bottomBar = { BottomNavBar(navController) },
         content = { paddingValues ->
             NavHost(navController = navController, startDestination = "home") {
-                composable("home") { HomeContent(paddingValues) }
-                composable("about") { AboutContent(paddingValues) }
+                composable("home") { HomeContent(paddingValues, context) }
+                composable("about") { AboutContent(paddingValues, context) }
                 composable("gallery") { GalleryView(paddingValues) }
                 composable("settings") { SettingsContent(
-                    paddingValues,
-                    mainViewModel,
-                    isLightMode,
-                    idiomaList,
-                    activity,
-                    context,
-                    register
+                    paddingValues, mainViewModel, isLightMode, idiomaList,
+                    activity, context, register, email
                 ) }
             }
         }
@@ -102,7 +99,7 @@ fun HomeView(
 }
 
 @Composable
-fun HomeContent(paddingValues: PaddingValues) {
+fun HomeContent(paddingValues: PaddingValues, context: Context) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -161,6 +158,7 @@ fun HomeContent(paddingValues: PaddingValues) {
 
             )
 
+            RedesSociales(context = context)
         }
     }
 }
