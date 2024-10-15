@@ -69,14 +69,6 @@ fun SettingsContent(
             .padding(start = 16.dp)
     ) {
         item {
-            Image(
-                painter = painterResource(R.drawable.img_1),
-                contentDescription = "Icono",
-                modifier = Modifier
-                    .padding(vertical = 16.dp)
-                    .size(200.dp)
-                    .clip(CircleShape)
-            )
             Text(
                 text = stringResource(id = R.string.nav_settings),
                 fontWeight = FontWeight.ExtraBold,
@@ -86,6 +78,14 @@ fun SettingsContent(
                     .fillMaxWidth()
                     .padding(10.dp),
                 textAlign = TextAlign.Center
+            )
+            Image(
+                painter = painterResource(R.drawable.img_1),
+                contentDescription = "Icono",
+                modifier = Modifier
+                    .padding(vertical = 16.dp)
+                    .size(200.dp)
+                    .clip(CircleShape)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
