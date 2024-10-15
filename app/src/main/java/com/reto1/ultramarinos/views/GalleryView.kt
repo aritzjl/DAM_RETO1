@@ -18,6 +18,7 @@ import com.reto1.ultramarinos.components.FAB
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import com.reto1.ultramarinos.components.ProductPreview
 import com.reto1.ultramarinos.components.BottomNavBar
+import com.reto1.ultramarinos.components.CartModal
 import com.reto1.ultramarinos.components.CategorySelector
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.is_single_column

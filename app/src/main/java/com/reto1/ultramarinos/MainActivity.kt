@@ -20,11 +20,13 @@ import androidx.activity.result.IntentSenderRequest
 import com.reto1.ultramarinos.views.HomeView
 import com.reto1.ultramarinos.views.LoginView
 import androidx.activity.result.ActivityResultLauncher
+import androidx.compose.runtime.mutableIntStateOf
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var register: Register
     private lateinit var signInLauncher: ActivityResultLauncher<IntentSenderRequest>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,7 @@ class MainActivity : ComponentActivity() {
         }
 
         register = Register(this, signInLauncher)  // Передаем signInLauncher в Register
-
+    register.isLoggedIn.value = true
         setContent {
 
             // Escucha cambios a esta variable
