@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
 
         register = Register(this, signInLauncher) // We pass signInLauncher to Register
         val email = register.loadEmail("email","")
-        val isLoggedIn = register.loadBoolean("is_logged_in", false)
+        val isLoggedIn = register.loadBoolean("is_logged_in", true)
         register.isLoggedIn.value = isLoggedIn
 
         setContent {
