@@ -30,6 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -52,6 +54,7 @@ fun SettingsContent(
     activity: Context,
     context: Context,
     register: Register,
+    email: String
 ) {
     var showMenu by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf(idiomaList.first { it.codigo == mainViewModel.getLanguage(activity) }) }
@@ -92,14 +95,16 @@ fun SettingsContent(
             ) {
                 Image(
                     painter = painterResource(
-                        id = if (isLightMode) R.drawable.baseline_email_24 else R.drawable.baseline_email_perfil_24),
+                        id = R.drawable.baseline_email_24
+                    ),
                     contentDescription = "email",
+                    colorFilter = ColorFilter.tint(if (isLightMode) Color.White else Color.Black),
                     modifier = Modifier
                         .padding(start = 5.dp)
                         .size(40.dp)
                 )
                 Text(
-                    text = "email@email.com",
+                    text = email,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onBackground,
@@ -115,8 +120,10 @@ fun SettingsContent(
             ) {
                 Image(
                     painter = painterResource(
-                        id = if (isLightMode) R.drawable.baseline_light_g_translate_24 else R.drawable.baseline_g_translate_24),
+                        id = R.drawable.baseline_g_translate_24
+                    ),
                     contentDescription = "traductor",
+                    colorFilter = ColorFilter.tint(if (isLightMode) Color.White else Color.Black),
                     modifier = Modifier
                         .padding(start = 5.dp)
                         .size(40.dp)
@@ -183,8 +190,10 @@ fun SettingsContent(
             ) {
                 Image(
                     painter = painterResource(
-                        id = if (isLightMode) R.drawable.baseline_light_exit_to_app_24 else R.drawable.baseline_exit_to_app_24),
+                        id = R.drawable.baseline_exit_to_app_24
+                    ),
                     contentDescription = "cerrar",
+                    colorFilter = ColorFilter.tint(if (isLightMode) Color.White else Color.Black),
                     modifier = Modifier
                         .padding(start = 5.dp)
                         .size(40.dp)

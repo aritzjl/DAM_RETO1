@@ -1,6 +1,7 @@
 package com.reto1.ultramarinos.views
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,10 +22,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.components.RedesSociales
 
 
 @Composable
-fun AboutContent(paddingValues: PaddingValues) {
+fun AboutContent(paddingValues: PaddingValues, context: Context) {
     LazyColumn(modifier= Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.onPrimary)
@@ -140,6 +142,7 @@ fun AboutContent(paddingValues: PaddingValues) {
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
             )
+            RedesSociales(context = context)
         }
     }
 }
