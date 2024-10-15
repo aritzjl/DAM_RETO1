@@ -1,7 +1,8 @@
 package com.reto1.ultramarinos.views
 
-import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,18 +30,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.reto1.ultramarinos.MainActivity
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.models.Idioma
 import com.reto1.ultramarinos.viewmodels.MainViewModel
-import kotlin.math.log
 
 
 @Composable
@@ -49,13 +49,12 @@ fun SettingsContent(
     mainViewModel: MainViewModel,
     isLightMode: Boolean,
     idiomaList: List<Idioma>,
-    idiomaActual: String,
-    onIdiomaActualChange: (Idioma, Activity) -> Unit,
-    activity: Activity,
+    activity: Context,
+    context: Context,
     register: Register,
 ) {
     var showMenu by remember { mutableStateOf(false) }
-    var selectedItem by remember { mutableStateOf(idiomaList.first { it.codigo == idiomaActual }) }
+    var selectedItem by remember { mutableStateOf(idiomaList.first { it.codigo == mainViewModel.getLanguage(activity) }) }
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -76,7 +75,7 @@ fun SettingsContent(
                     .clip(CircleShape)
             )
             Text(
-                text = "Usuario",
+                text = stringResource(id = R.string.nav_settings),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 color = MaterialTheme.colorScheme.onBackground,
@@ -148,8 +147,21 @@ fun SettingsContent(
                             },
                             onClick = {
                                 selectedItem = item
-                                onIdiomaActualChange(item, activity)
+                                val idiomaNuevo = selectedItem.codigo
                                 showMenu = false
+
+                                // Update language preference
+                                mainViewModel.setLanguage(activity,idiomaNuevo)
+
+                                // Change language using CambiarIdiomaClass
+                                mainViewModel.cambiarIdiomaClass.setLocale(activity,idiomaNuevo)
+
+                                // Reload the current activity
+                                val intent = Intent(activity, MainActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                activity.startActivity(intent)
+//                                (activity as AppCompatActivity).finish()
+
                             }
                         )
                     }
@@ -161,7 +173,7 @@ fun SettingsContent(
                     .fillMaxWidth()
                     .height(60.dp)
             ) {
-                SwitchVista(isLightMode = !mainViewModel.darkTheme.value!!, mainViewModel = mainViewModel)
+                SwitchVista(isLightMode = !mainViewModel.darkTheme.value!!, mainViewModel = mainViewModel, context = context)
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -180,6 +192,9 @@ fun SettingsContent(
                 TextButton(
                     onClick = {
                         register.logOut()
+                        val intent = Intent(activity, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        activity.startActivity(intent)
                     }
                 )  {
                     Text(
@@ -197,7 +212,7 @@ fun SettingsContent(
 }
 
 @Composable
-fun SwitchVista(isLightMode: Boolean, mainViewModel: MainViewModel) {
+fun SwitchVista(isLightMode: Boolean, mainViewModel: MainViewModel, context: Context) {
     Image(
         painter = painterResource(
             id =
@@ -229,7 +244,7 @@ fun SwitchVista(isLightMode: Boolean, mainViewModel: MainViewModel) {
         checked = isLightMode,
         enabled = true,
         onCheckedChange = {
-            mainViewModel.toggleTheme()
+            mainViewModel.toggleTheme(context)
         },
         colors = SwitchDefaults.colors(
             checkedThumbColor = MaterialTheme.colorScheme.onPrimary,

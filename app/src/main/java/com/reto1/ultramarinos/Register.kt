@@ -1,7 +1,9 @@
 package com.reto1.ultramarinos
 
 import android.app.Activity
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
@@ -17,10 +19,25 @@ import com.google.firebase.auth.GoogleAuthProvider
 class Register(private val activity: Activity, private val signInLauncher: ActivityResultLauncher<IntentSenderRequest>) {
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
+    private lateinit var sharedPreferences: SharedPreferences
 
     var isLoggedIn = mutableStateOf(false)
+        set(value) {
+            field = value
+            saveBoolean("is_logged_in", value.value)
+        }
+
+    fun saveBoolean(key: String, value: Boolean) {
+        sharedPreferences.edit().putBoolean(key, value).apply()
+    }
+
+    fun loadBoolean(key: String, defaultValue: Boolean): Boolean {
+        return sharedPreferences.getBoolean(key, defaultValue)
+    }
 
     init {
+        sharedPreferences = activity.getSharedPreferences("app_preferences", MODE_PRIVATE)
+
         oneTapClient = Identity.getSignInClient(activity)
         signInRequest = BeginSignInRequest.builder()
             .setGoogleIdTokenRequestOptions(
@@ -80,6 +97,7 @@ class Register(private val activity: Activity, private val signInLauncher: Activ
                 if (task.isSuccessful) {
                     Log.d("Register", "Registration successful!")
                     isLoggedIn.value = true
+                    saveBoolean("is_logged_in",true)
                     onResult(true, null)
                 } else {
                     Log.e("Register", "Registration failed", task.exception)
@@ -100,6 +118,7 @@ class Register(private val activity: Activity, private val signInLauncher: Activ
                 if (task.isSuccessful) {
                     Log.d("Register", "Sign-In successful!")
                     isLoggedIn.value = true
+                    saveBoolean("is_logged_in",true)
                     onResult(true, null)
                 } else {
                     Log.e("Register", "Sign-In failed", task.exception)
@@ -114,6 +133,6 @@ class Register(private val activity: Activity, private val signInLauncher: Activ
 
     fun logOut() {
         FirebaseAuth.getInstance().signOut()
-        isLoggedIn.value = false
+        saveBoolean("is_logged_in",false)
     }
 }
