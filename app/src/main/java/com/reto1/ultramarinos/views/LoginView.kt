@@ -1,5 +1,7 @@
 package com.reto1.ultramarinos.views
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -31,18 +33,20 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.reto1.ultramarinos.MainActivity
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.Register
 
 
 @Composable
-fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: () -> Unit) {
+fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: () -> Unit, activity: Activity) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -75,13 +79,14 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email") },
-                placeholder = { Text("example@domain.com") },
+                label = { Text("Email",color = Color.Black) },
+                placeholder = { Text("example@domain.com",color = Color.Black) },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
                 ),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = TextStyle(color = Color.Black)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -89,13 +94,14 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") },
+                label = { Text("Password",color = Color.Black) },
                 visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),
                 modifier = Modifier.fillMaxWidth(),
+                textStyle = TextStyle(color = Color.Black)
             )
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -118,6 +124,10 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
                         register.signInWithEmail(email, password) { success, message ->
                             if (success) {
                                 onLoginSuccess()
+                                register.saveBoolean("is_logged_in",true)
+                                val intent = Intent(activity, MainActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                activity.startActivity(intent)
                             } else {
                                 errorMessage = message ?: "Sign-in failed"
                             }
@@ -141,6 +151,10 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
                             register.registerWithEmail(email, password) { success, message ->
                                 if (success) {
                                     onLoginSuccess()
+                                    register.saveBoolean("is_logged_in",true)
+                                    val intent = Intent(activity, MainActivity::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    activity.startActivity(intent)
                                 } else {
                                     errorMessage = message ?: "Registration failed"
                                 }
@@ -159,7 +173,7 @@ fun LoginView(register: Register, onLoginSuccess: () -> Unit, onGoogleSignIn: ()
             }
 
             Text(
-                text = "Entrar con:",
+                text = "Sign in with:",
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(bottom = 16.dp,
                     top = 24.dp),
