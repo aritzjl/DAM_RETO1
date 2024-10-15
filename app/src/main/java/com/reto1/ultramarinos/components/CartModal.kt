@@ -19,7 +19,11 @@ fun CartModal(cartItems: List<CartProduct>, onDismiss: () -> Unit) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
 
-    val totalPrice = cartItems.map { it.product.price * it.amount }.sum()
+    // Cálculo del precio total considerando el precio de oferta
+    val totalPrice = cartItems.map {
+        val itemPrice = it.product.offerPrice ?: it.product.price
+        itemPrice * it.amount
+    }.sum()
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -27,7 +31,7 @@ fun CartModal(cartItems: List<CartProduct>, onDismiss: () -> Unit) {
         text = {
             Column {
                 cartItems.forEach { cartProduct ->
-                    val itemTotal = cartProduct.product.price * cartProduct.amount
+                    val itemTotal = (cartProduct.product.offerPrice ?: cartProduct.product.price) * cartProduct.amount
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -44,6 +48,7 @@ fun CartModal(cartItems: List<CartProduct>, onDismiss: () -> Unit) {
                             modifier = Modifier.weight(1f).padding(start = 8.dp),
                             style = MaterialTheme.typography.bodyMedium
                         )
+                        // Mostrar el precio correspondiente
                         Text(
                             text = "$${itemTotal}",
                             style = MaterialTheme.typography.bodyMedium
