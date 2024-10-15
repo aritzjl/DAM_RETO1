@@ -35,6 +35,14 @@ class Register(private val activity: Activity, private val signInLauncher: Activ
         return sharedPreferences.getBoolean(key, defaultValue)
     }
 
+    fun saveEmail(key: String, value: String) {
+        sharedPreferences.edit().putString(key, value).apply()
+    }
+
+    fun loadEmail(key: String, defaultValue: String): String {
+        return sharedPreferences.getString(key, defaultValue) ?: defaultValue
+    }
+
     init {
         sharedPreferences = activity.getSharedPreferences("app_preferences", MODE_PRIVATE)
 
