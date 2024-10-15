@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,6 +47,9 @@ import androidx.compose.ui.res.painterResource
 
 // HomeView.kt
 
+import androidx.compose.material3.*
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -58,7 +62,11 @@ import androidx.navigation.compose.rememberNavController
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.components.BottomNavBar
+import com.reto1.ultramarinos.components.Carrusel
+import com.reto1.ultramarinos.components.Carrusel2
+import com.reto1.ultramarinos.components.MiHilo
 import com.reto1.ultramarinos.components.ProductPreview
+import com.reto1.ultramarinos.components.Timer
 import com.reto1.ultramarinos.components.ToolBar
 import com.reto1.ultramarinos.components.YouTubePlayer
 import com.reto1.ultramarinos.models.Idioma
@@ -79,8 +87,7 @@ fun HomeView(
 ) {
 
     val navController = rememberNavController()
-    Scaffold(
-        topBar = { ToolBar(null) },
+    Scaffold(topBar = { ToolBar(null) },
         bottomBar = { BottomNavBar(navController) },
         content = { paddingValues ->
             NavHost(navController = navController, startDestination = "home") {
@@ -97,12 +104,12 @@ fun HomeView(
                     register
                 ) }
             }
-        }
-    )
+        })
 }
 
 @Composable
 fun HomeContent(paddingValues: PaddingValues) {
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -117,8 +124,21 @@ fun HomeContent(paddingValues: PaddingValues) {
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp), textAlign = TextAlign.Center
+                    .padding(10.dp),
+                textAlign = TextAlign.Center
             )
+
+            Box(
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo_utramarinos),
+                    contentDescription = "logo",
+                    modifier = Modifier
+                        .size(256.dp)
+                        .alpha(0.6f)
+                )
+            }
 
             Carrusel()
 
@@ -130,7 +150,8 @@ fun HomeContent(paddingValues: PaddingValues) {
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp), textAlign = TextAlign.Center
+                    .padding(10.dp),
+                textAlign = TextAlign.Start
             )
             Text(
                 text = stringResource(id = R.string.home_text_2),
@@ -140,7 +161,8 @@ fun HomeContent(paddingValues: PaddingValues) {
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp, bottom = 40.dp), textAlign = TextAlign.Center
+                    .padding(start = 10.dp, end = 10.dp, bottom = 40.dp),
+                textAlign = TextAlign.Start
             )
             Text(
                 text = stringResource(id = R.string.home_text_3),
@@ -150,14 +172,16 @@ fun HomeContent(paddingValues: PaddingValues) {
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp, bottom = 40.dp), textAlign = TextAlign.Center
+                    .padding(10.dp, bottom = 40.dp),
+                textAlign = TextAlign.Center
             )
 
+
+            Timer()
             Carrusel2(GalleryViewModel())
 
             YouTubePlayer(
-                youtubeVideoId = "QG4oGxgnBBw",
-                lifecycleOwner = LocalLifecycleOwner.current
+                youtubeVideoId = "QG4oGxgnBBw", lifecycleOwner = LocalLifecycleOwner.current
 
             )
 
@@ -165,284 +189,9 @@ fun HomeContent(paddingValues: PaddingValues) {
     }
 }
 
-@Composable
-fun Carrusel(modifier: Modifier = Modifier) {
-    val configuration = LocalConfiguration.current
-    val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        0.9f // 80% width in landscape
-    } else {
-        1f // 100% width in portrait
-    }
-
-// meto las imagenes en una coleccion
-    val images = listOf(
-
-        R.drawable.img_1,
-        R.drawable.img_2,
-        R.drawable.img_3,
-        R.drawable.img_4,
-        R.drawable.img_5,
-        R.drawable.imgprueba
-
-        )
 
 
-    val pagerState = rememberPagerState(
-        pageCount = { images.size }
-    )
-
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(4000)
-            val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
-            pagerState.scrollToPage(nextPage)
-        }
-    }
-
-    val scope = rememberCoroutineScope()
-
-    Column(
-        modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = modifier
-                .wrapContentSize()
-                .fillMaxWidth(fraction).clip(RoundedCornerShape(0.dp))
-        ) {
-            HorizontalPager(
-                state = pagerState,
-                modifier
-                    .wrapContentSize()
-
-            ) {
-
-                    currentPage ->
-                Card(
-
-                    modifier = Modifier
-                        .height(height = 250.dp)
-                        .fillMaxWidth()
 
 
-                ) {
-                    Image(
-                        painter = painterResource(id = images[currentPage]),
-                        contentDescription = "", contentScale = ContentScale.FillBounds
-                    )
-
-
-                }
-
-            }
-            IconButton(
-                onClick = {
-                    val nextPage = pagerState.currentPage + 1
-                    if (nextPage < images.size) {
-                        scope.launch {
-                            pagerState.animateScrollToPage(nextPage)
-                        }
-                    }
-                },
-                modifier = Modifier
-                    .padding(10.dp)
-                    .size(48.dp)
-                    .align(Alignment.CenterEnd)
-                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = Color(
-                        0x52373737
-                    )
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = "",
-                    modifier = Modifier.fillMaxSize(),
-                    tint = Color.LightGray
-                )
-            }
-
-            IconButton(
-                onClick = {
-                    val previousPage = pagerState.currentPage - 1
-                    if (previousPage >= 0) {
-                        scope.launch {
-                            pagerState.animateScrollToPage(previousPage)
-                        }
-                    }
-                },
-                modifier = Modifier
-                    .padding(10.dp)
-                    .size(48.dp)
-                    .align(Alignment.CenterStart)
-                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = Color(
-                        0x52373737
-                    )
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                    contentDescription = "",
-                    modifier = Modifier.fillMaxSize(),
-                    tint = Color.LightGray
-                )
-            }
-
-        }
-
-        PageIndicator(
-            pageCount = images.size,
-            currentPage = pagerState.currentPage,
-            modifier = Modifier.padding(top = 8.dp, bottom = 14.dp, start = 5.dp, end = 5.dp)
-        )
-    }
-}
-
-@Composable
-fun PageIndicator(pageCount: Int, currentPage: Int, modifier: Modifier) {
-
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-    ) {
-        repeat(pageCount) {
-            IndicatorDots(isSelected = it == currentPage, modifier = modifier)
-        }
-
-    }
-
-}
-
-@Composable
-fun IndicatorDots(isSelected: Boolean, modifier: Modifier) {
-
-    val size = animateDpAsState(targetValue = if (isSelected) 12.dp else 10.dp, label = "")
-    Box(
-        modifier = modifier
-            .padding(2.dp)
-            .size(size.value)
-            .clip(CircleShape)
-            .background(color = if (isSelected) Color.Black else Color.LightGray)
-    )
-}
-
-
-@Composable
-fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
-    val configuration = LocalConfiguration.current
-    val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        0.9f // 80% width in landscape
-    } else {
-        1f // 100% width in portrait
-    }
-
-    val products = viewModel.artworks.value
-
-    val pagerState = rememberPagerState(
-        pageCount = { products.size }
-    )
-
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(4000)
-            val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
-            pagerState.scrollToPage(nextPage)
-        }
-    }
-
-    val scope = rememberCoroutineScope()
-
-    Column(
-        modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = modifier
-                .fillMaxWidth(fraction)
-                .height(500.dp)
-                .clip(RoundedCornerShape(8.dp))
-        ) {
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier
-                    .wrapContentSize()
-                    .padding(26.dp)
-            ) { currentPage ->
-                val product = products[currentPage]
-                Card(
-                    modifier = Modifier
-                        .height(height = 500.dp)
-                        .fillMaxWidth()
-                ) {
-                    Column {
-                        ProductPreview(product)
-                    }
-                }
-            }
-            IconButton(
-                onClick = {
-                    val nextPage = pagerState.currentPage + 1
-                    if (nextPage < products.size) {
-                        scope.launch {
-                            pagerState.animateScrollToPage(nextPage)
-                        }
-                    }
-                },
-                modifier = Modifier
-                    .padding(10.dp)
-                    .size(48.dp)
-                    .align(Alignment.CenterEnd)
-                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = Color(
-                        0x52373737
-                    )
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = "",
-                    modifier = Modifier.fillMaxSize(),
-                    tint = Color.LightGray
-                )
-            }
-
-            IconButton(
-                onClick = {
-                    val previousPage = pagerState.currentPage - 1
-                    if (previousPage >= 0) {
-                        scope.launch {
-                            pagerState.animateScrollToPage(previousPage)
-                        }
-                    }
-                },
-                modifier = Modifier
-                    .padding(10.dp)
-                    .size(48.dp)
-                    .align(Alignment.CenterStart)
-                    .clip(CircleShape), colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = Color(
-                        0x52373737
-                    )
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                    contentDescription = "",
-                    modifier = Modifier.fillMaxSize(),
-                    tint = Color.LightGray
-                )
-            }
-
-        }
-
-        PageIndicator(
-            pageCount = products.size,
-            currentPage = pagerState.currentPage,
-            modifier = Modifier.padding(top = 8.dp, bottom = 14.dp, start = 5.dp, end = 5.dp)
-        )
-    }
-}
 
 
