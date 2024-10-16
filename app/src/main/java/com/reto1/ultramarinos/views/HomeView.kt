@@ -93,18 +93,6 @@ fun HomeContent(paddingValues: PaddingValues, context: Context) {
                 textAlign = TextAlign.Center
             )
 
-            Box(
-                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo_utramarinos),
-                    contentDescription = "logo",
-                    modifier = Modifier
-                        .size(256.dp)
-                        .alpha(0.6f)
-                )
-            }
-
             Carrusel()
 
             Text(
