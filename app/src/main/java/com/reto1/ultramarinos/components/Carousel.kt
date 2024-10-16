@@ -204,7 +204,7 @@ fun IndicatorDots(isSelected: Boolean, modifier: Modifier) {
 
 
 @Composable
-fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
+fun Carrusel2(viewModel: GalleryViewModel, email: String, modifier: Modifier = Modifier) {
     val configuration = LocalConfiguration.current
     val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
         0.9f // 80% width in landscape

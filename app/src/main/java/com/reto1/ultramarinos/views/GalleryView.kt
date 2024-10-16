@@ -39,6 +39,7 @@ fun GalleryView(paddingValues: PaddingValues, galleryViewModel: GalleryViewModel
             isSingleColumn = galleryViewModel.isSingleColumn,
             artworks = viewModel.artworks.value,
             paddingValues2 = innerPadding,
+            email,
             onCategorySelected = { category -> viewModel.filterArtworks(category) } // Pasar la categoría seleccionada
         )
     }
@@ -50,6 +51,7 @@ fun GalleryContent(
     isSingleColumn: Boolean,
     artworks: List<Product>,
     paddingValues2: PaddingValues,
+    email: String,
     onCategorySelected: (String?) -> Unit // Cambié ProductCategory? a String?
 ) {
     Column(modifier = Modifier.padding(paddingValues)) {
@@ -67,7 +69,7 @@ fun GalleryContent(
                 key = { index -> artworks[index].title }
             ) { index ->
                 val artwork = artworks[index]
-                ProductPreview(artwork)
+                ProductPreview(artwork, email)
             }
         }
     }

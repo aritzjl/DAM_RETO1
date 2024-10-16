@@ -62,7 +62,7 @@ fun HomeView(
         bottomBar = { BottomNavBar(navController) },
         content = { paddingValues ->
             NavHost(navController = navController, startDestination = "home") {
-                composable("home") { HomeContent(paddingValues, context) }
+                composable("home") { HomeContent(paddingValues, email, context) }
                 composable("about") { AboutContent(paddingValues, context) }
                 composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode, email) }
                 composable("settings") { SettingsContent(
@@ -74,7 +74,7 @@ fun HomeView(
 }
 
 @Composable
-fun HomeContent(paddingValues: PaddingValues, context: Context) {
+fun HomeContent(paddingValues: PaddingValues, email: String, context: Context) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -131,7 +131,7 @@ fun HomeContent(paddingValues: PaddingValues, context: Context) {
 
 
             Timer()
-            Carrusel2(GalleryViewModel())
+            Carrusel2(GalleryViewModel(), email)
 
             YouTubePlayer(
                 youtubeVideoId = "QG4oGxgnBBw", lifecycleOwner = LocalLifecycleOwner.current
