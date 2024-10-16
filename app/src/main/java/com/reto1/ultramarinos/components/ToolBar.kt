@@ -60,7 +60,7 @@ fun ToolBar(galeryViewModel: GalleryViewModel, navController: NavController, isL
                         onClick = {
                         val shareIntent = Intent().apply {
                             action = Intent.ACTION_SEND
-                            putExtra(Intent.EXTRA_TEXT, "Echa un vistazo a mi web https://github.com/aritzjl")
+                            putExtra(Intent.EXTRA_TEXT, "Echa un vistazo a nuestra web https://www.gregoriomartin.es/")
                             type = "text/plain"
                         }
                         context.startActivity(Intent.createChooser(shareIntent, "Compartir vía"))
