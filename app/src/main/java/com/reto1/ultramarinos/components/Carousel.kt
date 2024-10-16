@@ -246,7 +246,7 @@ fun Carrusel2(viewModel: GalleryViewModel, email: String, modifier: Modifier = M
                         .fillMaxSize().wrapContentSize()
                 ) {
                     Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
-                        ProductPreview(product)
+                        ProductPreview(product, email)
                     }
                 }
             }
