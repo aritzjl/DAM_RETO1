@@ -27,7 +27,7 @@ import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 @Composable
-fun FAB(email: String) {
+fun FAB(isLightMode: Boolean, email: String) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
     var showCartModal by remember { mutableStateOf(false) }
