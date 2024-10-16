@@ -53,17 +53,18 @@ fun HomeView(
     activity: Context,
     context: Context,
     register: Register,
-    email: String
+    email: String,
+    galleryViewModel: GalleryViewModel
 ) {
 
     val navController = rememberNavController()
-    Scaffold(topBar = { ToolBar(null) },
+    Scaffold(topBar = { ToolBar(galleryViewModel, navController, isLightMode) },
         bottomBar = { BottomNavBar(navController) },
         content = { paddingValues ->
             NavHost(navController = navController, startDestination = "home") {
-                composable("home") { HomeContent(paddingValues, context) }
+                composable("home") { HomeContent(paddingValues, email, context) }
                 composable("about") { AboutContent(paddingValues, context) }
-                composable("gallery") { GalleryView(paddingValues) }
+                composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode, email) }
                 composable("settings") { SettingsContent(
                     paddingValues, mainViewModel, isLightMode, idiomaList,
                     activity, context, register, email
@@ -73,7 +74,7 @@ fun HomeView(
 }
 
 @Composable
-fun HomeContent(paddingValues: PaddingValues, context: Context) {
+fun HomeContent(paddingValues: PaddingValues, email: String, context: Context) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -82,7 +83,7 @@ fun HomeContent(paddingValues: PaddingValues, context: Context) {
     ) {
         item {
             Text(
-                text = stringResource(id = R.string.home_main_title),
+                text = stringResource(id = R.string.nav_home),
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 32.sp,
                 color = MaterialTheme.colorScheme.onBackground,
@@ -91,18 +92,6 @@ fun HomeContent(paddingValues: PaddingValues, context: Context) {
                     .padding(10.dp),
                 textAlign = TextAlign.Center
             )
-
-            Box(
-                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo_utramarinos),
-                    contentDescription = "logo",
-                    modifier = Modifier
-                        .size(256.dp)
-                        .alpha(0.6f)
-                )
-            }
 
             Carrusel()
 
@@ -142,7 +131,7 @@ fun HomeContent(paddingValues: PaddingValues, context: Context) {
 
 
             Timer()
-            Carrusel2(GalleryViewModel())
+            Carrusel2(GalleryViewModel(), email)
 
             YouTubePlayer(
                 youtubeVideoId = "QG4oGxgnBBw", lifecycleOwner = LocalLifecycleOwner.current

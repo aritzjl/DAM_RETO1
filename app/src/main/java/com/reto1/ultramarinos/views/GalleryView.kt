@@ -21,25 +21,25 @@ import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.CartModal
 import com.reto1.ultramarinos.components.CategorySelector
 import com.reto1.ultramarinos.components.ToolBar
-import com.reto1.ultramarinos.is_single_column
 
 //  GALLERY VIEW
 
 @Composable
-fun GalleryView(paddingValues: PaddingValues) {
+fun GalleryView(paddingValues: PaddingValues, galleryViewModel: GalleryViewModel, isLightMode: Boolean, email: String) {
     val navController = rememberNavController()
     val viewModel: GalleryViewModel = viewModel()
 
     Scaffold(
-        topBar = { ToolBar(viewModel) },
+        topBar = { ToolBar(galleryViewModel, navController, isLightMode) },
         bottomBar = { BottomNavBar(navController) },
-        floatingActionButton = { FAB() }
+        floatingActionButton = { FAB(isLightMode, email) }
     ) { innerPadding ->
         GalleryContent(
             paddingValues = paddingValues,
-            isSingleColumn = is_single_column,
+            isSingleColumn = galleryViewModel.isSingleColumn,
             artworks = viewModel.artworks.value,
             paddingValues2 = innerPadding,
+            email,
             onCategorySelected = { category -> viewModel.filterArtworks(category) } // Pasar la categoría seleccionada
         )
     }
@@ -51,6 +51,7 @@ fun GalleryContent(
     isSingleColumn: Boolean,
     artworks: List<Product>,
     paddingValues2: PaddingValues,
+    email: String,
     onCategorySelected: (String?) -> Unit // Cambié ProductCategory? a String?
 ) {
     Column(modifier = Modifier.padding(paddingValues)) {
@@ -68,7 +69,7 @@ fun GalleryContent(
                 key = { index -> artworks[index].title }
             ) { index ->
                 val artwork = artworks[index]
-                ProductPreview(artwork)
+                ProductPreview(artwork, email)
             }
         }
     }

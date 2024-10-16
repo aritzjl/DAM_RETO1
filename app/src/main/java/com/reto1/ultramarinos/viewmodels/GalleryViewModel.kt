@@ -10,7 +10,6 @@ import com.reto1.ultramarinos.models.Product
 
 class GalleryViewModel : ViewModel() {
     var isSingleColumn by mutableStateOf(false)
-        private set
 
     var selectedCategory by mutableStateOf<String?>(null)
         private set
@@ -22,10 +21,6 @@ class GalleryViewModel : ViewModel() {
             "Conservas"
         )
     )
-
-    fun toggleColumnCount() {
-        isSingleColumn = !isSingleColumn
-    }
 
     private var allProducts = listOf<Product>()
 
