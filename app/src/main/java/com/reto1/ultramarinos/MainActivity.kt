@@ -18,6 +18,7 @@ import com.reto1.ultramarinos.views.HomeView
 import com.reto1.ultramarinos.views.LoginView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.mutableIntStateOf
+import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -51,9 +52,8 @@ class MainActivity : ComponentActivity() {
         }
 
         register = Register(this, signInLauncher) // We pass signInLauncher to Register
-
         val email = register.loadEmail("email","")
-        val isLoggedIn = register.loadBoolean("is_logged_in", false)
+        val isLoggedIn = register.loadBoolean("is_logged_in", true)
         register.isLoggedIn.value = isLoggedIn
 
         setContent {
@@ -73,7 +73,8 @@ class MainActivity : ComponentActivity() {
                         context,
                         activity,
                         register = register,
-                        email = email
+                        email = email,
+                        galleryViewModel = GalleryViewModel()
                     )
                 } else {
                     LoginView(

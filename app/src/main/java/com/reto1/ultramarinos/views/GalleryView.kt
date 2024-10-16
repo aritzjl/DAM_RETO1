@@ -21,23 +21,22 @@ import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.CartModal
 import com.reto1.ultramarinos.components.CategorySelector
 import com.reto1.ultramarinos.components.ToolBar
-import com.reto1.ultramarinos.is_single_column
 
 //  GALLERY VIEW
 
 @Composable
-fun GalleryView(paddingValues: PaddingValues, email: String) {
+fun GalleryView(paddingValues: PaddingValues, galleryViewModel: GalleryViewModel, isLightMode: Boolean, email: String) {
     val navController = rememberNavController()
     val viewModel: GalleryViewModel = viewModel()
 
     Scaffold(
-        topBar = { ToolBar(viewModel) },
+        topBar = { ToolBar(galleryViewModel, navController, isLightMode) },
         bottomBar = { BottomNavBar(navController) },
-        floatingActionButton = { FAB(email) }
+        floatingActionButton = { FAB(isLightMode, email) }
     ) { innerPadding ->
         GalleryContent(
             paddingValues = paddingValues,
-            isSingleColumn = is_single_column,
+            isSingleColumn = galleryViewModel.isSingleColumn,
             artworks = viewModel.artworks.value,
             paddingValues2 = innerPadding,
             onCategorySelected = { category -> viewModel.filterArtworks(category) } // Pasar la categoría seleccionada

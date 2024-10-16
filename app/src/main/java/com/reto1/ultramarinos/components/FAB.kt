@@ -15,6 +15,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -25,7 +27,7 @@ import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 @Composable
-fun FAB(email: String) {
+fun FAB(isLightMode: Boolean, email: String) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
     var showCartModal by remember { mutableStateOf(false) }
@@ -67,7 +69,8 @@ fun FAB(email: String) {
         Image(
             painter = painterResource(R.drawable.baseline_shopping_cart_24),
             contentDescription = "Icono",
-            modifier = Modifier.width(48.dp)
+            modifier = Modifier.width(48.dp),
+            colorFilter = ColorFilter.tint(if (isLightMode) Color.White else Color.Black),
         )
     }
 }
