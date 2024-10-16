@@ -26,14 +26,14 @@ import com.reto1.ultramarinos.is_single_column
 //  GALLERY VIEW
 
 @Composable
-fun GalleryView(paddingValues: PaddingValues) {
+fun GalleryView(paddingValues: PaddingValues, email: String) {
     val navController = rememberNavController()
     val viewModel: GalleryViewModel = viewModel()
 
     Scaffold(
         topBar = { ToolBar(viewModel) },
         bottomBar = { BottomNavBar(navController) },
-        floatingActionButton = { FAB() }
+        floatingActionButton = { FAB(email) }
     ) { innerPadding ->
         GalleryContent(
             paddingValues = paddingValues,

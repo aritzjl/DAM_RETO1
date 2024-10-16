@@ -1,16 +1,19 @@
 package com.reto1.ultramarinos.components
 
+import android.content.SharedPreferences
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import android.widget.Toast
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
@@ -18,6 +21,10 @@ import com.reto1.ultramarinos.viewmodels.CartViewModel
 fun CartModal(cartItems: List<CartProduct>, onDismiss: () -> Unit) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
+    lateinit var register: Register
+    //val email = register.loadEmail("email","")
+
+    val email = "aritzzjl@gmail.com"
 
     // Cálculo del precio total considerando el precio de oferta
     val totalPrice = cartItems.map {
@@ -66,7 +73,7 @@ fun CartModal(cartItems: List<CartProduct>, onDismiss: () -> Unit) {
         confirmButton = {
             Button(
                 onClick = {
-                    viewModel.clearUserCart("aritzzjl@gmail.com", {
+                    viewModel.clearUserCart(email, {
                         Toast.makeText(context, "Compra realizada!", Toast.LENGTH_SHORT).show()
                         onDismiss()
                     }, { exception ->
@@ -83,7 +90,7 @@ fun CartModal(cartItems: List<CartProduct>, onDismiss: () -> Unit) {
                 // Botón para vaciar el carrito
                 Button(
                     onClick = {
-                        viewModel.clearUserCart("aritzzjl@gmail.com", {
+                        viewModel.clearUserCart(email, {
                             Toast.makeText(context, "Carrito vaciado!", Toast.LENGTH_SHORT).show()
                             onDismiss()
                         }, { exception ->
