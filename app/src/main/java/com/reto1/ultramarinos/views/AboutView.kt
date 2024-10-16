@@ -42,16 +42,6 @@ fun AboutContent(paddingValues: PaddingValues, context: Context) {
                     .padding(10.dp),
                 textAlign = TextAlign.Center
             )
-            Text(
-                text = stringResource(id = R.string.about_main_title),
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 25.sp,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                textAlign = TextAlign.Center
-            )
 
             Text(
                 text = stringResource(id = R.string.about_subtitle_1),
