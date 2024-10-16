@@ -4,10 +4,46 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.reto1.ultramarinos.models.Product
 import android.util.Log
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class CartViewModel : ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
+
+    fun clearUserCart(userEmail: String, onSuccess: () -> Unit, onError: (Exception) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val cartDocuments = db.collection("PedidoProducto")
+                    .whereEqualTo("user", userEmail)
+                    .get()
+                    .await()
+
+                if (!cartDocuments.isEmpty) {
+                    for (cartDoc in cartDocuments) {
+                        cartDoc.reference.delete().await()
+                    }
+                    // Mover el callback de éxito al hilo principal
+                    withContext(Dispatchers.Main) {
+                        onSuccess()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        onError(Exception("El carrito está vacío para el usuario: $userEmail"))
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("CartViewModel", "Error al eliminar productos del carrito", e)
+                // Mover el callback de error al hilo principal
+                withContext(Dispatchers.Main) {
+                    onError(e)
+                }
+            }
+        }
+    }
 
     fun addCartProduct(product: Product, quantity: Int, userEmail: String, onSuccess: () -> Unit, onError: (Exception) -> Unit) {
         // Consultar la colección "Productos" para encontrar el ID del documento por nombre

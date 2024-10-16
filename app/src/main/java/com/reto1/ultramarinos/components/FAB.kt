@@ -1,6 +1,7 @@
 package com.reto1.ultramarinos.components
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -21,11 +22,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 @Composable
-fun FAB(isLightMode: Boolean) {
+fun FAB(email: String) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
     var showCartModal by remember { mutableStateOf(false) }
@@ -40,7 +42,7 @@ fun FAB(isLightMode: Boolean) {
 
     FloatingActionButton(onClick = {
         Log.d("Cart", "Clicado: Obteniendo carrito")
-        viewModel.getUserCart("aritzzjl@gmail.com") { cartList ->
+        viewModel.getUserCart(email) { cartList ->
             Log.d("Cart", "Carrito obtenido: $cartList")
             try {
                 val groupedCartItems = cartList

@@ -25,14 +25,14 @@ import com.reto1.ultramarinos.components.ToolBar
 //  GALLERY VIEW
 
 @Composable
-fun GalleryView(paddingValues: PaddingValues, galleryViewModel: GalleryViewModel, isLightMode: Boolean) {
+fun GalleryView(paddingValues: PaddingValues, email: String) {
     val navController = rememberNavController()
     val viewModel: GalleryViewModel = viewModel()
 
     Scaffold(
         topBar = { ToolBar(galleryViewModel, navController, isLightMode) },
         bottomBar = { BottomNavBar(navController) },
-        floatingActionButton = { FAB(isLightMode) }
+        floatingActionButton = { FAB(email) }
     ) { innerPadding ->
         GalleryContent(
             paddingValues = paddingValues,
