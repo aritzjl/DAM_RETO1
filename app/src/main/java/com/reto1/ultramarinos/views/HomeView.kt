@@ -64,7 +64,7 @@ fun HomeView(
             NavHost(navController = navController, startDestination = "home") {
                 composable("home") { HomeContent(paddingValues, context) }
                 composable("about") { AboutContent(paddingValues, context) }
-                composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode) }
+                composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode, email) }
                 composable("settings") { SettingsContent(
                     paddingValues, mainViewModel, isLightMode, idiomaList,
                     activity, context, register, email

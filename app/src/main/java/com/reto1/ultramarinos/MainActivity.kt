@@ -57,7 +57,6 @@ class MainActivity : ComponentActivity() {
         register.isLoggedIn.value = isLoggedIn
 
         setContent {
-
             // Escucha cambios a esta variable
             val darkTheme : Boolean by mainViewModel.darkTheme.observeAsState(initial = false)
             val context = LocalContext.current
@@ -66,7 +65,7 @@ class MainActivity : ComponentActivity() {
             AppTheme (
                 darkTheme = darkTheme
             ){
-                if (isLoggedIn) {
+                if (isLoggedIn && email != "") {
                     HomeView(
                         mainViewModel,
                         darkTheme,

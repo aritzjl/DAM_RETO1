@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
@@ -231,7 +232,7 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
         Box(
             modifier = modifier
                 .fillMaxWidth(fraction)
-                .height(500.dp)
+                .height(Dp.Unspecified)
                 .clip(RoundedCornerShape(8.dp))
         ) {
             HorizontalPager(
@@ -242,10 +243,9 @@ fun Carrusel2(viewModel: GalleryViewModel, modifier: Modifier = Modifier) {
                 val product = products[currentPage]
                 Card(
                     modifier = Modifier
-                        .height(height = 500.dp)
-                        .fillMaxWidth()
+                        .fillMaxSize().wrapContentSize()
                 ) {
-                    Column {
+                    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
                         ProductPreview(product)
                     }
                 }
