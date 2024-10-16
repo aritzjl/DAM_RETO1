@@ -18,13 +18,9 @@ import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 @Composable
-fun CartModal(cartItems: List<CartProduct>, onDismiss: () -> Unit) {
+fun CartModal(cartItems: List<CartProduct>, email:String, onDismiss: () -> Unit) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
-    lateinit var register: Register
-    //val email = register.loadEmail("email","")
-
-    val email = "aritzzjl@gmail.com"
 
     // Cálculo del precio total considerando el precio de oferta
     val totalPrice = cartItems.map {

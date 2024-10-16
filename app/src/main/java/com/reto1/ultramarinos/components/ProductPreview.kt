@@ -39,7 +39,7 @@ import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.models.Product
 
 @Composable
-fun ProductPreview(artwork: Product) {
+fun ProductPreview(artwork: Product, email: String) {
     var showModal by remember { mutableStateOf(false) }
     val context = LocalContext.current
     Box(
@@ -164,7 +164,7 @@ fun ProductPreview(artwork: Product) {
         }
         if (showModal) {
             //Toast.makeText(context, "hola0", Toast.LENGTH_SHORT).show()
-            ProductDetailModal(product = artwork, onDismiss = { showModal = false })
+            ProductDetailModal(product = artwork, email, onDismiss = { showModal = false })
         }
     }
 }
