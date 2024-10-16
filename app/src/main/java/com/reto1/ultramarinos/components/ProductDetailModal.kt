@@ -21,7 +21,7 @@ import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 
 @Composable
-fun ProductDetailModal(product: Product, onDismiss: () -> Unit) {
+fun ProductDetailModal(product: Product, email:String, onDismiss: () -> Unit) {
     var cart_amount by remember { mutableStateOf(0) }
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
@@ -89,7 +89,7 @@ fun ProductDetailModal(product: Product, onDismiss: () -> Unit) {
                                         viewModel.addCartProduct(
                                             product,
                                             cart_amount,
-                                            "aritzzjl@gmail.com", // Email por defecto
+                                            email,
                                             onSuccess = {
                                                 Toast.makeText(context, "Producto añadido al carrito", Toast.LENGTH_SHORT).show()
                                                 cart_amount = 0  // Resetear el contador

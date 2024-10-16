@@ -35,7 +35,7 @@ fun FAB(isLightMode: Boolean, email: String) {
 
     if (showCartModal)
     {
-        CartModal(cartItems) {
+        CartModal(cartItems, email = email) {
             showCartModal = false
         }
     }
