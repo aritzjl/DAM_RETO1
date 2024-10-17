@@ -71,8 +71,20 @@ class GalleryViewModel : ViewModel() {
             // Si no hay categoría seleccionada, mostrar todos los productos
             allProducts
         } else {
-            // Si hay una categoría seleccionada, filtrar los productos por esa categoría
-            allProducts.filter { it.category == category }
+            var chosenCategory = ""
+            if (category.toString() == "Fish" || category.toString() == "Arraina")
+            {
+                chosenCategory = "Pescado"
+            }
+            if (category == "Legumes" || category == "Lekaleak")
+            {
+                chosenCategory = "Legumbres"
+            }
+            if (category == "Preseves" || category == "Kontserbak")
+            {
+                chosenCategory = "Conservas"
+            }
+            allProducts.filter { it.category == chosenCategory }
         }
     }
 }
