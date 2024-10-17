@@ -1,7 +1,4 @@
-markdown
-
 # Ultramarinos
-
 
 ## Tabla de Contenidos
 
