@@ -27,20 +27,15 @@ class MainActivity : ComponentActivity() {
     private lateinit var register: Register
     private lateinit var signInLauncher: ActivityResultLauncher<IntentSenderRequest>
 
-    override fun attachBaseContext(newBase: Context?) {
-        val language = mainViewModel.getLanguage(newBase!!) ?: "es"
-        cambiarIdiomaClass.setLocale(newBase,language)
-        super.attachBaseContext(newBase)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Call the getTheme method
         mainViewModel.getTheme(this)
 
-        // Call the getLanguage method
-        val language = mainViewModel.getLanguage(this)
+        // Call the getLanguage method and set it
+        val language = mainViewModel.getLanguage(this) ?: "es"
+        cambiarIdiomaClass.setLocale(this, language)
         Log.d("MainActivity", "Language: $language")
 
         signInLauncher = registerForActivityResult(
@@ -68,10 +63,9 @@ class MainActivity : ComponentActivity() {
                 if (isLoggedIn && email != "") {
                     HomeView(
                         mainViewModel,
+                        cambiarIdiomaClass,
                         darkTheme,
-                        mainViewModel.allIdiomas,
                         context,
-                        activity,
                         register = register,
                         email = email,
                         language = language.toString(),

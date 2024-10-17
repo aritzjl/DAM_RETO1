@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.reto1.ultramarinos.CambiarIdiomaClass
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.components.BottomNavBar
@@ -40,9 +41,8 @@ import com.reto1.ultramarinos.viewmodels.MainViewModel
 @Composable
 fun HomeView(
     mainViewModel: MainViewModel,
+    cambiarIdiomaClass: CambiarIdiomaClass,
     isLightMode: Boolean,
-    idiomaList: List<Idioma>,
-    activity: Context,
     context: Context,
     register: Register,
     email: String,
@@ -59,8 +59,8 @@ fun HomeView(
                 composable("about") { AboutContent(paddingValues, context) }
                 composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode, email, language) }
                 composable("settings") { SettingsContent(
-                    paddingValues, mainViewModel, isLightMode, idiomaList,
-                    activity, context, register, email
+                    paddingValues, mainViewModel, cambiarIdiomaClass, isLightMode,
+                    context, register, email
                 ) }
             }
         })
