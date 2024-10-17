@@ -18,7 +18,7 @@ import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 @Composable
-fun CartModal(cartItems: List<CartProduct>, email:String, onDismiss: () -> Unit) {
+fun CartModal(cartItems: List<CartProduct>, email: String, language: String, onDismiss: () -> Unit) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
 
@@ -35,6 +35,15 @@ fun CartModal(cartItems: List<CartProduct>, email:String, onDismiss: () -> Unit)
             Column {
                 cartItems.forEach { cartProduct ->
                     val itemTotal = (cartProduct.product.offerPrice ?: cartProduct.product.price) * cartProduct.amount
+
+                    // Traducción del contenido del producto según el idioma
+                    val productText = when (language) {
+                        "en" -> "${cartProduct.product.title_en ?: cartProduct.product.title} x ${cartProduct.amount}"
+                        "eu" -> "${cartProduct.product.title_eus ?: cartProduct.product.title} x ${cartProduct.amount}"
+                        else -> "${cartProduct.product.title} x ${cartProduct.amount}"
+                    }
+
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -47,8 +56,10 @@ fun CartModal(cartItems: List<CartProduct>, email:String, onDismiss: () -> Unit)
                             modifier = Modifier.size(40.dp)
                         )
                         Text(
-                            text = "${cartProduct.product.title} x ${cartProduct.amount}",
-                            modifier = Modifier.weight(1f).padding(start = 8.dp),
+                            text = productText,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 8.dp),
                             style = MaterialTheme.typography.bodyMedium
                         )
                         // Mostrar el precio correspondiente

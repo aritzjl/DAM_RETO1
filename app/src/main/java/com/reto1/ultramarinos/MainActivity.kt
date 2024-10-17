@@ -74,6 +74,7 @@ class MainActivity : ComponentActivity() {
                         activity,
                         register = register,
                         email = email,
+                        language = language.toString(),
                         galleryViewModel = GalleryViewModel()
                     )
                 } else {

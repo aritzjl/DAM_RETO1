@@ -37,14 +37,16 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.models.Product
+import com.reto1.ultramarinos.viewmodels.MainViewModel
 
 @Composable
 fun ProductPreview(
     product: Product,
-    email: String
+    email: String,
+    language: String
 ) {
     // Desestructuración de las propiedades de Product
-    val (
+    var (
         title,
         description,
         imageUrl,
@@ -59,7 +61,14 @@ fun ProductPreview(
     ) = product
 
     var showModal by remember { mutableStateOf(false) }
-    val context = LocalContext.current
+    if (language == "en")
+    {
+        title = title_en.toString();
+    }
+    else if (language == "eu")
+    {
+        title = title_eus.toString();
+    }
 
     Box(
         modifier = Modifier
@@ -148,7 +157,7 @@ fun ProductPreview(
         }
 
         if (showModal) {
-            ProductDetailModal(product = product, email, onDismiss = { showModal = false })
+            ProductDetailModal(product = product, email, language, onDismiss = { showModal = false })
         }
     }
 }
