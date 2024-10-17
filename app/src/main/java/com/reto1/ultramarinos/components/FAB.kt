@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.reto1.ultramarinos.R
@@ -32,6 +33,7 @@ fun FAB(isLightMode: Boolean, email: String, language: String) {
     val viewModel: CartViewModel = viewModel()
     var showCartModal by remember { mutableStateOf(false) }
     var cartItems by remember { mutableStateOf<List<CartProduct>>(emptyList()) }
+    val vacio = stringResource(id = R.string.cart_empty)
 
     if (showCartModal)
     {
@@ -58,7 +60,7 @@ fun FAB(isLightMode: Boolean, email: String, language: String) {
                 if (cartItems.isNotEmpty()) {
                     showCartModal = true
                 } else {
-                    Toast.makeText(context, "El carrito está vacío", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, vacio, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e("Cart", "Error: ${e.message}", e)

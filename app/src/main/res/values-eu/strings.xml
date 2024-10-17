@@ -33,4 +33,20 @@
     <string name="products_fish">Arraina</string>
     <string name="products_legumes">Lekaleak</string>
     <string name="products_preserves">Kontserbak</string>
+
+    <string name="product_price">Prezioa:</string>
+    <string name="product_offer_price">Eskaintzako prezioa:</string>
+    <string name="product_add">Produktua saskira gehitu da</string>
+    <string name="product_big_0">Kantitatea 0 baino handiagoa izan behar da</string>
+
+    <string name="cart_empty">Saskia hutsik dago</string>
+    <string name="cart_title">Errosketa-saskia</string>
+    <string name="cart_total_price">Guztira Prezioa:</string>
+    <string name="cart_delete">Saskia ezabatu</string>
+    <string name="cart_delete_good">Saskia hutsik geratu da!</string>
+    <string name="cart_delete_error">Saskia hutsik uzteko akatsa:</string>
+    <string name="cart_close">Itxi</string>
+    <string name="cart_buy">Erosketa egin</string>
+    <string name="cart_buy_good">Erosketa burutu da!</string>
+    <string name="cart_buy_error">Erosketa burutzean akatsa:</string>
 </resources>
