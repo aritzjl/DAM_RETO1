@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.is_carousel_Paused
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -46,7 +47,7 @@ import kotlinx.coroutines.launch
 fun Carrusel(modifier: Modifier = Modifier) {
     val configuration = LocalConfiguration.current
     val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        0.9f // 80% width in landscape
+        0.9f // 90% width in landscape
     } else {
         1f // 100% width in portrait
     }
@@ -66,7 +67,7 @@ fun Carrusel(modifier: Modifier = Modifier) {
 
     LaunchedEffect(Unit) {
         while (true) {
-            delay(4000)
+            delay(5000)
             val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
             pagerState.scrollToPage(nextPage)
         }
@@ -100,7 +101,8 @@ fun Carrusel(modifier: Modifier = Modifier) {
                     Image(
                         painter = painterResource(id = images[currentPage]),
                         contentDescription = "",
-                        contentScale = ContentScale.FillBounds
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier.fillMaxSize()
                     )
 
 
@@ -204,10 +206,10 @@ fun IndicatorDots(isSelected: Boolean, modifier: Modifier) {
 
 
 @Composable
-fun Carrusel2(viewModel: GalleryViewModel, email: String, modifier: Modifier = Modifier) {
+fun Carrusel2(viewModel: GalleryViewModel, email: String, language: String, modifier: Modifier = Modifier) {
     val configuration = LocalConfiguration.current
     val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        0.9f // 80% width in landscape
+        0.9f // 90% width in landscape
     } else {
         1f // 100% width in portrait
     }
@@ -216,11 +218,13 @@ fun Carrusel2(viewModel: GalleryViewModel, email: String, modifier: Modifier = M
 
     val pagerState = rememberPagerState(pageCount = { products.size })
 
-    LaunchedEffect(Unit) {
-        while (true) {
-            delay(4000)
-            val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
-            pagerState.scrollToPage(nextPage)
+    LaunchedEffect(is_carousel_Paused) {
+        if(!is_carousel_Paused) {
+            while (true) {
+                delay(5000)
+                val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
+                pagerState.scrollToPage(nextPage)
+            }
         }
     }
 
@@ -246,7 +250,7 @@ fun Carrusel2(viewModel: GalleryViewModel, email: String, modifier: Modifier = M
                         .fillMaxSize().wrapContentSize()
                 ) {
                     Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
-                        ProductPreview(product, email)
+                        ProductPreview(product, email, language)
                     }
                 }
             }

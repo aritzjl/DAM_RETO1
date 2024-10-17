@@ -114,7 +114,13 @@ class CartViewModel : ViewModel() {
                                         price = productDocument.getDouble("precio")?.toFloat() ?: 0f,
                                         offerPrice = productDocument.getDouble("precio_oferta")?.toFloat(),
                                         unit = productDocument.getString("unidad"),
-                                        category = productDocument.getString("categoria")
+                                        category = productDocument.getString("categoria") ,
+
+                                        title_en = productDocument.getString("nombre_ing"),
+                                        title_eus = productDocument.getString("nombre_eus"),
+
+                                        description_en = productDocument.getString("descripcion_ing"),
+                                        description_eus = productDocument.getString("descripcion_eus")
                                     )
                                     // Añadir el producto y su cantidad al carrito
                                     cartItems.add(product to cantidad)

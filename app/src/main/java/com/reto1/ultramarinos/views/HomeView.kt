@@ -3,23 +3,17 @@ package com.reto1.ultramarinos.views
 // HomeView.kt
 
 import android.content.Context
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,8 +29,6 @@ import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.components.BottomNavBar
 import com.reto1.ultramarinos.components.Carrusel
 import com.reto1.ultramarinos.components.Carrusel2
-import com.reto1.ultramarinos.components.MiHilo
-import com.reto1.ultramarinos.components.ProductPreview
 import com.reto1.ultramarinos.components.RedesSociales
 import com.reto1.ultramarinos.components.Timer
 import com.reto1.ultramarinos.components.ToolBar
@@ -54,6 +46,7 @@ fun HomeView(
     context: Context,
     register: Register,
     email: String,
+    language: String,
     galleryViewModel: GalleryViewModel
 ) {
 
@@ -62,9 +55,9 @@ fun HomeView(
         bottomBar = { BottomNavBar(navController) },
         content = { paddingValues ->
             NavHost(navController = navController, startDestination = "home") {
-                composable("home") { HomeContent(paddingValues, email, context) }
+                composable("home") { HomeContent(paddingValues, email, language, context) }
                 composable("about") { AboutContent(paddingValues, context) }
-                composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode, email) }
+                composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode, email, language) }
                 composable("settings") { SettingsContent(
                     paddingValues, mainViewModel, cambiarIdiomaClass, isLightMode,
                     context, register, email
@@ -74,7 +67,7 @@ fun HomeView(
 }
 
 @Composable
-fun HomeContent(paddingValues: PaddingValues, email: String, context: Context) {
+fun HomeContent(paddingValues: PaddingValues, email: String, language: String, context: Context) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -131,7 +124,7 @@ fun HomeContent(paddingValues: PaddingValues, email: String, context: Context) {
 
 
             Timer()
-            Carrusel2(GalleryViewModel(), email)
+            Carrusel2(GalleryViewModel(), email, language)
 
             YouTubePlayer(
                 youtubeVideoId = "QG4oGxgnBBw", lifecycleOwner = LocalLifecycleOwner.current

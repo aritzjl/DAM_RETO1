@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
 
         // Call the getLanguage method and set it
         val language = mainViewModel.getLanguage(this) ?: "es"
-        cambiarIdiomaClass.setLocale(this, language)
+
         Log.d("MainActivity", "Language: $language")
 
         signInLauncher = registerForActivityResult(
@@ -57,6 +57,11 @@ class MainActivity : ComponentActivity() {
             val context = LocalContext.current
             val activity = LocalContext.current as Activity
 
+            mainViewModel.getLanguage(this) ?: "es"
+            val prefs: SharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+            prefs.edit().putString("language", language).apply()
+
+            
             AppTheme (
                 darkTheme = darkTheme
             ){
@@ -68,6 +73,7 @@ class MainActivity : ComponentActivity() {
                         context,
                         register = register,
                         email = email,
+                        language = language.toString(),
                         galleryViewModel = GalleryViewModel()
                     )
                 } else {

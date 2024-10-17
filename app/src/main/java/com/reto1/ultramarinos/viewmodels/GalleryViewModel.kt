@@ -47,6 +47,12 @@ class GalleryViewModel : ViewModel() {
                         offerPrice = documento.data["precio_oferta"].toString().toFloatOrNull(),
                         unit = documento.data["unidad"].toString(),
                         category = documento.data["categoria"].toString(),
+
+                        title_en = documento.data["nombre_ing"].toString(),
+                        title_eus = documento.data["nombre_eus"].toString(),
+
+                        description_en = documento.data["descripcion_ing"].toString(),
+                        description_eus = documento.data["descripcion_eus"].toString(),
                     )
                 }
                 // Guardar todos los productos en la lista completa
@@ -65,8 +71,20 @@ class GalleryViewModel : ViewModel() {
             // Si no hay categoría seleccionada, mostrar todos los productos
             allProducts
         } else {
-            // Si hay una categoría seleccionada, filtrar los productos por esa categoría
-            allProducts.filter { it.category == category }
+            var chosenCategory = ""
+            if (category.toString() == "Fish" || category.toString() == "Arraina")
+            {
+                chosenCategory = "Pescado"
+            }
+            if (category == "Legumes" || category == "Lekaleak")
+            {
+                chosenCategory = "Legumbres"
+            }
+            if (category == "Preseves" || category == "Kontserbak")
+            {
+                chosenCategory = "Conservas"
+            }
+            allProducts.filter { it.category == chosenCategory }
         }
     }
 }
