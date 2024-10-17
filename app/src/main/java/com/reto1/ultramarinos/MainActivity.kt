@@ -33,9 +33,9 @@ class MainActivity : ComponentActivity() {
         // Call the getTheme method
         mainViewModel.getTheme(this)
 
-        // Call the getLanguage method and set it
+        // Call the getLanguage method
         val language = mainViewModel.getLanguage(this) ?: "es"
-        cambiarIdiomaClass.setLocale(this, language)
+
         Log.d("MainActivity", "Language: $language")
 
         signInLauncher = registerForActivityResult(
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
             val darkTheme : Boolean by mainViewModel.darkTheme.observeAsState(initial = false)
             val context = LocalContext.current
             val activity = LocalContext.current as Activity
-
+            
             AppTheme (
                 darkTheme = darkTheme
             ){
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                         context,
                         register = register,
                         email = email,
-                        language = language.toString(),
+                        language = language,
                         galleryViewModel = GalleryViewModel()
                     )
                 } else {

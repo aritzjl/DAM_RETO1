@@ -3,6 +3,7 @@ package com.reto1.ultramarinos.views
 // HomeView.kt
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,6 +37,7 @@ import com.reto1.ultramarinos.components.YouTubePlayer
 import com.reto1.ultramarinos.models.Idioma
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import com.reto1.ultramarinos.viewmodels.MainViewModel
+import java.util.Locale
 
 
 @Composable
@@ -68,6 +70,11 @@ fun HomeView(
 
 @Composable
 fun HomeContent(paddingValues: PaddingValues, email: String, language: String, context: Context) {
+    val locale = Locale(language)
+    Locale.setDefault(locale)
+    val config = context.resources.configuration
+    config.setLocale(locale)
+    context.resources.updateConfiguration(config, context.resources.displayMetrics)
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
