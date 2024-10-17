@@ -3,7 +3,6 @@ package com.reto1.ultramarinos.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -67,8 +66,6 @@ class MiHilo : Thread() {
 }
 
 
-
-
 @Composable
 fun Timer() {
     val timerText by remember{
@@ -93,7 +90,6 @@ fun Timer() {
 
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

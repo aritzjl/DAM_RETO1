@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.is_carousel_Paused
 import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.models.Product
 import com.reto1.ultramarinos.viewmodels.CartViewModel
@@ -25,9 +26,12 @@ fun ProductDetailModal(product: Product, email:String, onDismiss: () -> Unit) {
     var cart_amount by remember { mutableStateOf(0) }
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
+    is_carousel_Paused = true
 
     AlertDialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = {
+            is_carousel_Paused = false
+            onDismiss() },
         title = { Text(text = product.title) },
         text = {
             LazyColumn {
@@ -110,7 +114,11 @@ fun ProductDetailModal(product: Product, email:String, onDismiss: () -> Unit) {
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = {
+                // Reanudar el carrusel al cerrar el modal
+                is_carousel_Paused = false
+                onDismiss()
+            }) {
                 Text("Cerrar")
             }
         }
