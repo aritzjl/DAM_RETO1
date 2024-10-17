@@ -222,8 +222,10 @@ fun Carrusel2(viewModel: GalleryViewModel, email: String, language: String, modi
         if(!is_carousel_Paused) {
             while (true) {
                 delay(5000)
-                val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
-                pagerState.scrollToPage(nextPage)
+                if (pagerState.pageCount > 0) {
+                    val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
+                    pagerState.scrollToPage(nextPage)
+                }
             }
         }
     }
