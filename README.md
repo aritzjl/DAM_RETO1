@@ -121,7 +121,7 @@ Para ejecutar el proyecto, sigue estos pasos:
 
     ```bash
     cd Ultramarinos
-```
+	```
 
     Abre el proyecto en Android Studio.
 
