@@ -19,6 +19,7 @@ markdown
 - **Interfaz Multilingüe**: Opción para cambiar el idioma de la aplicación.
 - **Integración con Redes Sociales**: Permite compartir productos y promociones a través de plataformas sociales.
 - **Modo oscuro**: Permite al usuario cambiar los colores de la app.
+- **Sobre Nosotros**: Sección sobre nosotros con Intents para compartir.
 
 ## Tecnologías Utilizadas
 
