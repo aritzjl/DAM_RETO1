@@ -11,8 +11,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import android.widget.Toast
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
+import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
@@ -28,9 +30,15 @@ fun CartModal(cartItems: List<CartProduct>, email: String, language: String, onD
         itemPrice * it.amount
     }.sum()
 
+    val precio_total = stringResource(id = R.string.cart_total_price)
+    val eliminar_bien = stringResource(id = R.string.cart_delete_good)
+    val eliminar_error = stringResource(id = R.string.cart_delete_error)
+    val add_bien = stringResource(id = R.string.cart_buy_good)
+    val add_error = stringResource(id = R.string.cart_buy_error)
+
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "Carrito de Compras", style = MaterialTheme.typography.titleLarge) },
+        title = { Text(text = stringResource(id = R.string.cart_title), style = MaterialTheme.typography.titleLarge) },
         text = {
             Column {
                 cartItems.forEach { cartProduct ->
@@ -71,7 +79,7 @@ fun CartModal(cartItems: List<CartProduct>, email: String, language: String, onD
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Precio Total: $${totalPrice}",
+                    text = precio_total + " $${totalPrice}",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -81,15 +89,15 @@ fun CartModal(cartItems: List<CartProduct>, email: String, language: String, onD
             Button(
                 onClick = {
                     viewModel.clearUserCart(email, {
-                        Toast.makeText(context, "Compra realizada!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, add_bien, Toast.LENGTH_SHORT).show()
                         onDismiss()
                     }, { exception ->
-                        Toast.makeText(context, "Error al realizar la compra: ${exception.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, add_error + " ${exception.message}", Toast.LENGTH_SHORT).show()
                     })
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
-                Text("Comprar", color = MaterialTheme.colorScheme.onPrimary)
+                Text(stringResource(id = R.string.cart_buy), color = MaterialTheme.colorScheme.onPrimary)
             }
         },
         dismissButton = {
@@ -98,14 +106,14 @@ fun CartModal(cartItems: List<CartProduct>, email: String, language: String, onD
                 Button(
                     onClick = {
                         viewModel.clearUserCart(email, {
-                            Toast.makeText(context, "Carrito vaciado!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, eliminar_bien, Toast.LENGTH_SHORT).show()
                             onDismiss()
                         }, { exception ->
-                            Toast.makeText(context, "Error al vaciar el carrito: ${exception.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, eliminar_error + " ${exception.message}", Toast.LENGTH_SHORT).show()
                         })
                     }
                 ) {
-                    Text("Eliminar Carrito")
+                    Text(stringResource(id = R.string.cart_delete))
                 }
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -116,7 +124,7 @@ fun CartModal(cartItems: List<CartProduct>, email: String, language: String, onD
                         onDismiss() // Cerrar el modal sin hacer nada más
                     }
                 ) {
-                    Text("Cerrar")
+                    Text(stringResource(id = R.string.cart_close))
                 }
             }
         },
