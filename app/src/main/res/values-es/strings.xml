@@ -33,4 +33,20 @@
     <string name="products_fish">Pescado</string>
     <string name="products_legumes">Legumbres</string>
     <string name="products_preserves">Conservas</string>
+
+    <string name="product_price">Precio:</string>
+    <string name="product_offer_price">Precio de oferta:</string>
+    <string name="product_add">Producto añadido al carrito</string>
+    <string name="product_big_0">La cantidad debe ser mayor que 0</string>
+
+    <string name="cart_empty">El carrito está vacío</string>
+    <string name="cart_title">Carrito de Compras</string>
+    <string name="cart_total_price">Precio Total:</string>
+    <string name="cart_delete">Eliminar Carrito</string>
+    <string name="cart_delete_good">Carrito vaciado!</string>
+    <string name="cart_delete_error">Error al vaciar el carrito:</string>
+    <string name="cart_close">Cerrar</string>
+    <string name="cart_buy">Comprar</string>
+    <string name="cart_buy_good">Compra realizada!</string>
+    <string name="cart_buy_error">Error al realizar la compra:</string>
 </resources>
