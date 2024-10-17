@@ -47,6 +47,12 @@ class GalleryViewModel : ViewModel() {
                         offerPrice = documento.data["precio_oferta"].toString().toFloatOrNull(),
                         unit = documento.data["unidad"].toString(),
                         category = documento.data["categoria"].toString(),
+
+                        title_en = documento.data["nombre_ing"].toString(),
+                        title_eus = documento.data["nombre_eus"].toString(),
+
+                        description_en = documento.data["descripcion_ing"].toString(),
+                        description_eus = documento.data["descripcion_eus"].toString(),
                     )
                 }
                 // Guardar todos los productos en la lista completa

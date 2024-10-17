@@ -18,21 +18,26 @@ import com.reto1.ultramarinos.components.FAB
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import com.reto1.ultramarinos.components.ProductPreview
 import com.reto1.ultramarinos.components.BottomNavBar
-import com.reto1.ultramarinos.components.CartModal
 import com.reto1.ultramarinos.components.CategorySelector
 import com.reto1.ultramarinos.components.ToolBar
 
 //  GALLERY VIEW
 
 @Composable
-fun GalleryView(paddingValues: PaddingValues, galleryViewModel: GalleryViewModel, isLightMode: Boolean, email: String) {
+fun GalleryView(
+    paddingValues: PaddingValues,
+    galleryViewModel: GalleryViewModel,
+    isLightMode: Boolean,
+    email: String,
+    language: String
+) {
     val navController = rememberNavController()
     val viewModel: GalleryViewModel = viewModel()
 
     Scaffold(
         topBar = { ToolBar(galleryViewModel, navController, isLightMode) },
         bottomBar = { BottomNavBar(navController) },
-        floatingActionButton = { FAB(isLightMode, email) }
+        floatingActionButton = { FAB(isLightMode, email, language) }
     ) { innerPadding ->
         GalleryContent(
             paddingValues = paddingValues,
@@ -40,6 +45,7 @@ fun GalleryView(paddingValues: PaddingValues, galleryViewModel: GalleryViewModel
             artworks = viewModel.artworks.value,
             paddingValues2 = innerPadding,
             email,
+            language,
             onCategorySelected = { category -> viewModel.filterArtworks(category) } // Pasar la categoría seleccionada
         )
     }
@@ -52,7 +58,8 @@ fun GalleryContent(
     artworks: List<Product>,
     paddingValues2: PaddingValues,
     email: String,
-    onCategorySelected: (String?) -> Unit // Cambié ProductCategory? a String?
+    language: String,
+    onCategorySelected: (String?) -> Unit // Cambié ProductCategory? a String?){}
 ) {
     Column(modifier = Modifier.padding(paddingValues)) {
         // Mostrar el selector de categorías
@@ -69,7 +76,7 @@ fun GalleryContent(
                 key = { index -> artworks[index].title }
             ) { index ->
                 val artwork = artworks[index]
-                ProductPreview(artwork, email)
+                ProductPreview(artwork, email, language)
             }
         }
     }

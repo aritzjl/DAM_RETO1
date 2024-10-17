@@ -206,7 +206,7 @@ fun IndicatorDots(isSelected: Boolean, modifier: Modifier) {
 
 
 @Composable
-fun Carrusel2(viewModel: GalleryViewModel, email: String, modifier: Modifier = Modifier) {
+fun Carrusel2(viewModel: GalleryViewModel, email: String, language: String, modifier: Modifier = Modifier) {
     val configuration = LocalConfiguration.current
     val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
         0.9f // 90% width in landscape
@@ -250,7 +250,7 @@ fun Carrusel2(viewModel: GalleryViewModel, email: String, modifier: Modifier = M
                         .fillMaxSize().wrapContentSize()
                 ) {
                     Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
-                        ProductPreview(product, email)
+                        ProductPreview(product, email, language)
                     }
                 }
             }

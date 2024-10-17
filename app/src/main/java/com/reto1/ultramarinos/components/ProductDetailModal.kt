@@ -22,17 +22,30 @@ import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 
 @Composable
-fun ProductDetailModal(product: Product, email:String, onDismiss: () -> Unit) {
+fun ProductDetailModal(product: Product, email: String, language: String, onDismiss: () -> Unit) {
     var cart_amount by remember { mutableStateOf(0) }
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
     is_carousel_Paused = true
 
+    // Seleccionar el título y la descripción según el idioma
+    val title = when (language) {
+        "en" -> product.title_en ?: product.title
+        "eu" -> product.title_eus ?: product.title
+        else -> product.title
+    }
+
+    val description = when (language) {
+        "en" -> product.description_en ?: product.description
+        "eu" -> product.description_eus ?: product.description
+        else -> product.description
+    }
+
     AlertDialog(
         onDismissRequest = {
             is_carousel_Paused = false
             onDismiss() },
-        title = { Text(text = product.title) },
+        title = { Text(text = title) },  // Cambiar el título según el idioma
         text = {
             LazyColumn {
                 item {
@@ -44,7 +57,7 @@ fun ProductDetailModal(product: Product, email:String, onDismiss: () -> Unit) {
                             .aspectRatio(1f)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = product.category.toString())
+                    Text(text = description)  // Mostrar la descripción traducida
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = "Precio: ${product.price}€" + (if (product.unit != null) " / ${product.unit}" else ""))
                     product.offerPrice?.let {
@@ -108,7 +121,6 @@ fun ProductDetailModal(product: Product, email:String, onDismiss: () -> Unit) {
                                     }
                                 }
                         )
-
                     }
                 }
             }
