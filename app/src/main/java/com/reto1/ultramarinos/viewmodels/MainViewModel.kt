@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.reto1.ultramarinos.CambiarIdiomaClass
 import com.reto1.ultramarinos.models.Idioma
 
 class MainViewModel(context: Context) : ViewModel() {
@@ -14,7 +13,7 @@ class MainViewModel(context: Context) : ViewModel() {
     private val _darkTheme = MutableLiveData<Boolean>()
     val darkTheme: LiveData<Boolean> = _darkTheme
 
-    fun toggleTheme(context: Context){
+    fun toggleTheme(context: Context) {
         val prefs: SharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
 
         // Cambia el value del tema
@@ -32,24 +31,27 @@ class MainViewModel(context: Context) : ViewModel() {
     }
 
     // Idiomas
-    val cambiarIdiomaClass by lazy {
-        CambiarIdiomaClass()
-    }
-
-    fun setLanguage(context: Context, idioma: String) {
-        val prefs: SharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
-        prefs.edit().putString("language", idioma).apply()
-    }
-
-    fun getLanguage(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("language", "es")
-    }
+    private val _currentLanguage  = MutableLiveData<String>()
+    val currentLanguage: LiveData<String> = _currentLanguage
 
     val allIdiomas = listOf(
         Idioma("Castellano","es"),
         Idioma("English","en"),
         Idioma("Euskara","eu"),
     )
+
+    fun setLanguage(context: Context, idiomacod: String) {
+        val prefs: SharedPreferences = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+
+        _currentLanguage.value = idiomacod
+
+        prefs.edit().putString("language", idiomacod).apply()
+    }
+
+    fun getLanguage(context: Context): String? {
+        val prefs = context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+
+        return prefs.getString("language", "es")
+    }
 
 }
