@@ -296,6 +296,3 @@ fun AppTheme(
   )
 }
 
-class Theme {
-
-}

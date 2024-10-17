@@ -1,6 +1,5 @@
 package com.reto1.ultramarinos.components
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -16,13 +15,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.reto1.ultramarinos.R
 
 @Composable
 fun CategorySelector(onCategorySelected: (String?) -> Unit) {
+    val todas = stringResource(id = R.string.products_all)
+    val pescado = stringResource(id = R.string.products_fish)
+    val legumbres = stringResource(id = R.string.products_legumes)
+    val conservas = stringResource(id = R.string.products_preserves)
+
     // Lista de categorías como strings, null es la opción para "Todas las categorías"
-    val categories = listOf(null) + listOf("Pescado", "Legumbres", "Conservas")
+    val categories = listOf(null) + listOf(pescado, legumbres, conservas)
     var expanded by remember { mutableStateOf(false) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }
 
@@ -33,7 +38,7 @@ fun CategorySelector(onCategorySelected: (String?) -> Unit) {
             .clickable { expanded = !expanded }
     ) {
         Text(
-            text = selectedCategory ?: "Todas las categorías",
+            text = selectedCategory ?: todas,
             modifier = Modifier.padding(16.dp)
         )
     }
@@ -54,7 +59,7 @@ fun CategorySelector(onCategorySelected: (String?) -> Unit) {
                         }
                 ) {
                     Text(
-                        text = category ?: "Todas las categorías",
+                        text = category ?: todas,
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
