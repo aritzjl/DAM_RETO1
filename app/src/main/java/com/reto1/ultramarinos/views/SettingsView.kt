@@ -83,7 +83,7 @@ fun SettingsContent(
                 textAlign = TextAlign.Center
             )
             Image(
-                painter = painterResource(R.drawable.img_1),
+                painter = painterResource(R.drawable.default_pic),
                 contentDescription = "Icono",
                 modifier = Modifier
                     .padding(vertical = 16.dp)
