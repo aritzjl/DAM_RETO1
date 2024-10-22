@@ -10,8 +10,6 @@
     <string name="light_mode">Modo Claro</string>
     <string name="log_out">Cerrar Sesión</string>
 
-    <string name="about_main_title">ULTRAMARINOS GREGORIO MARTIN</string>
-
     <string name="about_subtitle_1">El Comienzo</string>
     <string name="about_desc_1">En 1835, José María Gurtubay, un comerciante de Bilbao, cometió un error en su pedido a sus proveedores. Escribió "Envíenme primer barco que toque puerto de Bilbao 100 o 120 bacaladas primera superior". Sin embargo, la "o" fue malinterpretada como un 0, y en lugar de recibir 100 o 120 bacaladas, recibió **1,000,120**. Este inesperado exceso de bacalao se convirtió en el alimento básico para la gente de Bilbao durante el verano de ese año, lo que llevó a la creación de muchas recetas.</string>
 
@@ -27,8 +25,6 @@
     <string name="about_subtitle_5">Nuestro Objetivo</string>
     <string name="about_desc_5">Nuestro objetivo es seguir ofreciendo los mejores productos a los mejores precios, mientras mantenemos nuestra autenticidad y profesionalismo. Creemos que nuestro servicio personalizado y nuestros productos de alta calidad nos distinguen, y estamos orgullosos de ser un punto de referencia en la escena culinaria de Bilbao.</string>
 
-    <string name="home_main_title">Inicio</string>
-
     <string name="home_text_1">Desde 1931 somos especialistas en bacalao, legumbres, quesos, embutidos, conservas, vinos, condimentos, chocolates…</string>
     <string name="home_text_2">Uno de nuestros secretos es que somos amantes de la gastronomía de calidad en Ultramarinos Gregorio Martín.\n Nuestra experiencia de estos años unido a una materia prima de calidad es la combinación perfecta para un producto 5 estrellas.</string>
     <string name="home_text_3">Productos destacados</string>
@@ -37,4 +33,20 @@
     <string name="products_fish">Pescado</string>
     <string name="products_legumes">Legumbres</string>
     <string name="products_preserves">Conservas</string>
+
+    <string name="product_price">Precio:</string>
+    <string name="product_offer_price">Precio de oferta:</string>
+    <string name="product_add">Producto añadido al carrito</string>
+    <string name="product_big_0">La cantidad debe ser mayor que 0</string>
+
+    <string name="cart_empty">El carrito está vacío</string>
+    <string name="cart_title">Carrito de Compras</string>
+    <string name="cart_total_price">Precio Total:</string>
+    <string name="cart_delete">Eliminar Carrito</string>
+    <string name="cart_delete_good">Carrito vaciado!</string>
+    <string name="cart_delete_error">Error al vaciar el carrito:</string>
+    <string name="cart_close">Cerrar</string>
+    <string name="cart_buy">Comprar</string>
+    <string name="cart_buy_good">Compra realizada!</string>
+    <string name="cart_buy_error">Error al realizar la compra:</string>
 </resources>

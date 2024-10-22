@@ -33,9 +33,9 @@ fun AboutContent(paddingValues: PaddingValues, context: Context) {
         .padding(paddingValues)) {
         item {
             Text(
-                text = stringResource(id = R.string.about_main_title),
+                text = stringResource(id = R.string.nav_about),
                 fontWeight = FontWeight.ExtraBold,
-                fontSize = 30.sp,
+                fontSize = 32.sp,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()

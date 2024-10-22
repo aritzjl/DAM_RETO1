@@ -1,6 +1,7 @@
 package com.reto1.ultramarinos.components
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -14,31 +15,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 @Composable
-fun FAB() {
+fun FAB(isLightMode: Boolean, email: String, language: String) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
     var showCartModal by remember { mutableStateOf(false) }
     var cartItems by remember { mutableStateOf<List<CartProduct>>(emptyList()) }
+    val vacio = stringResource(id = R.string.cart_empty)
 
     if (showCartModal)
     {
-        CartModal(cartItems) {
+        CartModal(cartItems, email = email, language = language) {
             showCartModal = false
         }
     }
 
     FloatingActionButton(onClick = {
         Log.d("Cart", "Clicado: Obteniendo carrito")
-        viewModel.getUserCart("aritzzjl@gmail.com") { cartList ->
+        viewModel.getUserCart(email) { cartList ->
             Log.d("Cart", "Carrito obtenido: $cartList")
             try {
                 val groupedCartItems = cartList
@@ -54,7 +60,7 @@ fun FAB() {
                 if (cartItems.isNotEmpty()) {
                     showCartModal = true
                 } else {
-                    Toast.makeText(context, "El carrito está vacío", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, vacio, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e("Cart", "Error: ${e.message}", e)
@@ -65,7 +71,8 @@ fun FAB() {
         Image(
             painter = painterResource(R.drawable.baseline_shopping_cart_24),
             contentDescription = "Icono",
-            modifier = Modifier.width(48.dp)
+            modifier = Modifier.width(48.dp),
+            colorFilter = ColorFilter.tint(if (isLightMode) Color.White else Color.Black),
         )
     }
 }

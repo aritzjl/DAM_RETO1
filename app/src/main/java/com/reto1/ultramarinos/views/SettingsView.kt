@@ -1,5 +1,6 @@
 package com.reto1.ultramarinos.views
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -24,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,10 +40,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.reto1.ultramarinos.CambiarIdiomaClass
 import com.reto1.ultramarinos.MainActivity
 import com.reto1.ultramarinos.R
 import com.reto1.ultramarinos.Register
-import com.reto1.ultramarinos.models.Idioma
 import com.reto1.ultramarinos.viewmodels.MainViewModel
 
 
@@ -49,15 +51,16 @@ import com.reto1.ultramarinos.viewmodels.MainViewModel
 fun SettingsContent(
     paddingValues: PaddingValues,
     mainViewModel: MainViewModel,
+    cambiarIdiomaClass: CambiarIdiomaClass,
     isLightMode: Boolean,
-    idiomaList: List<Idioma>,
-    activity: Context,
     context: Context,
     register: Register,
     email: String
 ) {
     var showMenu by remember { mutableStateOf(false) }
-    var selectedItem by remember { mutableStateOf(idiomaList.first { it.codigo == mainViewModel.getLanguage(activity) }) }
+
+    val currentLanguage by mainViewModel.currentLanguage.observeAsState(mainViewModel.getLanguage(context) ?: "es")
+    val idiomaSeleccionado = mainViewModel.allIdiomas.first { it.codigo == currentLanguage }
 
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -69,14 +72,6 @@ fun SettingsContent(
             .padding(start = 16.dp)
     ) {
         item {
-            Image(
-                painter = painterResource(R.drawable.img_1),
-                contentDescription = "Icono",
-                modifier = Modifier
-                    .padding(vertical = 16.dp)
-                    .size(200.dp)
-                    .clip(CircleShape)
-            )
             Text(
                 text = stringResource(id = R.string.nav_settings),
                 fontWeight = FontWeight.ExtraBold,
@@ -86,6 +81,14 @@ fun SettingsContent(
                     .fillMaxWidth()
                     .padding(10.dp),
                 textAlign = TextAlign.Center
+            )
+            Image(
+                painter = painterResource(R.drawable.default_pic),
+                contentDescription = "Icono",
+                modifier = Modifier
+                    .padding(vertical = 16.dp)
+                    .size(200.dp)
+                    .clip(CircleShape)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -134,7 +137,7 @@ fun SettingsContent(
                     }
                 )  {
                     Text(
-                        text = selectedItem.title,
+                        text = idiomaSeleccionado.title,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onBackground,
@@ -146,28 +149,23 @@ fun SettingsContent(
                     expanded = showMenu,
                     onDismissRequest = { showMenu = false },
                 ) {
-                    for (i in idiomaList.indices) {
-                        val item = idiomaList[i]
+                    for (i in mainViewModel.allIdiomas.indices) {
+                        val item = mainViewModel.allIdiomas[i]
                         DropdownMenuItem(
                             text = {
                                 Text(text = item.title)
                             },
                             onClick = {
-                                selectedItem = item
-                                val idiomaNuevo = selectedItem.codigo
-                                showMenu = false
-
                                 // Update language preference
-                                mainViewModel.setLanguage(activity,idiomaNuevo)
+                                mainViewModel.setLanguage(context,item.codigo)
 
                                 // Change language using CambiarIdiomaClass
-                                mainViewModel.cambiarIdiomaClass.setLocale(activity,idiomaNuevo)
+                                cambiarIdiomaClass.setLocale(context,item.codigo)
 
-                                // Reload the current activity
-                                val intent = Intent(activity, MainActivity::class.java)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                                activity.startActivity(intent)
-//                                (activity as AppCompatActivity).finish()
+                                // Recreate the activity to apply the new language
+                                (context as? Activity)?.recreate()
+
+                                showMenu = false
 
                             }
                         )
@@ -201,9 +199,9 @@ fun SettingsContent(
                 TextButton(
                     onClick = {
                         register.logOut()
-                        val intent = Intent(activity, MainActivity::class.java)
+                        val intent = Intent(context, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        activity.startActivity(intent)
+                        context.startActivity(intent)
                     }
                 )  {
                     Text(

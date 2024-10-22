@@ -10,8 +10,6 @@
     <string name="light_mode">Argi Modua</string>
     <string name="log_out">Saioa Amaitu</string>
 
-    <string name="about_main_title">GREGORIO MARTIN ULTRAMARINAK</string>
-
     <string name="about_subtitle_1">Hasiera</string>
     <string name="about_desc_1">1835ean, José María Gurtubay, Bilboko merkataria, akats bat egin zuen hornitzaileei egindako eskaeran. Idatzi zuen "Envíenme primer barco que toque puerto de Bilbao 100 o 120 bakailao lehenengo superior". Baina, "o" hori 0 bezala ulertu zen, eta, 100 edo 120 bakailao ordez, **1,000,120** jaso zuen! Bakailaoaren gehiegizko kopuru horrek Bilboko jendearen janari nagusia bihurtu zen urte hartako udan, eta hainbat errezeta sortu ziren.</string>
 
@@ -27,8 +25,6 @@
     <string name="about_subtitle_5">Gure Helburua</string>
     <string name="about_desc_5">Gure helburua produktu onenak prezio onenen eskaintzen jarraitzea da, autentizitatea eta profesionalismoa mantenduz. Uste dugu zerbitzu pertsonalizatua eta produktu kalitate handikoak bereizten gaituzela, eta Bilboko sukaldaritzaren eszenan erreferentzia garrantzitsua izateaz harro gaude.</string>
 
-    <string name="home_main_title">Hasiera</string>
-
     <string name="home_text_1">1931tik bakailao, lekadunak, gazta, saltsak, kontserbak, ardoak, ongailuak, txokolateak… espezialistak gara.</string>
     <string name="home_text_2">Gure sekretu bat da gastronomia kalitate oneko zaleak garela Ultramarinos Gregorio Martín-en.\n Urteetako esperientzia konbinatuta materia prima kalitate onekoarekin 5 izarretako produktua sortzeko konbinazio perfektua da.</string>
     <string name="home_text_3">Produktu nabarmenak</string>
@@ -37,4 +33,20 @@
     <string name="products_fish">Arraina</string>
     <string name="products_legumes">Lekaleak</string>
     <string name="products_preserves">Kontserbak</string>
+
+    <string name="product_price">Prezioa:</string>
+    <string name="product_offer_price">Eskaintzako prezioa:</string>
+    <string name="product_add">Produktua saskira gehitu da</string>
+    <string name="product_big_0">Kantitatea 0 baino handiagoa izan behar da</string>
+
+    <string name="cart_empty">Saskia hutsik dago</string>
+    <string name="cart_title">Errosketa-saskia</string>
+    <string name="cart_total_price">Guztira Prezioa:</string>
+    <string name="cart_delete">Saskia ezabatu</string>
+    <string name="cart_delete_good">Saskia hutsik geratu da!</string>
+    <string name="cart_delete_error">Saskia hutsik uzteko akatsa:</string>
+    <string name="cart_close">Itxi</string>
+    <string name="cart_buy">Erosketa egin</string>
+    <string name="cart_buy_good">Erosketa burutu da!</string>
+    <string name="cart_buy_error">Erosketa burutzean akatsa:</string>
 </resources>

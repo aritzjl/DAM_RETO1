@@ -11,24 +11,47 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.is_carousel_Paused
 import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.models.Product
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 
 @Composable
-fun ProductDetailModal(product: Product, onDismiss: () -> Unit) {
+fun ProductDetailModal(product: Product, email: String, language: String, onDismiss: () -> Unit) {
     var cart_amount by remember { mutableStateOf(0) }
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
+    is_carousel_Paused = true
+
+    // Seleccionar el título y la descripción según el idioma
+    val title = when (language) {
+        "en" -> product.title_en ?: product.title
+        "eu" -> product.title_eus ?: product.title
+        else -> product.title
+    }
+
+    val description = when (language) {
+        "en" -> product.description_en ?: product.description
+        "eu" -> product.description_eus ?: product.description
+        else -> product.description
+    }
+
+    val precio = stringResource(id = R.string.product_price)
+    val precio_oferta = stringResource(id = R.string.product_offer_price)
+    val add_producto = stringResource(id = R.string.product_add)
+    val mas_0 = stringResource(id = R.string.product_big_0)
 
     AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(text = product.title) },
+        onDismissRequest = {
+            is_carousel_Paused = false
+            onDismiss() },
+        title = { Text(text = title) },  // Cambiar el título según el idioma
         text = {
             LazyColumn {
                 item {
@@ -40,12 +63,12 @@ fun ProductDetailModal(product: Product, onDismiss: () -> Unit) {
                             .aspectRatio(1f)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = product.category.toString())
+                    Text(text = description)  // Mostrar la descripción traducida
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Precio: ${product.price}€" + (if (product.unit != null) " / ${product.unit}" else ""))
+                    Text(text = precio + " ${product.price}€" + (if (product.unit != null) " / ${product.unit}" else ""))
                     product.offerPrice?.let {
                         Text(
-                            text = "Precio de oferta: $it€" + (if (product.unit != null) " / ${product.unit}" else ""),
+                            text = precio_oferta + " $it€" + (if (product.unit != null) " / ${product.unit}" else ""),
                             color = Color.Red
                         )
                     }
@@ -89,9 +112,9 @@ fun ProductDetailModal(product: Product, onDismiss: () -> Unit) {
                                         viewModel.addCartProduct(
                                             product,
                                             cart_amount,
-                                            "aritzzjl@gmail.com", // Email por defecto
+                                            email,
                                             onSuccess = {
-                                                Toast.makeText(context, "Producto añadido al carrito", Toast.LENGTH_SHORT).show()
+                                                Toast.makeText(context, add_producto, Toast.LENGTH_SHORT).show()
                                                 cart_amount = 0  // Resetear el contador
                                                 onDismiss()  // Cerrar el modal
                                             },
@@ -100,18 +123,21 @@ fun ProductDetailModal(product: Product, onDismiss: () -> Unit) {
                                             }
                                         )
                                     } else {
-                                        Toast.makeText(context, "La cantidad debe ser mayor que 0", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, mas_0, Toast.LENGTH_SHORT).show()
                                     }
                                 }
                         )
-
                     }
                 }
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cerrar")
+            TextButton(onClick = {
+                // Reanudar el carrusel al cerrar el modal
+                is_carousel_Paused = false
+                onDismiss()
+            }) {
+                Text(stringResource(id = R.string.cart_close))
             }
         }
     )
