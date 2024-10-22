@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import android.widget.Toast
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
@@ -20,10 +21,10 @@ import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 @Composable
-fun CartModal(cartItems: List<CartProduct>, email: String, language: String, onDismiss: () -> Unit) {
+fun CartModal(cartItems: List<CartProduct>, email: String, language: String, register: Register, onDismiss: () -> Unit) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
-
+    val email = remember { register.loadEmail("email", "") }
     // Cálculo del precio total considerando el precio de oferta
     val totalPrice = cartItems.map {
         val itemPrice = it.product.offerPrice ?: it.product.price

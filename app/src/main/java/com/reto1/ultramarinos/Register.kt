@@ -39,7 +39,7 @@ class Register(private val activity: Activity, private val signInLauncher: Activ
         sharedPreferences.edit().putString(key, value).apply()
     }
 
-    fun loadEmail(key: String, defaultValue: String): String {
+    public fun loadEmail(key: String, defaultValue: String): String {
         return sharedPreferences.getString(key, defaultValue) ?: defaultValue
     }
 
@@ -63,6 +63,7 @@ class Register(private val activity: Activity, private val signInLauncher: Activ
             .addOnSuccessListener { result ->
                 try {
                     val intentSenderRequest = IntentSenderRequest.Builder(result.pendingIntent).build()
+
                     signInLauncher.launch(intentSenderRequest)
                 } catch (e: Exception) {
                     Log.e("Register", "Google Sign-In failed", e)
@@ -78,23 +79,31 @@ class Register(private val activity: Activity, private val signInLauncher: Activ
             try {
                 val credential: SignInCredential? = oneTapClient.getSignInCredentialFromIntent(result)
                 val idToken = credential?.googleIdToken
-                if (idToken != null) {
+                val email = credential?.id // Obtiene el email del SignInCredential
+                if (idToken != null && email != null) {
+                    Log.d("Register", "User's email: $email") // Log del email
+
                     val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
                     FirebaseAuth.getInstance().signInWithCredential(firebaseCredential)
                         .addOnCompleteListener(activity) { task ->
                             if (task.isSuccessful) {
                                 Log.d("Register", "Google Sign-In successful!")
+                                // Actualizar estado de inicio de sesión y guardar email
                                 isLoggedIn.value = true
+                                saveEmail("email", email) // Guardar email
                             } else {
                                 Log.e("Register", "Google Sign-In failed", task.exception)
                             }
                         }
+                } else {
+                    Log.e("Register", "ID token or email is null")
                 }
             } catch (e: ApiException) {
                 Log.e("Register", "Google Sign-In failed", e)
             }
         }
     }
+
 
 
     fun registerWithEmail(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
@@ -105,6 +114,7 @@ class Register(private val activity: Activity, private val signInLauncher: Activ
                 if (task.isSuccessful) {
                     Log.d("Register", "Registration successful!")
                     isLoggedIn.value = true
+
                     saveBoolean("is_logged_in",true)
                     onResult(true, null)
                 } else {

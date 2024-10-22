@@ -57,9 +57,9 @@ fun HomeView(
         bottomBar = { BottomNavBar(navController) },
         content = { paddingValues ->
             NavHost(navController = navController, startDestination = "home") {
-                composable("home") { HomeContent(paddingValues, email, language, context) }
+                composable("home") { HomeContent(paddingValues, email, language, context, register) }
                 composable("about") { AboutContent(paddingValues, context) }
-                composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode, email, language) }
+                composable("gallery") { GalleryView(paddingValues, galleryViewModel, isLightMode, email, language, register) }
                 composable("settings") { SettingsContent(
                     paddingValues, mainViewModel, cambiarIdiomaClass, isLightMode,
                     context, register, email
@@ -69,7 +69,7 @@ fun HomeView(
 }
 
 @Composable
-fun HomeContent(paddingValues: PaddingValues, email: String, language: String, context: Context) {
+fun HomeContent(paddingValues: PaddingValues, email: String, language: String, context: Context, register:Register) {
     val locale = Locale(language)
     Locale.setDefault(locale)
     val config = context.resources.configuration
@@ -131,7 +131,7 @@ fun HomeContent(paddingValues: PaddingValues, email: String, language: String, c
 
 
             Timer()
-            Carrusel2(GalleryViewModel(), email, language)
+            Carrusel2(GalleryViewModel(), email, language, register)
 
             YouTubePlayer(
                 youtubeVideoId = "QG4oGxgnBBw", lifecycleOwner = LocalLifecycleOwner.current

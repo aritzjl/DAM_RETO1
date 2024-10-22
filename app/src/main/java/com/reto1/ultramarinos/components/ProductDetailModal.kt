@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.is_carousel_Paused
 import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.models.Product
@@ -23,10 +24,11 @@ import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 
 @Composable
-fun ProductDetailModal(product: Product, email: String, language: String, onDismiss: () -> Unit) {
+fun ProductDetailModal(product: Product, email: String, language: String, register: Register, onDismiss: () -> Unit) {
     var cart_amount by remember { mutableStateOf(0) }
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
+    val email = remember { register.loadEmail("email", "") }
     is_carousel_Paused = true
 
     // Seleccionar el título y la descripción según el idioma
@@ -46,6 +48,7 @@ fun ProductDetailModal(product: Product, email: String, language: String, onDism
     val precio_oferta = stringResource(id = R.string.product_offer_price)
     val add_producto = stringResource(id = R.string.product_add)
     val mas_0 = stringResource(id = R.string.product_big_0)
+
 
     AlertDialog(
         onDismissRequest = {

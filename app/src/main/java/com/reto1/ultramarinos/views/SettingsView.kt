@@ -57,6 +57,9 @@ fun SettingsContent(
     register: Register,
     email: String
 ) {
+
+
+    val email = remember { register.loadEmail("email", "") }
     var showMenu by remember { mutableStateOf(false) }
 
     val currentLanguage by mainViewModel.currentLanguage.observeAsState(mainViewModel.getLanguage(context) ?: "es")

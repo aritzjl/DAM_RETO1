@@ -17,7 +17,11 @@ import androidx.activity.result.IntentSenderRequest
 import com.reto1.ultramarinos.views.HomeView
 import com.reto1.ultramarinos.views.LoginView
 import androidx.activity.result.ActivityResultLauncher
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 
 class MainActivity : ComponentActivity() {
@@ -30,10 +34,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Call the getTheme method
+        // Cargar el tema
         mainViewModel.getTheme(this)
 
-        // Call the getLanguage method
+        // Cargar idioma
         val language = mainViewModel.getLanguage(this) ?: "es"
 
         Log.d("MainActivity", "Language: $language")
@@ -46,46 +50,52 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        register = Register(this, signInLauncher) // We pass signInLauncher to Register
-        val email = register.loadEmail("email","")
-        val isLoggedIn = register.loadBoolean("is_logged_in", true)
+        register = Register(this, signInLauncher)
+
+        // Recuperar el estado de inicio de sesión y el email
+        val email = register.loadEmail("email", "")
+        val isLoggedIn = register.loadBoolean("is_logged_in", false)
         register.isLoggedIn.value = isLoggedIn
 
         setContent {
-            // Escucha cambios a esta variable
-            val darkTheme : Boolean by mainViewModel.darkTheme.observeAsState(initial = false)
+            // Escuchar cambios en el tema oscuro
+            val darkTheme: Boolean by mainViewModel.darkTheme.observeAsState(initial = false)
             val context = LocalContext.current
             val activity = LocalContext.current as Activity
-            
-            AppTheme (
-                darkTheme = darkTheme
-            ){
-                if (isLoggedIn && email != "") {
+
+            // Observa cambios en el estado de inicio de sesión
+            val loggedInState = remember { register.isLoggedIn }.value
+            val currentEmail = remember { register.loadEmail("email", "") }
+
+            AppTheme(darkTheme = darkTheme) {
+                if (loggedInState && currentEmail.isNotEmpty()) {
+                    // Navegar a HomeView si está autenticado
                     HomeView(
-                        mainViewModel,
-                        cambiarIdiomaClass,
+                        mainViewModel = mainViewModel,
+                        cambiarIdiomaClass = cambiarIdiomaClass,
                         darkTheme,
-                        context,
+                        context = context,
                         register = register,
-                        email = email,
+                        email = currentEmail,
                         language = language,
-                        galleryViewModel = GalleryViewModel()
+                        galleryViewModel = GalleryViewModel(),
+
                     )
                 } else {
+                    // Mostrar LoginView si no está autenticado
                     LoginView(
-                        register = register,    // We pass register to LoginView
+                        register = register,
                         onLoginSuccess = {
+                            // Actualizar estado de inicio de sesión
                             register.isLoggedIn.value = true
-                            register.saveEmail("email",email)
                         },
                         onGoogleSignIn = {
                             register.startGoogleSignIn()
                         },
-                        activity
+                        activity = activity
                     )
                 }
             }
-
         }
     }
 }

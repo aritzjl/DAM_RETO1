@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.models.Product
 import com.reto1.ultramarinos.components.FAB
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
@@ -29,7 +30,8 @@ fun GalleryView(
     galleryViewModel: GalleryViewModel,
     isLightMode: Boolean,
     email: String,
-    language: String
+    language: String,
+    register: Register,
 ) {
     val navController = rememberNavController()
     val viewModel: GalleryViewModel = viewModel()
@@ -37,7 +39,7 @@ fun GalleryView(
     Scaffold(
         topBar = { ToolBar(galleryViewModel, navController, isLightMode) },
         bottomBar = { BottomNavBar(navController) },
-        floatingActionButton = { FAB(isLightMode, email, language) }
+        floatingActionButton = { FAB(isLightMode, email, language, register) }
     ) { innerPadding ->
         GalleryContent(
             paddingValues = paddingValues,
@@ -46,6 +48,7 @@ fun GalleryView(
             paddingValues2 = innerPadding,
             email,
             language,
+            register,
             onCategorySelected = { category -> viewModel.filterArtworks(category) } // Pasar la categoría seleccionada
         )
     }
@@ -59,6 +62,7 @@ fun GalleryContent(
     paddingValues2: PaddingValues,
     email: String,
     language: String,
+    register: Register,
     onCategorySelected: (String?) -> Unit // Cambié ProductCategory? a String?){}
 ) {
     Column(modifier = Modifier.padding(paddingValues)) {
@@ -76,7 +80,7 @@ fun GalleryContent(
                 key = { index -> artworks[index].title }
             ) { index ->
                 val artwork = artworks[index]
-                ProductPreview(artwork, email, language)
+                ProductPreview(artwork, email, language, register)
             }
         }
     }
