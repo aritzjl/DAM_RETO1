@@ -79,9 +79,7 @@ fun ToolBar(galeryViewModel: GalleryViewModel, navController: NavController, isL
                             .padding(end = 10.dp),
                         onClick = {
                             val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                                data = Uri.parse("mailto:") // Solo abre aplicaciones de correo
-                                putExtra(Intent.EXTRA_EMAIL, arrayOf("info@gregoriomartin.es")) // Correo destinatario
-                                putExtra(Intent.EXTRA_SUBJECT, "Asunto del correo") // Asunto del correo
+                                data = Uri.parse("mailto:info@gregoriomartin.es") // Solo abre aplicaciones de correo
                             }
 
                             if (emailIntent.resolveActivity(context.packageManager) != null) {

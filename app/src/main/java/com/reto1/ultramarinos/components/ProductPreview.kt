@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.models.Product
 import com.reto1.ultramarinos.viewmodels.MainViewModel
 
@@ -43,7 +44,8 @@ import com.reto1.ultramarinos.viewmodels.MainViewModel
 fun ProductPreview(
     product: Product,
     email: String,
-    language: String
+    language: String,
+    register: Register
 ) {
     // Desestructuración de las propiedades de Product
     var (
@@ -157,7 +159,7 @@ fun ProductPreview(
         }
 
         if (showModal) {
-            ProductDetailModal(product = product, email, language, onDismiss = { showModal = false })
+            ProductDetailModal(product = product, email, language, register, onDismiss = { showModal = false })
         }
     }
 }

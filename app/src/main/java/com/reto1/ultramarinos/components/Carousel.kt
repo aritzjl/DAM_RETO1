@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.reto1.ultramarinos.R
+import com.reto1.ultramarinos.Register
 import com.reto1.ultramarinos.is_carousel_Paused
 import com.reto1.ultramarinos.viewmodels.GalleryViewModel
 import kotlinx.coroutines.delay
@@ -206,7 +207,7 @@ fun IndicatorDots(isSelected: Boolean, modifier: Modifier) {
 
 
 @Composable
-fun Carrusel2(viewModel: GalleryViewModel, email: String, language: String, modifier: Modifier = Modifier) {
+fun Carrusel2(viewModel: GalleryViewModel, email: String, language: String, register: Register, modifier: Modifier = Modifier) {
     val configuration = LocalConfiguration.current
     val fraction = if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
         0.9f // 90% width in landscape
@@ -252,7 +253,7 @@ fun Carrusel2(viewModel: GalleryViewModel, email: String, language: String, modi
                         .fillMaxSize().wrapContentSize()
                 ) {
                     Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
-                        ProductPreview(product, email, language)
+                        ProductPreview(product, email, language, register)
                     }
                 }
             }

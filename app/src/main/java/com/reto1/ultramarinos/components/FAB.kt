@@ -28,16 +28,17 @@ import com.reto1.ultramarinos.models.CartProduct
 import com.reto1.ultramarinos.viewmodels.CartViewModel
 
 @Composable
-fun FAB(isLightMode: Boolean, email: String, language: String) {
+fun FAB(isLightMode: Boolean, email: String, language: String, register: Register) {
     val context = LocalContext.current
     val viewModel: CartViewModel = viewModel()
     var showCartModal by remember { mutableStateOf(false) }
     var cartItems by remember { mutableStateOf<List<CartProduct>>(emptyList()) }
     val vacio = stringResource(id = R.string.cart_empty)
+    val email = remember { register.loadEmail("email", "") }
 
     if (showCartModal)
     {
-        CartModal(cartItems, email = email, language = language) {
+        CartModal(cartItems, email = email, language = language, register) {
             showCartModal = false
         }
     }
